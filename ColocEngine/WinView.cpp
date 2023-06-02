@@ -1,4 +1,5 @@
 #include "WinView.h"
+#include<cassert>
 #define _THIS NULL
 #define _ALL NULL
 
@@ -36,28 +37,31 @@ bool WinView::initialize()
 {
     bool FAIL = 0;
 
-    HINSTANCE hIns = nullptr;
     WNDCLASSEX wcex = {};
 
-    hIns = GetModuleHandle(_THIS);
-    if (hIns == nullptr) return FAIL;
+    h_ins = GetModuleHandle(_THIS);  //<----
+
+    if (h_ins == nullptr) return FAIL;
 
     {
-        auto color = (HBRUSH)(RGB(1,1,1));
+        auto color = CreateSolidBrush(RGB(1, 10, 100));
 
         wcex.lpfnWndProc = WndProc;
         wcex.lpszClassName = WND_NAME::smp;
         wcex.lpszMenuName = nullptr;
         wcex.cbSize = sizeof(wcex);
         wcex.style = CS_HREDRAW | CS_VREDRAW;
-        wcex.hIcon = LoadIcon(hIns, IDI_QUESTION);
-        wcex.hIconSm = LoadIcon(hIns, IDI_EXCLAMATION);
-        wcex.hCursor = LoadCursor(hIns, IDC_ARROW);
-        wcex.hInstance = hIns;
+        wcex.hIcon = LoadIcon(h_ins, IDI_QUESTION);
+        wcex.hIconSm = LoadIcon(h_ins, IDI_EXCLAMATION);
+        wcex.hCursor = LoadCursor(h_ins, IDC_ARROW);
+        wcex.hInstance = h_ins;
         wcex.hbrBackground = color;
-    }
 
-    if(!RegisterClassEx(&wcex)) return FAIL;
+        color = nullptr;
+    }
+    auto rgc = RegisterClassEx(&wcex);
+
+    if(!rgc) return FAIL;
 
     RECT box = { 0,0,0,0 };
     {
@@ -66,14 +70,14 @@ bool WinView::initialize()
     }
 
     {
-        long style = WS_POPUPWINDOW;
+        auto style = WS_OVERLAPPEDWINDOW;
         AdjustWindowRect(&box, style, false);
 
         h_wnd = CreateWindowEx
         (
             0,
             WND_NAME::smp,
-            TEXT("What is this?"),
+            WND_NAME::smp,
             style,
             CW_USEDEFAULT,
             CW_USEDEFAULT,
@@ -82,8 +86,7 @@ bool WinView::initialize()
             nullptr,
             nullptr,
             h_ins,
-            nullptr
-
+            0
         );
     }
 
@@ -117,6 +120,11 @@ void WinView::loop()
         {
             TranslateMessage(&msg);
             DispatchMessage(&msg);
+        }
+
+        else
+        {
+
         }
     }
 }
