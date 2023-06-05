@@ -2,6 +2,7 @@
 #include<cassert>
 #define _THIS NULL
 #define _ALL NULL
+#define __guidof __uuidof
 
 WinView::WinView(uint32_t h, uint32_t w) :h_ins(nullptr), h_wnd(nullptr), h_(h), w_(w)
 {
@@ -127,6 +128,50 @@ void WinView::loop()
 
         }
     }
+}
+
+bool WinView::initialize_D3D()
+{
+    bool FAIL = 0;
+
+    auto res = D3D12CreateDevice
+    (
+        nullptr,
+        D3D_FEATURE_LEVEL_11_0,
+        __guidof(device_),
+        reinterpret_cast<void**>(&device_)
+    );
+    if (FAILED(res))               return FAIL;
+
+
+    D3D12_COMMAND_QUEUE_DESC cmddesc = {};
+
+    {
+        cmddesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
+        cmddesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
+        cmddesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
+        cmddesc.NodeMask = NULL;
+    }
+    res = device_->CreateCommandQueue(&cmddesc, __guidof(cmdque_), reinterpret_cast<void**>(&cmdque_));
+    if (FAILED(res))     return FAIL;
+
+
+}
+
+void WinView::termination_D3D()
+{
+}
+
+void WinView::rendaring()
+{
+}
+
+void WinView::waitGPU()
+{
+}
+
+void WinView::present(uint32_t itv)
+{
 }
 
 LRESULT WinView::WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
