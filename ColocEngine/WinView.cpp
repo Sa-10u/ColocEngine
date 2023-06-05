@@ -76,7 +76,7 @@ bool WinView::initialize()
 
         h_wnd = CreateWindowEx
         (
-            0,
+            WS_EX_LAYERED,
             WND_NAME::smp,
             WND_NAME::smp,
             style,
@@ -154,7 +154,21 @@ bool WinView::initialize_D3D()
     }
     res = device_->CreateCommandQueue(&cmddesc, __guidof(cmdque_), reinterpret_cast<void**>(&cmdque_));
     if (FAILED(res))     return FAIL;
+    
 
+    IDXGIFactory4* fact = nullptr;
+    res =  CreateDXGIFactory1(__guidof(fact), reinterpret_cast<void**>(&fact));
+    if (FAILED(res))     return 0;
+
+
+    DXGI_SWAP_CHAIN_DESC desc = {};
+    desc.BufferDesc.Height = h_;
+    desc.BufferDesc.Width = w_;
+    desc.BufferDesc.RefreshRate.Numerator = 60;
+    desc.BufferDesc.RefreshRate.Denominator = 1;
+    desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+    desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+    desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
 
 }
 

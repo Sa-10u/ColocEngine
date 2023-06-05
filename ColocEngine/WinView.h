@@ -6,7 +6,7 @@
 #include<dxgi1_4.h>
 
 #pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"dxgi1_4.lib")
+#pragma comment(lib,"dxgi.lib")
 
 class WinView
 {
