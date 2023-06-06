@@ -30,8 +30,8 @@ private:
 	IDXGISwapChain3* swpchain_;
 	ID3D12Resource* colbuf_;
 	ID3D12CommandQueue* cmdque_;
-	ID3D12CommandAllocator* comaloc_;
 	ID3D12CommandList* comlist_;
+	ID3D12CommandAllocator* comaloc_;
 	ID3D12DescriptorHeap* heapRTV_;
 
 	ID3D12Fence* fence_;

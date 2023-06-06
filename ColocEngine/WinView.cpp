@@ -179,15 +179,26 @@ bool WinView::initialize_D3D()
     desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
     desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
     }
-
     IDXGISwapChain* p_swch = nullptr;
-
     res = fact->CreateSwapChain(cmdque_, &desc, &p_swch);
-    if (res)
+    if (FAILED(res))
     {
         SAFE_RELEASE(fact);
         return FAIL;
     }
+    res = p_swch->QueryInterface(__guidof(swpchain_), reinterpret_cast<void**>(swpchain_));
+    if (FAILED(res))
+    {
+        SAFE_RELEASE(fact);
+        SAFE_RELEASE(p_swch);
+        return FAIL;
+    }
+    IND_frame = swpchain_->GetCurrentBackBufferIndex();
+    SAFE_RELEASE(fact);
+    SAFE_RELEASE(p_swch);
+
+
+
 }
 
 
