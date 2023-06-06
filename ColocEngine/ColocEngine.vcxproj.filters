@@ -26,5 +26,8 @@
     <ClInclude Include="WinView.h">
       <Filter>Head</Filter>
     </ClInclude>
+    <ClInclude Include="MACRO.h">
+      <Filter>Head</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

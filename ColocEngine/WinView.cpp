@@ -154,14 +154,15 @@ bool WinView::initialize_D3D()
     }
     res = device_->CreateCommandQueue(&cmddesc, __guidof(cmdque_), reinterpret_cast<void**>(&cmdque_));
     if (FAILED(res))     return FAIL;
-    
+
 
     IDXGIFactory4* fact = nullptr;
-    res =  CreateDXGIFactory1(__guidof(fact), reinterpret_cast<void**>(&fact));
+    res = CreateDXGIFactory1(__guidof(fact), reinterpret_cast<void**>(&fact));
     if (FAILED(res))     return 0;
 
 
     DXGI_SWAP_CHAIN_DESC desc = {};
+    {
     desc.BufferDesc.Height = h_;
     desc.BufferDesc.Width = w_;
     desc.BufferDesc.RefreshRate.Numerator = 60;
@@ -169,8 +170,27 @@ bool WinView::initialize_D3D()
     desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
     desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
+    desc.SampleDesc.Count = 1;
+    desc.SampleDesc.Quality = 0;
+    desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+    desc.BufferCount = FrameAmmount;
+    desc.OutputWindow = h_wnd;
+    desc.Windowed = TRUE;
+    desc.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
+    desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
+    }
 
+    IDXGISwapChain* p_swch = nullptr;
+
+    res = fact->CreateSwapChain(cmdque_, &desc, &p_swch);
+    if (res)
+    {
+        SAFE_RELEASE(fact);
+        return FAIL;
+    }
 }
+
+
 
 void WinView::termination_D3D()
 {

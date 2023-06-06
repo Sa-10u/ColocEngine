@@ -23,6 +23,7 @@
     <ClCompile Include="WinView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="MACRO.h" />
     <ClInclude Include="WinView.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
