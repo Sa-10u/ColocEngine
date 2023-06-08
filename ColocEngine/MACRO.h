@@ -3,9 +3,9 @@
 template<typename tgt>
 inline void SAFE_DELETE(tgt* p)
 {
-	delete p;
 	if (!(p = nullptr)) //funcptr
 	{
+		delete p;
 		p = nullptr;
 	}
 }
@@ -13,9 +13,9 @@ inline void SAFE_DELETE(tgt* p)
 template<typename tgt>
 inline void SAFE_RELEASE(tgt* p)
 {
-	p->Release();
 	if (!(p = nullptr))
 	{
+		p->Release();
 		p = nullptr;
 	}
 

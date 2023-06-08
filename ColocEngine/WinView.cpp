@@ -198,6 +198,29 @@ bool WinView::initialize_D3D()
     SAFE_RELEASE(p_swch);
 
 
+    for (int i = 0u;i < FrameAmmount; i++) {
+        
+        res = device_->CreateCommandAllocator
+        (
+            D3D12_COMMAND_LIST_TYPE_DIRECT,
+            __guidof(comalloc_[i]),
+            reinterpret_cast<void**>(comalloc_[i])
+        );
+
+        if (FAILED(res)) return FAIL;
+    }
+
+    res = device_->CreateCommandList
+    (
+        0,
+        D3D12_COMMAND_LIST_TYPE_DIRECT,
+        comalloc_[IND_frame],
+        nullptr,
+        __guidof(comlist_),
+        reinterpret_cast<void**>(comlist_)
+    );
+    if (FAILED(res)) return 0;
+
 
 }
 
