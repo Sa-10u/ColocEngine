@@ -186,7 +186,7 @@ bool WinView::initialize_D3D()
         SAFE_RELEASE(fact);
         return FAIL;
     }
-    res = p_swch->QueryInterface(__guidof(swpchain_), reinterpret_cast<void**>(swpchain_));
+    res = p_swch->QueryInterface(__guidof(swpchain_), reinterpret_cast<void**>(&swpchain_));
     if (FAILED(res))
     {
         SAFE_RELEASE(fact);
@@ -217,11 +217,36 @@ bool WinView::initialize_D3D()
         comalloc_[IND_frame],
         nullptr,
         __guidof(comlist_),
-        reinterpret_cast<void**>(comlist_)
+        reinterpret_cast<void**>(&comlist_)
     );
-    if (FAILED(res)) return 0;
+    if (FAILED(res)) return FAIL;
 
+    D3D12_DESCRIPTOR_HEAP_DESC hpdesc;
 
+    {
+        hpdesc.NumDescriptors = FrameAmmount;
+        hpdesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
+        hpdesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+        hpdesc.NodeMask = 0;
+    }
+
+    res = device_->CreateDescriptorHeap(&hpdesc, __guidof(heapRTV_), reinterpret_cast<void**>(&heapRTV_));
+
+    if (FAILED(res))    return FAIL;
+ 
+
+    D3D12_CPU_DESCRIPTOR_HANDLE hdC = heapRTV_->GetCPUDescriptorHandleForHeapStart();
+    UINT incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+
+    for (UINT i = 0u; i < FrameAmmount; i++) {
+
+        res = swpchain_->GetBuffer(i, IID_PPV_ARGS(&colbuf_[i]));
+        if (FAILED(res))     return FAIL;
+
+        D3D12_RENDER_TARGET_VIEW_DESC rtvdesc = {};
+
+        rtvdesc.Format = 
+    }
 }
 
 
