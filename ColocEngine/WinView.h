@@ -30,12 +30,12 @@ private:
 	IDXGISwapChain3* swpchain_;
 	ID3D12Resource* colbuf_[FrameAmmount];
 	ID3D12CommandQueue* cmdque_;
-	ID3D12CommandAllocator* comalloc_[FrameAmmount];
-	ID3D12CommandList* comlist_;
+	ID3D12CommandAllocator* cmdalloc_[FrameAmmount];
+	ID3D12GraphicsCommandList* cmdlist_;
 	ID3D12DescriptorHeap* heapRTV_;
 
 	ID3D12Fence* fence_;
-	HANDLE h_fence;
+	HANDLE event_fence;
 	uint64_t fencecnt_[FrameAmmount];
 	uint64_t IND_frame;
 	D3D12_CPU_DESCRIPTOR_HANDLE h_RTV[FrameAmmount];

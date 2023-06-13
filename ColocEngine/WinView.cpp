@@ -203,8 +203,8 @@ bool WinView::initialize_D3D()
         res = device_->CreateCommandAllocator
         (
             D3D12_COMMAND_LIST_TYPE_DIRECT,
-            __guidof(comalloc_[i]),
-            reinterpret_cast<void**>(comalloc_[i])
+            __guidof(cmdalloc_[i]),
+            reinterpret_cast<void**>(cmdalloc_[i])
         );
 
         if (FAILED(res)) return FAIL;
@@ -214,10 +214,10 @@ bool WinView::initialize_D3D()
     (
         0,
         D3D12_COMMAND_LIST_TYPE_DIRECT,
-        comalloc_[IND_frame],
+        cmdalloc_[IND_frame],
         nullptr,
-        __guidof(comlist_),
-        reinterpret_cast<void**>(&comlist_)
+        __guidof(cmdlist_),
+        reinterpret_cast<void**>(&cmdlist_)
     );
     if (FAILED(res)) return FAIL;
 
@@ -235,7 +235,7 @@ bool WinView::initialize_D3D()
     if (FAILED(res))    return FAIL;
  
 
-    D3D12_CPU_DESCRIPTOR_HANDLE hdC = heapRTV_->GetCPUDescriptorHandleForHeapStart();
+    D3D12_CPU_DESCRIPTOR_HANDLE handle = heapRTV_->GetCPUDescriptorHandleForHeapStart();
     UINT incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
     for (UINT i = 0u; i < FrameAmmount; i++) {
@@ -245,8 +245,29 @@ bool WinView::initialize_D3D()
 
         D3D12_RENDER_TARGET_VIEW_DESC rtvdesc = {};
 
-        rtvdesc.Format = 
+        rtvdesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+        rtvdesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+        rtvdesc.Texture2D.MipSlice = NULL;
+        rtvdesc.Texture2D.PlaneSlice = NULL;
+
+        device_->CreateRenderTargetView(colbuf_[i], &rtvdesc, handle);
+
+        h_RTV[i] = handle;
+        handle.ptr += incre;
     }
+
+    res = device_->CreateFence
+    (
+        fencecnt_[IND_frame],
+        D3D12_FENCE_FLAG_NONE,
+        __guidof(fence_),
+        reinterpret_cast<void**>(&fence_)
+    );
+
+    if (FAILED(res))     return FAIL;
+
+    event_fence = CreateEvent(nullptr, false, false, nullptr);
+    if (event_fence == nullptr)  return FAIL;
 }
 
 
@@ -257,6 +278,8 @@ void WinView::termination_D3D()
 
 void WinView::rendaring()
 {
+    cmdalloc_[IND_frame]->Reset();
+    cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
 }
 
 void WinView::waitGPU()
