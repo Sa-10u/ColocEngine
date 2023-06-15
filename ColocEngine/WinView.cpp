@@ -280,6 +280,21 @@ void WinView::rendaring()
 {
     cmdalloc_[IND_frame]->Reset();
     cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
+
+    D3D12_RESOURCE_BARRIER brr ={};
+    {
+        brr.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        brr.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+
+        brr.Transition.pResource = colbuf_[IND_frame];
+        brr.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
+
+        brr.Transition.StateBefore = D3D12_RESOURCE_STATE_PRESENT;
+        brr.Transition.StateAfter = D3D12_RESOURCE_STATE_RENDER_TARGET;
+    }
+    cmdlist_->ResourceBarrier(1, &brr);
+
+    cmdlist_->OMSetRenderTargets(1,)
 }
 
 void WinView::waitGPU()
