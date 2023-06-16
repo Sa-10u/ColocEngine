@@ -2,12 +2,15 @@
 #include <Windows.h>
 #include <cstdint>]
 
+#include<DirectXMath.h>
 #include<d3d12.h>
 #include<dxgi1_4.h>
 #include"MACRO.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
+
+using namespace::DirectX;
 
 class WinView
 {

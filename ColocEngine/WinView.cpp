@@ -294,7 +294,10 @@ void WinView::rendaring()
     }
     cmdlist_->ResourceBarrier(1, &brr);
 
-    cmdlist_->OMSetRenderTargets(1,)
+    float backcolor_[] = { 0,0.6,1,1 };
+
+    cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
+    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_, 0, nullptr);
 }
 
 void WinView::waitGPU()
