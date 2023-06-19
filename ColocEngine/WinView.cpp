@@ -76,7 +76,7 @@ bool WinView::initialize()
 
         h_wnd = CreateWindowEx
         (
-            WS_EX_LAYERED,
+            NULL,
             WND_NAME::smp,
             WND_NAME::smp,
             style,
@@ -298,6 +298,18 @@ void WinView::rendaring()
 
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
     cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_, 0, nullptr);
+
+    {
+        brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+        brr.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+    }
+
+    cmdlist_->ResourceBarrier(1, &brr);
+    cmdlist_->Close();
+
+
+    ID3D12CommandList* commands[] = { cmdlist_ };
+    cmdque_->ExecuteCommandLists(1, commands);
 }
 
 void WinView::waitGPU()
@@ -306,6 +318,7 @@ void WinView::waitGPU()
 
 void WinView::present(uint32_t itv)
 {
+
 }
 
 LRESULT WinView::WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
