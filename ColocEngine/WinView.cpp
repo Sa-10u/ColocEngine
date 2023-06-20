@@ -276,7 +276,7 @@ void WinView::termination_D3D()
 {
 }
 
-void WinView::rendaring()
+void WinView::write()
 {
     cmdalloc_[IND_frame]->Reset();
     cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
@@ -314,11 +314,35 @@ void WinView::rendaring()
 
 void WinView::waitGPU()
 {
+    assert(cmdque_ != nullptr);
+    assert(fence_ != nullptr);
+    assert(event_fence != nullptr);
+
+    cmdque_->Signal(fence_, fencecnt_[IND_frame]);
+
+    fence_->SetEventOnCompletion(fencecnt_[IND_frame], event_fence);
+
+    WaitForSingleObjectEx(event_fence, INFINITE,FALSE);
+
+    fencecnt_[IND_frame]++;
 }
 
 void WinView::present(uint32_t itv)
 {
+    swpchain_->Present(itv, 0);
 
+    const auto curval = fencecnt_[IND_frame];
+    cmdque_->Signal(fence_, curval);
+
+    IND_frame = swpchain_->GetCurrentBackBufferIndex();
+
+    if (fence_->GetCompletedValue() < fencecnt_[IND_frame])
+    {
+        fence_->SetEventOnCompletion(fencecnt_[IND_frame], event_fence);
+        WaitForSingleObjectEx(event_fence, INFINITE, FALSE);
+    }
+    
+    fencecnt_[IND_frame] = curval + 1;
 }
 
 LRESULT WinView::WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)

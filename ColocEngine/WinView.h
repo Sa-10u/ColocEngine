@@ -54,7 +54,7 @@ private:
 
 	bool initialize_D3D();
 	void termination_D3D();
-	void rendaring();
+	void write();
 	void waitGPU();
 	void present(uint32_t itv);
 };
