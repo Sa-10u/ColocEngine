@@ -274,6 +274,24 @@ bool WinView::initialize_D3D()
 
 void WinView::termination_D3D()
 {
+    waitGPU();
+    if (event_fence != nullptr)
+    {
+        CloseHandle(event_fence);
+        event_fence = nullptr;
+    }
+
+    SAFE_RELEASE(fence_);
+    SAFE_RELEASE(heapRTV_);
+    for (int i = 0; i < FrameAmmount; i++) {
+        SAFE_RELEASE(colbuf_[i]);
+        SAFE_RELEASE(cmdalloc_[i]);
+    }
+    SAFE_RELEASE(cmdlist_);
+    SAFE_RELEASE(cmdque_);
+    SAFE_RELEASE(swpchain_);
+
+    SAFE_RELEASE(device_);
 }
 
 void WinView::write()
@@ -294,7 +312,7 @@ void WinView::write()
     }
     cmdlist_->ResourceBarrier(1, &brr);
 
-    float backcolor_[] = { 0,0.6,1,1 };
+    float backcolor_[] = { 1,0.6,1,1 };
 
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
     cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_, 0, nullptr);
