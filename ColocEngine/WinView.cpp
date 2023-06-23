@@ -28,7 +28,10 @@ bool WinView::setup()
 {
     if (initialize())
     {
-        return true;
+        if (initialize_D3D())
+        {
+            return true;
+        }
     }
     
     return false;
@@ -104,6 +107,7 @@ void WinView::termination()
 {
     if (h_ins != nullptr)
     {
+        termination_D3D();
         UnregisterClass(WND_NAME::smp, h_ins);
     }
 
@@ -125,7 +129,9 @@ void WinView::loop()
 
         else
         {
-
+            write();
+            waitGPU();
+            present(0);
         }
     }
 }
@@ -169,7 +175,7 @@ bool WinView::initialize_D3D()
     desc.BufferDesc.RefreshRate.Denominator = 1;
     desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     desc.BufferDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
-    desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UINT;
+    desc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     desc.SampleDesc.Count = 1;
     desc.SampleDesc.Quality = 0;
     desc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
@@ -180,12 +186,13 @@ bool WinView::initialize_D3D()
     desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
     }
     IDXGISwapChain* p_swch = nullptr;
-    res = fact->CreateSwapChain(cmdque_, &desc, &p_swch);
+    res = fact->CreateSwapChain(cmdque_, &desc, &p_swch);   //------failed
     if (FAILED(res))
     {
         SAFE_RELEASE(fact);
         return FAIL;
     }
+
     res = p_swch->QueryInterface(__guidof(swpchain_), reinterpret_cast<void**>(&swpchain_));
     if (FAILED(res))
     {
@@ -193,6 +200,7 @@ bool WinView::initialize_D3D()
         SAFE_RELEASE(p_swch);
         return FAIL;
     }
+
     IND_frame = swpchain_->GetCurrentBackBufferIndex();
     SAFE_RELEASE(fact);
     SAFE_RELEASE(p_swch);
@@ -204,7 +212,7 @@ bool WinView::initialize_D3D()
         (
             D3D12_COMMAND_LIST_TYPE_DIRECT,
             __guidof(cmdalloc_[i]),
-            reinterpret_cast<void**>(cmdalloc_[i])
+            reinterpret_cast<void**>(&cmdalloc_[i])
         );
 
         if (FAILED(res)) return FAIL;
@@ -268,6 +276,8 @@ bool WinView::initialize_D3D()
 
     event_fence = CreateEvent(nullptr, false, false, nullptr);
     if (event_fence == nullptr)  return FAIL;
+
+    return true;
 }
 
 
@@ -312,10 +322,10 @@ void WinView::write()
     }
     cmdlist_->ResourceBarrier(1, &brr);
 
-    float backcolor_[] = { 1,0.6,1,1 };
+    float backcolor_[2][4] = {{0,0.6,0.5,1} ,{1,0.6,0.5,1}};
 
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
-    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_, 0, nullptr);
+    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_[IND_frame%2], 0, nullptr);
 
     {
         brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
