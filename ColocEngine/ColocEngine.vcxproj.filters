@@ -21,12 +21,18 @@
     <ClCompile Include="WinView.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="D3D.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinView.h">
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="MACRO.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="D3D.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>

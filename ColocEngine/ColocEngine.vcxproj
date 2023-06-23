@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="D3D.cpp" />
     <ClCompile Include="MAIN.cpp" />
     <ClCompile Include="WinView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D3D.h" />
     <ClInclude Include="MACRO.h" />
     <ClInclude Include="WinView.h" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
-#include <cstdint>]
+#include <cstdint>
+#include"D3D.h"
 
 #include<DirectXMath.h>
 #include<d3d12.h>
@@ -12,6 +13,7 @@
 
 using namespace::DirectX;
 
+
 class WinView
 {
 public:
@@ -22,26 +24,10 @@ public:
 	
 private:
 
-	static const uint32_t FrameAmmount = 2;
-
 	HINSTANCE h_ins;
 	HWND h_wnd;
 	uint32_t h_;
 	uint32_t w_;
-
-	ID3D12Device* device_;
-	IDXGISwapChain3* swpchain_;
-	ID3D12Resource* colbuf_[FrameAmmount];
-	ID3D12CommandQueue* cmdque_;
-	ID3D12CommandAllocator* cmdalloc_[FrameAmmount];
-	ID3D12GraphicsCommandList* cmdlist_;
-	ID3D12DescriptorHeap* heapRTV_;
-
-	ID3D12Fence* fence_;
-	HANDLE event_fence;
-	uint64_t fencecnt_[FrameAmmount];
-	uint64_t IND_frame;
-	D3D12_CPU_DESCRIPTOR_HANDLE h_RTV[FrameAmmount];
 
 private:
 
@@ -52,11 +38,6 @@ private:
 	void termination();
 	void loop();
 
-	bool initialize_D3D();
-	void termination_D3D();
-	void write();
-	void waitGPU();
-	void present(uint32_t itv);
 };
 
 namespace WND_NAME
