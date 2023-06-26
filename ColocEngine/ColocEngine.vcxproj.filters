@@ -36,4 +36,9 @@
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="poorVS.hlsl">
+      <Filter>Resource</Filter>
+    </FxCompile>
+  </ItemGroup>
 </Project>

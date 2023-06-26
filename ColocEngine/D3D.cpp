@@ -272,3 +272,4 @@ void D3d::present(uint32_t itv)
 
     fencecnt_[IND_frame] = curval + 1;
 }
+
