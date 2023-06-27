@@ -2,5 +2,8 @@
 
 bool D3d::Buffers::Initialize()
 {
-    Vertex 
+	bool FAILED = 0;
+	bool res = FAILED;
+  //  Vertex 
+	return false;
 }

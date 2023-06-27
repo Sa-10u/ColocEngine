@@ -50,7 +50,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
 
     IDXGIFactory4* fact = nullptr;
-    res = CreateDXGIFactory1(__guidof(fact), reinterpret_cast<void**>(&fact));
+    res = CreateDXGIFactory2(0,__guidof(fact), reinterpret_cast<void**>(&fact));
     if (FAILED(res))     return 0;
 
 
