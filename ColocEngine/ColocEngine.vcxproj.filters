@@ -24,6 +24,9 @@
     <ClCompile Include="D3D.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="Buffers.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinView.h">
@@ -40,5 +43,13 @@
     <FxCompile Include="poorVS.hlsl">
       <Filter>Resource</Filter>
     </FxCompile>
+    <FxCompile Include="PoorPS.hlsl">
+      <Filter>Resource</Filter>
+    </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="PoorHeader.hlsli">
+      <Filter>Resource</Filter>
+    </None>
   </ItemGroup>
 </Project>

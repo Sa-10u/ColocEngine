@@ -50,22 +50,32 @@ private:
 	uint64_t IND_frame;
 	D3D12_CPU_DESCRIPTOR_HANDLE h_RTV[FrameAmmount];
 
-	ID3D12DescriptorHeap* heapCBV_;
-	ID3D12RootSignature* rootsig_;
-	ID3D12PipelineState* statePipe_;
-
-	ID3D12Resource* VB;
-	ID3D12Resource* CB[FrameAmmount];
-	D3D12_VERTEX_BUFFER_VIEW VBV;
-	D3D12_VIEWPORT view_;
-	D3D12_RECT rect_;
-	D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
-
-	float angle_;
-
 	//----
 
 	static D3d* instance;
+
+public:
+
+	class Buffers
+	{
+	public:
+
+		bool Initialize();
+
+	private:
+		ID3D12DescriptorHeap* heapCBV_;
+		ID3D12RootSignature* rootsig_;
+		ID3D12PipelineState* statePipe_;
+
+		ID3D12Resource* VB;
+		ID3D12Resource* CB[FrameAmmount];
+		D3D12_VERTEX_BUFFER_VIEW VBV;
+		D3D12_VIEWPORT view_;
+		D3D12_RECT rect_;
+		D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
+
+		float angle_;
+	};
 
 };
 

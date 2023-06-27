@@ -225,7 +225,7 @@ void D3d::write()
     float backcolor_[2][4] = { {0,0.6,0.5,1} ,{1,0.6,0.5,1} };
 
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
-    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_[IND_frame % 2], 0, nullptr);
+    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_[IND_frame ], 0, nullptr);
 
     {
         brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
@@ -272,4 +272,5 @@ void D3d::present(uint32_t itv)
 
     fencecnt_[IND_frame] = curval + 1;
 }
+
 
