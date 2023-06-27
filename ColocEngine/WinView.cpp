@@ -29,7 +29,10 @@ bool WinView::setup()
     {
         if (D3D->Initialize(h_wnd,h_,w_))
         {
-            return true;
+            if (D3D->buffer_.Initialize())
+            {
+                return true;
+            }
         }
     }
     

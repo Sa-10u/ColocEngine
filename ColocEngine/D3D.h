@@ -56,7 +56,7 @@ private:
 
 public:
 
-	class Buffers
+	class Buffers 
 	{
 	public:
 
@@ -75,7 +75,7 @@ public:
 		D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
 
 		float angle_;
-	};
+	}buffer_;
 
 };
 
