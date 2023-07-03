@@ -1,15 +1,18 @@
 #include"D3D.h"
-
-struct VERTEX
-{
-	XMFLOAT3 pos;
-	XMFLOAT4 rgba;
-};
+#include"BUFFER.h"
 
 bool D3d::Buffers::Initialize()
 {
 	bool FAILED = 0;
 	bool res = FAILED;
   //  Vertex 
-	return false;
+	VERTEX vx[] =
+	{
+		{XMFLOAT3(-1,-1,0),XMFLOAT4(0,0,1,1)},
+		{XMFLOAT3( 1,-1,0),XMFLOAT4(0,1,0,1)},
+		{XMFLOAT3( 0, 1,0),XMFLOAT4(1,0,0,1)}
+	};
+	//------------
+
+	return true;
 }

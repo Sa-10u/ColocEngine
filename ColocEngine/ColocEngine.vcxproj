@@ -25,6 +25,7 @@
     <ClCompile Include="WinView.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BUFFER.h" />
     <ClInclude Include="D3D.h" />
     <ClInclude Include="MACRO.h" />
     <ClInclude Include="WinView.h" />
