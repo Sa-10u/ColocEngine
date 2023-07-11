@@ -30,7 +30,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     auto res = D3D12CreateDevice
     (
         nullptr,
-        D3D_FEATURE_LEVEL_11_0,
+        D3D_FEATURE_LEVEL_12_1,
         __guidof(device_),
         reinterpret_cast<void**>(&device_)
     );
