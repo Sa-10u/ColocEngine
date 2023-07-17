@@ -1,7 +1,6 @@
 #include "D3D.h"
 #include<cassert>
 
-#define __guidof __uuidof
 
 D3d* D3D = D3d::Create();
 

@@ -63,6 +63,7 @@ public:
 		bool Initialize();
 
 	private:
+
 		ID3D12DescriptorHeap* heapCBV_;
 		ID3D12RootSignature* rootsig_;
 		ID3D12PipelineState* statePipe_;

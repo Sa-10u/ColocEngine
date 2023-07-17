@@ -1,10 +1,10 @@
 #include"D3D.h"
 #include"BUFFER.h"
+#include"MACRO.h"
 
 bool D3d::Buffers::Initialize()
 {
 	bool FAILED = 0;
-	bool res = FAILED;
   //  Vertex 
 	VERTEX vx[] =
 	{
@@ -37,6 +37,18 @@ bool D3d::Buffers::Initialize()
 		rdc_.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 		rdc_.Flags = D3D12_RESOURCE_FLAG_NONE;
 	}
+
+	HRESULT res = D3d::instance->device_->CreateCommittedResource
+	(
+		&propheap_,
+		D3D12_HEAP_FLAG_NONE,
+		&rdc_,
+		D3D12_RESOURCE_STATE_GENERIC_READ,
+		nullptr,
+		__guidof(VB),
+		reinterpret_cast<void**>(&VB)
+	);
+	if (FAILED(res))	return FAILED;
 
 	return true;
 }
