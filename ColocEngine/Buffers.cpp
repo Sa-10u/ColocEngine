@@ -4,7 +4,7 @@
 
 bool D3d::Buffers::Initialize()
 {
-	bool FAILED = 0;
+	bool FAIL = 0;
   //  Vertex 
 	VERTEX vx[] =
 	{
@@ -48,14 +48,30 @@ bool D3d::Buffers::Initialize()
 		__guidof(VB),
 		reinterpret_cast<void**>(&VB)
 	);
-	if (FAILED(res))	return FAILED;
+	if (FAILED(res))	return FAIL;
 
 	void* ptr = nullptr;
 	VB->Map(0, nullptr, &ptr);
-
 	memcpy(ptr, vx, sizeof(vx));
-
 	VB->Unmap(0, nullptr);
+
+	VBV.BufferLocation = VB->GetGPUVirtualAddress();
+	VBV.SizeInBytes = sizeof(vx);
+	VBV.StrideInBytes = sizeof(VERTEX);
+
+	D3D12_DESCRIPTOR_HEAP_DESC hpcb;
+
+	{
+		hpcb.NumDescriptors = FrameAmmount;
+		hpcb.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+		hpcb.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+		hpcb.NodeMask = 0;
+	}
+	res = D3d::instance->device_->CreateDescriptorHeap(&hpcb, __guidof(heapCBV_), reinterpret_cast<void**>(&heapCBV_));
+
+	if (FAILED(res))    return FAIL;
+	
+
 
 	return true;
 }
