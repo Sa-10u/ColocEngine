@@ -71,7 +71,47 @@ bool D3d::Buffers::Initialize()
 
 	if (FAILED(res))    return FAIL;
 	
+	D3D12_HEAP_PROPERTIES cbprop = {};
+	{
+		cbprop.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+		cbprop.CreationNodeMask = 1;
+		cbprop.VisibleNodeMask = 1;
+		cbprop.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+		cbprop.Type = D3D12_HEAP_TYPE_UPLOAD;
+	}
+	D3D12_RESOURCE_DESC cbdesc = {};
+	{
+		cbdesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		cbdesc.Height = 1;
+		cbdesc.Width = sizeof(WVP);
+		cbdesc.DepthOrArraySize = 1;
 
+		cbdesc.Format = DXGI_FORMAT_UNKNOWN;
+		cbdesc.MipLevels = 1;
+		cbdesc.Alignment = 0;
+		cbdesc.Format = DXGI_FORMAT_UNKNOWN;
+		cbdesc.Flags = D3D12_RESOURCE_FLAG_NONE;
+		cbdesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+		cbdesc.SampleDesc.Quality = 0;
+		cbdesc.SampleDesc.Count = 1;
+	}
+
+	for (int i = 0;i < FrameAmmount;i++) {
+
+		res = D3d::instance->device_->CreateCommittedResource
+		(
+			&cbprop,
+			D3D12_HEAP_FLAG_NONE,
+			&cbdesc,
+			D3D12_RESOURCE_STATE_GENERIC_READ,
+			nullptr,
+			__guidof(CB[i]),
+			reinterpret_cast<void**>(&CB[i])
+		);
+
+		if (FAILED(res))    return FAIL;
+	}
 
 	return true;
 }
