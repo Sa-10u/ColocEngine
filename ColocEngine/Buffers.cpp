@@ -7,4 +7,3 @@ bool D3d::Buffers::Initialize()
   //  Vertex 
 	return false;
 }
-
