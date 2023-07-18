@@ -1,7 +1,6 @@
 #include "D3D.h"
 #include<cassert>
 
-#define __guidof __uuidof
 
 D3d* D3D = D3d::Create();
 
@@ -50,7 +49,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
 
     IDXGIFactory4* fact = nullptr;
-    res = CreateDXGIFactory2(0,__guidof(fact), reinterpret_cast<void**>(&fact));
+    res = CreateDXGIFactory1(__guidof(fact), reinterpret_cast<void**>(&fact));
     if (FAILED(res))     return 0;
 
 
@@ -169,6 +168,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
 void D3d::Termination()
 {
+
     waitGPU();
     if (event_fence != nullptr)
     {
@@ -187,6 +187,8 @@ void D3d::Termination()
     SAFE_RELEASE(swpchain_);
 
     SAFE_RELEASE(device_);
+
+    this->Kill();
 }
 
 void D3d::Run(int interval)
@@ -225,7 +227,7 @@ void D3d::write()
     float backcolor_[2][4] = { {0,0.6,0.5,1} ,{1,0.6,0.5,1} };
 
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
-    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_[IND_frame ], 0, nullptr);
+    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_[IND_frame], 0, nullptr);
 
     {
         brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;

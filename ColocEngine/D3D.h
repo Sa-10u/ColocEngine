@@ -56,13 +56,14 @@ private:
 
 public:
 
-	class Buffers
+	class Buffers 
 	{
 	public:
 
 		bool Initialize();
 
 	private:
+
 		ID3D12DescriptorHeap* heapCBV_;
 		ID3D12RootSignature* rootsig_;
 		ID3D12PipelineState* statePipe_;
@@ -75,7 +76,7 @@ public:
 		D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
 
 		float angle_;
-	};
+	}buffer_;
 
 };
 

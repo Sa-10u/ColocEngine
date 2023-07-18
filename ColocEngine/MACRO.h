@@ -20,3 +20,6 @@ inline void SAFE_RELEASE(tgt*& p)
 	}
 
 }
+
+#define __guidof __uuidof
+

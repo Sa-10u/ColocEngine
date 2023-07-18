@@ -38,6 +38,9 @@
     <ClInclude Include="D3D.h">
       <Filter>Head</Filter>
     </ClInclude>
+    <ClInclude Include="BUFFER.h">
+      <Filter>Head</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="poorVS.hlsl">
