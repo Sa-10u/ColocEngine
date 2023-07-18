@@ -50,5 +50,12 @@ bool D3d::Buffers::Initialize()
 	);
 	if (FAILED(res))	return FAILED;
 
+	void* ptr = nullptr;
+	VB->Map(0, nullptr, &ptr);
+
+	memcpy(ptr, vx, sizeof(vx));
+
+	VB->Unmap(0, nullptr);
+
 	return true;
 }
