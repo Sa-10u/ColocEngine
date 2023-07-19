@@ -8,9 +8,9 @@ bool D3d::Buffers::Initialize()
   //  Vertex 
 	VERTEX vx[] =
 	{
-		{XMFLOAT3(-1,-1,0),XMFLOAT4(0,0,1,1)},
-		{XMFLOAT3( 1,-1,0),XMFLOAT4(0,1,0,1)},
-		{XMFLOAT3( 0, 1,0),XMFLOAT4(1,0,0,1)}
+		{fl3(-1,-1,0),fl4(0,0,1,1)},
+		{fl3( 1,-1,0),fl4(0,1,0,1)},
+		{fl3( 0, 1,0),fl4(1,0,0,1)}
 	};
 	//------------
 

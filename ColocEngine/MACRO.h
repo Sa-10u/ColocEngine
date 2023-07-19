@@ -1,4 +1,5 @@
 #pragma once
+#include<DirectXMath.h>
 
 template<typename tgt>
 inline void SAFE_DELETE(tgt*& p)
@@ -23,3 +24,10 @@ inline void SAFE_RELEASE(tgt*& p)
 
 #define __guidof __uuidof
 
+
+typedef DirectX::XMFLOAT2 fl2;
+typedef DirectX::XMFLOAT3 fl3;
+typedef DirectX::XMFLOAT4 fl4;
+
+typedef DirectX::XMMATRIX Mat;
+typedef DirectX::XMVECTOR Vec;
