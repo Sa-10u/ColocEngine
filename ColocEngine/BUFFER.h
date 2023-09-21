@@ -1,3 +1,4 @@
+#pragma once
 #include"DirectXMath.h"
 
 using namespace DirectX;
@@ -20,6 +21,6 @@ struct CBUFFERVIEW
 {
 	T* buffer;
 	D3D12_CONSTANT_BUFFER_VIEW_DESC desc;
-	D3D12_CPU_DESCRIPTOR_HANDLE cpuhandle;
-	D3D12_GPU_DESCRIPTOR_HANDLE gpuhandle;
+	D3D12_CPU_DESCRIPTOR_HANDLE HCPU;
+	D3D12_GPU_DESCRIPTOR_HANDLE HGPU;
 };

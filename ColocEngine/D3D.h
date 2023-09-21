@@ -6,6 +6,7 @@
 #include<d3d12.h>
 #include<dxgi1_4.h>
 #include"MACRO.h"
+#include"BUFFER.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -71,6 +72,7 @@ public:
 		ID3D12Resource* VB;
 		ID3D12Resource* CB[FrameAmmount];
 		D3D12_VERTEX_BUFFER_VIEW VBV;
+		CBUFFERVIEW<WVP> CBV[FrameAmmount];
 		D3D12_VIEWPORT view_;
 		D3D12_RECT rect_;
 		D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];

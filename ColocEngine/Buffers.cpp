@@ -111,6 +111,25 @@ bool D3d::Buffers::Initialize()
 		);
 
 		if (FAILED(res))    return FAIL;
+
+		{
+			auto incre = D3d::instance->device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+			auto adr = CB[i]->GetGPUVirtualAddress();
+			auto h_CPU = heapCBV_->GetCPUDescriptorHandleForHeapStart();
+			auto h_GPU = heapCBV_->GetGPUDescriptorHandleForHeapStart();
+
+			h_CPU.ptr += incre * i;
+			h_GPU.ptr += incre * i;
+
+			CBV[i].HCPU = h_CPU;
+			CBV[i].HGPU = h_GPU;
+			CBV[i].desc.BufferLocation = adr;
+			CBV[i].desc.SizeInBytes = sizeof(WVP);
+
+			D3D->device_->CreateConstantBufferView(&CBV[i].desc, CBV[i].HCPU);
+
+		}
 	}
 
 	return true;

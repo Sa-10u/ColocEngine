@@ -2,9 +2,9 @@
 #include<cassert>
 
 
-D3d* D3D = D3d::Create();
-
 D3d* D3d::instance = nullptr;
+
+D3d* D3D = D3d::Create();
 
 D3d* D3d::Create()
 {
