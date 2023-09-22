@@ -24,6 +24,8 @@ inline void SAFE_RELEASE(tgt*& p)
 
 #define __guidof __uuidof
 
+constexpr double _PI = 3.141592;
+
 
 typedef DirectX::XMFLOAT2 fl2;
 typedef DirectX::XMFLOAT3 fl3;

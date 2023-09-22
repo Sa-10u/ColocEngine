@@ -29,6 +29,8 @@ private:
 	uint32_t h_;
 	uint32_t w_;
 
+	D3d* D3D;
+
 private:
 
 	static LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp);
@@ -38,6 +40,7 @@ private:
 	void termination();
 	void loop();
 
+	void ChangeAspect();
 };
 
 namespace WND_NAME

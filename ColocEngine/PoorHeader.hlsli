@@ -1,6 +1,6 @@
 struct VSinput
 {
-	float3 pos : POS;
+	float3 pos : POSITION;
 	float4 RGBA: COLOR;
 };
 

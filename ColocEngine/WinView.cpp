@@ -25,14 +25,16 @@ void WinView::Run()
 
 bool WinView::setup()
 {
+    D3D = new D3d;
+
     if (initialize())
     {
         if (D3D->Initialize(h_wnd,h_,w_))
         {
-            if (D3D->buffer_.Initialize())
-            {
-                return true;
-            }
+            ChangeAspect();
+
+
+            return true;
         }
     }
     
@@ -102,6 +104,7 @@ bool WinView::initialize()
     UpdateWindow(h_wnd);
     SetFocus(h_wnd);
 
+
     return true;
 }
 
@@ -138,14 +141,20 @@ void WinView::loop()
     }
 }
 
+void WinView::ChangeAspect()
+{
+    D3D->SetHeight(h_);
+    D3D->SetWidth(w_);
+}
+
 
 LRESULT WinView::WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
 {
     switch (msg)
     {
-    case WM_DESTROY:PostQuitMessage(0);     break;
+    case WM_DESTROY:PostQuitMessage(0);     return 0;
 
-    default: return DefWindowProc(hwnd,msg,wp,lp);           break;
+    default: return DefWindowProc(hwnd,msg,wp,lp);           return 0;
 
     }
 }

@@ -2,29 +2,16 @@
 #include<cassert>
 
 
-D3d* D3d::instance = nullptr;
-
-D3d* D3D = D3d::Create();
-
-D3d* D3d::Create()
-{
-	if (instance == nullptr)
-	{
-		instance = new D3d;
-	}
-	
-	return instance;
-}
-
 void D3d::Kill()
 {
-    delete instance;
-    instance = nullptr;
+    delete me;
+    me = nullptr;
 }
 
 bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 {
     bool FAIL = 0;
+    buffer_.SetParent(this);
 
     auto res = D3D12CreateDevice
     (
@@ -163,7 +150,8 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     event_fence = CreateEvent(nullptr, false, false, nullptr);
     if (event_fence == nullptr)  return FAIL;
 
-    return true;
+    if(buffer_.Initialize())    return true;
+    
 }
 
 void D3d::Termination()
@@ -187,8 +175,9 @@ void D3d::Termination()
     SAFE_RELEASE(swpchain_);
 
     SAFE_RELEASE(device_);
+    
 
-    this->Kill();
+    buffer_.Termination();
 }
 
 void D3d::Run(int interval)
@@ -198,12 +187,34 @@ void D3d::Run(int interval)
 	present(interval);
 }
 
+void D3d::SetHeight(float h)
+{
+    Height = h;
+}
+
+void D3d::SetWidth(float w)
+{
+    Width = w;
+}
+
+float D3d::GetHeight()
+{
+    return Height;
+}
+
+float D3d::GetWidth()
+{
+    return Width;
+}
+
 D3d::~D3d()
 {
 }
 
 D3d::D3d()
 {
+    Height = 0.0f;
+    Width = 0.0f;
 }
 
 void D3d::write()

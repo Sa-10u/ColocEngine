@@ -19,16 +19,21 @@ class D3d
 {
 public:
 
-	static D3d* Create();
-	static void Kill();
+	D3d();
+	~D3d();
+
+	void Kill();
 
 	bool Initialize(HWND hwnd , uint32_t h , uint32_t w);
 	void Termination();
 	void Run(int interval);
 
+	void SetHeight(float h);
+	void SetWidth(float w);
+	float GetHeight();
+	float GetWidth();
+
 private:
-	D3d();
-	~D3d();
 
 	void write();
 	void waitGPU();
@@ -51,9 +56,14 @@ private:
 	uint64_t IND_frame;
 	D3D12_CPU_DESCRIPTOR_HANDLE h_RTV[FrameAmmount];
 
-	//----
+	//-----
 
-	static D3d* instance;
+	float Height;
+	float Width;
+
+	//-------
+
+	D3d* me;
 
 public:
 
@@ -62,6 +72,14 @@ public:
 	public:
 
 		bool Initialize();
+		void Termination();
+
+		void SetParent(D3d* parent);
+
+	private:
+
+		bool ProcInputLayout_();
+		bool ProcRasterrizer_();
 
 	private:
 
@@ -73,13 +91,18 @@ public:
 		ID3D12Resource* CB[FrameAmmount];
 		D3D12_VERTEX_BUFFER_VIEW VBV;
 		CBUFFERVIEW<WVP> CBV[FrameAmmount];
+
 		D3D12_VIEWPORT view_;
 		D3D12_RECT rect_;
 		D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
 
 		float angle_;
+
+	protected:
+
+		D3d* parent_;
+		
 	}buffer_;
 
 };
 
-extern D3d* D3D;		//<---- use this.
