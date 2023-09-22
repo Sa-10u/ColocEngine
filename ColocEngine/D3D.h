@@ -79,7 +79,7 @@ public:
 	private:
 
 		bool ProcInputLayout_();
-		bool ProcRasterrizer_();
+		bool MakePipelineState_();
 
 	private:
 
