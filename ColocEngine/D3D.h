@@ -56,6 +56,8 @@ private:
 	uint64_t IND_frame;
 	D3D12_CPU_DESCRIPTOR_HANDLE h_RTV[FrameAmmount];
 
+	D3D12_RESOURCE_BARRIER brr;
+
 	//-----
 
 	float Height;
@@ -75,6 +77,12 @@ public:
 		void Termination();
 
 		void SetParent(D3d* parent);
+
+		void SetAngle(float angle);
+		float GetAngle();
+
+		void Update();
+		void Render();
 
 	private:
 

@@ -155,10 +155,10 @@ bool D3d::Buffers::Initialize()
 	}
 
 	res = ProcInputLayout_();
-	if (FAILED(res))	return 0;
+	if (res)	return 0;
 
 	res = MakePipelineState_();
-	if (FAILED(res))	return 0;
+	if (res)	return 0;
 
 	return true;
 }
@@ -177,13 +177,57 @@ void D3d::Buffers::Termination()
 	}
 
 	VB->Release();
-	statePipe_->Release();
+	//statePipe_->Release();
 
 }
 
 void D3d::Buffers::SetParent(D3d* parent)
 {
 	this->parent_ = parent;
+}
+
+void D3d::Buffers::SetAngle(float angle)
+{
+	angle_ = angle;
+}
+
+float D3d::Buffers::GetAngle()
+{
+	return angle_;
+}
+
+void D3d::Buffers::Update()
+{
+	this->angle_ += 0.025f;
+	this->CBV[parent_->IND_frame].buffer->wld = DirectX::XMMatrixRotationY(angle_);
+
+	view_.TopLeftX = 0;
+	view_.TopLeftY = 0;
+	view_.Width = parent_->Width;
+	view_.Height = parent_->Height;
+	view_.MinDepth = 0.0f;
+	view_.MaxDepth = 1.0f;
+
+	rect_.left = 0;
+	rect_.top = 0;
+	rect_.right = parent_->Width;
+	rect_.bottom = parent_->Height;
+}
+
+void D3d::Buffers::Render()
+{
+	parent_->cmdlist_->SetGraphicsRootSignature(rootsig_);
+	parent_->cmdlist_->SetDescriptorHeaps(1, &heapCBV_);
+	parent_->cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[parent_->IND_frame].desc.BufferLocation);
+	parent_->cmdlist_->SetPipelineState(statePipe_);
+
+	parent_->cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	parent_->cmdlist_->IASetVertexBuffers(0, 1, &VBV);
+	parent_->cmdlist_->RSSetScissorRects(1, &rect_);
+	parent_->cmdlist_->RSSetViewports(1, &view_);
+
+
+	parent_->cmdlist_->DrawInstanced(3, 1, 0, 0);
 }
 
 bool D3d::Buffers::ProcInputLayout_()
@@ -213,7 +257,7 @@ bool D3d::Buffers::ProcInputLayout_()
 	auto res = D3D12SerializeRootSignature
 	(
 		&rsdesc,
-		D3D_ROOT_SIGNATURE_VERSION_1_1,
+		D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&blob,
 		&erblob
 	);
@@ -224,8 +268,7 @@ bool D3d::Buffers::ProcInputLayout_()
 		0,
 		blob->GetBufferPointer(),
 		blob->GetBufferSize(),
-		__guidof(blob),
-		reinterpret_cast<void**>(&blob)
+		IID_PPV_ARGS(&rootsig_)
 	);
 	if (FAILED(res))	return 0;
 
@@ -301,7 +344,7 @@ bool D3d::Buffers::MakePipelineState_()
 	auto res = D3DReadFileToBlob(L"PoorVS.cso", &blobVS);
 	if (FAILED(res))	return 0;
 
-	auto res = D3DReadFileToBlob(L"PoorPS.cso", &blobPS);
+	res = D3DReadFileToBlob(L"PoorPS.cso", &blobPS);
 	if (FAILED(res))	return 0;
 
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC descpipest = {};
@@ -323,5 +366,7 @@ bool D3d::Buffers::MakePipelineState_()
 		descpipest.SampleDesc.Quality = NULL;
 	}
 
-	res = parent_->device_->CreateComputePipelineState
+	res = parent_->device_->CreateGraphicsPipelineState(&descpipest, __guidof(statePipe_), reinterpret_cast<void**>(&statePipe_));
+
+
 }

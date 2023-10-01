@@ -10,6 +10,10 @@ void D3d::Kill()
 
 bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 {
+
+    this->Height = h;
+    this->Width = w;
+
     bool FAIL = 0;
     buffer_.SetParent(this);
 
@@ -42,8 +46,8 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
     DXGI_SWAP_CHAIN_DESC desc = {};
     {
-        desc.BufferDesc.Height = h;
-        desc.BufferDesc.Width = w;
+        desc.BufferDesc.Height = Height;
+        desc.BufferDesc.Width = Width;
         desc.BufferDesc.RefreshRate.Numerator = 60;
         desc.BufferDesc.RefreshRate.Denominator = 1;
         desc.BufferDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
@@ -59,7 +63,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
         desc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
     }
     IDXGISwapChain* p_swch = nullptr;
-    res = fact->CreateSwapChain(cmdque_, &desc, &p_swch);   //------failed
+    res = fact->CreateSwapChain(cmdque_, &desc, &p_swch); 
     if (FAILED(res))
     {
         SAFE_RELEASE(fact);
@@ -150,8 +154,9 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     event_fence = CreateEvent(nullptr, false, false, nullptr);
     if (event_fence == nullptr)  return FAIL;
 
-    if(buffer_.Initialize())    return true;
+    if(!buffer_.Initialize())    return FAIL;
     
+    return true;
 }
 
 void D3d::Termination()
@@ -182,9 +187,26 @@ void D3d::Termination()
 
 void D3d::Run(int interval)
 {
+    buffer_.Update();
+
 	write();
+    buffer_.Render();
 	waitGPU();
+
+    {
+        brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
+        brr.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+    }
+
+    cmdlist_->ResourceBarrier(1, &brr);
+    cmdlist_->Close();
+
+
+    ID3D12CommandList* commands[] = { cmdlist_ };
+    cmdque_->ExecuteCommandLists(1, commands);
 	present(interval);
+
+    
 }
 
 void D3d::SetHeight(float h)
@@ -222,7 +244,6 @@ void D3d::write()
     cmdalloc_[IND_frame]->Reset();
     cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
 
-    D3D12_RESOURCE_BARRIER brr = {};
     {
         brr.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
         brr.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
@@ -240,17 +261,6 @@ void D3d::write()
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
     cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_[IND_frame], 0, nullptr);
 
-    {
-        brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
-        brr.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
-    }
-
-    cmdlist_->ResourceBarrier(1, &brr);
-    cmdlist_->Close();
-
-
-    ID3D12CommandList* commands[] = { cmdlist_ };
-    cmdque_->ExecuteCommandLists(1, commands);
 }
 
 void D3d::waitGPU()
