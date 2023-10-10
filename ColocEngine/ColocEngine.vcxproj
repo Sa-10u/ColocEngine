@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Buffers.cpp" />
     <ClCompile Include="D3D.cpp" />
     <ClCompile Include="MAIN.cpp" />
     <ClCompile Include="WinView.cpp" />

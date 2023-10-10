@@ -25,6 +25,7 @@ public:
 	void Kill();
 
 	bool Initialize(HWND hwnd , uint32_t h , uint32_t w);
+	bool InitPoly();
 	void Termination();
 	void Run(int interval);
 
@@ -58,6 +59,21 @@ private:
 
 	D3D12_RESOURCE_BARRIER brr;
 
+	ID3D12DescriptorHeap* heapCBV_;
+	ID3D12RootSignature* rootsig_;
+	ID3D12PipelineState* PSO;
+
+	ID3D12Resource* VB;
+	ID3D12Resource* CB[FrameAmmount];
+	D3D12_VERTEX_BUFFER_VIEW VBV;
+	CBUFFERVIEW<WVP> CBV[FrameAmmount];
+
+	D3D12_VIEWPORT view_;
+	D3D12_RECT rect_;
+	D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
+
+	float angle_;
+
 	//-----
 
 	float Height;
@@ -66,51 +82,5 @@ private:
 	//-------
 
 	D3d* me;
-
-public:
-
-	class Buffers 
-	{
-	public:
-
-		bool Initialize();
-		void Termination();
-
-		void SetParent(D3d* parent);
-
-		void SetAngle(float angle);
-		float GetAngle();
-
-		void Update();
-		void Render();
-
-	private:
-
-		bool ProcInputLayout_();
-		bool MakePipelineState_();
-
-	private:
-
-		ID3D12DescriptorHeap* heapCBV_;
-		ID3D12RootSignature* rootsig_;
-		ID3D12PipelineState* statePipe_;
-
-		ID3D12Resource* VB;
-		ID3D12Resource* CB[FrameAmmount];
-		D3D12_VERTEX_BUFFER_VIEW VBV;
-		CBUFFERVIEW<WVP> CBV[FrameAmmount];
-
-		D3D12_VIEWPORT view_;
-		D3D12_RECT rect_;
-		D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
-
-		float angle_;
-
-	protected:
-
-		D3d* parent_;
-		
-	}buffer_;
-
 };
 

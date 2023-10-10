@@ -10,12 +10,19 @@ void D3d::Kill()
 
 bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 {
+#if 1
+    ID3D12Debug* db;
+    D3D12GetDebugInterface(IID_PPV_ARGS(&db));
+
+    db->EnableDebugLayer();
+
+#endif
+
 
     this->Height = h;
     this->Width = w;
 
     bool FAIL = 0;
-    buffer_.SetParent(this);
 
     auto res = D3D12CreateDevice
     (
@@ -154,9 +161,105 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     event_fence = CreateEvent(nullptr, false, false, nullptr);
     if (event_fence == nullptr)  return FAIL;
 
-    if(!buffer_.Initialize())    return FAIL;
-    
+    if (!InitPoly()) return false;
+
     return true;
+}
+
+bool D3d::InitPoly()
+{
+    VERTEX vts[] = 
+    {
+        {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
+        {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
+        {XMFLOAT3(0.0f,-1.0f,0.0f),XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
+    };
+
+    D3D12_HEAP_PROPERTIES hp_prop_v = {};
+    {
+        hp_prop_v.Type = D3D12_HEAP_TYPE_UPLOAD;
+        hp_prop_v.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+        hp_prop_v.CreationNodeMask = 1;
+        hp_prop_v.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+        hp_prop_v.VisibleNodeMask = 1;
+    };
+
+    D3D12_RESOURCE_DESC rc_desc_v = {};
+    {
+        rc_desc_v.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+        rc_desc_v.Alignment = 0;
+        rc_desc_v.Width = sizeof(vts);
+        rc_desc_v.Height = 1;
+        rc_desc_v.DepthOrArraySize = 1;
+        rc_desc_v.MipLevels = 1;
+        rc_desc_v.Format = DXGI_FORMAT_UNKNOWN;
+        rc_desc_v.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+        rc_desc_v.Flags = D3D12_RESOURCE_FLAG_NONE;
+        
+        rc_desc_v.SampleDesc.Count = 1;
+        rc_desc_v.SampleDesc.Quality = 0;
+    }
+
+    HRESULT res = device_->CreateCommittedResource
+    (
+        &hp_prop_v,
+        D3D12_HEAP_FLAG_NONE,
+        &rc_desc_v,
+        D3D12_RESOURCE_STATE_GENERIC_READ,
+        nullptr,
+        IID_PPV_ARGS(&VB)
+    );
+
+    if (FAILED(res))  return false;
+    //----------------------------
+    {
+
+        void* ptr = nullptr;
+        res = VB->Map(NULL, 0, &ptr);
+
+        if (FAILED(res)) return false;
+
+        memcpy(ptr, vts, sizeof(vts));
+
+        VB->Unmap(0, 0);
+
+        VBV.BufferLocation = VB->GetGPUVirtualAddress();
+        VBV.SizeInBytes = sizeof(vts);
+        VBV.StrideInBytes = sizeof(VERTEX);
+    }
+
+    {
+        D3D12_DESCRIPTOR_HEAP_DESC hp_desc = {};
+        {
+            hp_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+            hp_desc.NodeMask = 0;
+            hp_desc.NumDescriptors = 1 * FrameAmmount;
+            hp_desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+        }
+
+        res = device_->CreateDescriptorHeap
+        (
+            &hp_desc,
+            IID_PPV_ARGS(&heapCBV_)
+        );
+
+        if (FAILED(res)) return false;
+    }
+
+    //------------------------
+    {
+        D3D12_HEAP_PROPERTIES hp_proc_c;
+        {
+            hp_proc_c.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+            hp_proc_c.Type = D3D12_HEAP_TYPE_UPLOAD;
+            hp_proc_c.CreationNodeMask = 1;
+            hp_proc_c.VisibleNodeMask = 1;
+            hp_proc_c.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+        }
+
+        D3D12_RESOURCE_DESC rc_desc_c;
+    }
+
 }
 
 void D3d::Termination()
@@ -182,15 +285,12 @@ void D3d::Termination()
     SAFE_RELEASE(device_);
     
 
-    buffer_.Termination();
 }
 
 void D3d::Run(int interval)
 {
-    buffer_.Update();
 
 	write();
-    buffer_.Render();
 	waitGPU();
 
     {
