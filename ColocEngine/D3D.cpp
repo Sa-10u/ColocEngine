@@ -168,6 +168,8 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
 bool D3d::InitPoly()
 {
+    HRESULT res = false;
+
     VERTEX vts[] = 
     {
         {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
@@ -175,40 +177,42 @@ bool D3d::InitPoly()
         {XMFLOAT3(0.0f,-1.0f,0.0f),XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
     };
 
-    D3D12_HEAP_PROPERTIES hp_prop_v = {};
     {
-        hp_prop_v.Type = D3D12_HEAP_TYPE_UPLOAD;
-        hp_prop_v.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
-        hp_prop_v.CreationNodeMask = 1;
-        hp_prop_v.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
-        hp_prop_v.VisibleNodeMask = 1;
-    };
+        D3D12_HEAP_PROPERTIES hp_prop_v = {};
+        {
+            hp_prop_v.Type = D3D12_HEAP_TYPE_UPLOAD;
+            hp_prop_v.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+            hp_prop_v.CreationNodeMask = 1;
+            hp_prop_v.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+            hp_prop_v.VisibleNodeMask = 1;
+        };
 
-    D3D12_RESOURCE_DESC rc_desc_v = {};
-    {
-        rc_desc_v.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
-        rc_desc_v.Alignment = 0;
-        rc_desc_v.Width = sizeof(vts);
-        rc_desc_v.Height = 1;
-        rc_desc_v.DepthOrArraySize = 1;
-        rc_desc_v.MipLevels = 1;
-        rc_desc_v.Format = DXGI_FORMAT_UNKNOWN;
-        rc_desc_v.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-        rc_desc_v.Flags = D3D12_RESOURCE_FLAG_NONE;
-        
-        rc_desc_v.SampleDesc.Count = 1;
-        rc_desc_v.SampleDesc.Quality = 0;
+        D3D12_RESOURCE_DESC rc_desc_v = {};
+        {
+            rc_desc_v.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+            rc_desc_v.Alignment = 0;
+            rc_desc_v.Width = sizeof(vts);
+            rc_desc_v.Height = 1;
+            rc_desc_v.DepthOrArraySize = 1;
+            rc_desc_v.MipLevels = 1;
+            rc_desc_v.Format = DXGI_FORMAT_UNKNOWN;
+            rc_desc_v.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+            rc_desc_v.Flags = D3D12_RESOURCE_FLAG_NONE;
+
+            rc_desc_v.SampleDesc.Count = 1;
+            rc_desc_v.SampleDesc.Quality = 0;
+        }
+
+        res = device_->CreateCommittedResource
+        (
+            &hp_prop_v,
+            D3D12_HEAP_FLAG_NONE,
+            &rc_desc_v,
+            D3D12_RESOURCE_STATE_GENERIC_READ,
+            nullptr,
+            IID_PPV_ARGS(&VB)
+        );
     }
-
-    HRESULT res = device_->CreateCommittedResource
-    (
-        &hp_prop_v,
-        D3D12_HEAP_FLAG_NONE,
-        &rc_desc_v,
-        D3D12_RESOURCE_STATE_GENERIC_READ,
-        nullptr,
-        IID_PPV_ARGS(&VB)
-    );
 
     if (FAILED(res))  return false;
     //----------------------------
@@ -258,7 +262,53 @@ bool D3d::InitPoly()
         }
 
         D3D12_RESOURCE_DESC rc_desc_c;
+        {
+            rc_desc_c.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+            rc_desc_c.Format = DXGI_FORMAT_UNKNOWN;
+            rc_desc_c.MipLevels = 1;
+            rc_desc_c.Alignment = 0;
+            rc_desc_c.Height = 1;
+            rc_desc_c.Width = sizeof(WVP);
+            rc_desc_c.DepthOrArraySize = 1;
+            rc_desc_c.Flags = D3D12_RESOURCE_FLAG_NONE;
+            rc_desc_c.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+
+            rc_desc_c.SampleDesc.Count = 1;
+            rc_desc_c.SampleDesc.Quality = 0;
+        }
+
+        for (auto i = 0; i < FrameAmmount;i++) {
+
+            res = device_->CreateCommittedResource
+            (
+                &hp_proc_c,
+                D3D12_HEAP_FLAG_NONE,
+                &rc_desc_c,
+                D3D12_RESOURCE_STATE_GENERIC_READ,
+                NULL,
+                IID_PPV_ARGS(&CB[i])
+            );
+            //----------------------------------
+
+            static auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+            auto address = CB[i]->GetGPUVirtualAddress();
+            auto _HCPU = heapCBV_->GetCPUDescriptorHandleForHeapStart();
+            auto _HGPU = heapCBV_->GetGPUDescriptorHandleForHeapStart();
+
+            _HCPU.ptr += incre * i;
+            _HGPU.ptr += incre * i;
+
+            CBV[i].HCPU = _HCPU;
+            CBV[i].HGPU = _HGPU;
+            CBV[i].desc.BufferLocation = address;
+            CBV[i].desc.SizeInBytes = sizeof(WVP);
+
+            device_->CreateConstantBufferView(&CBV[i].desc, CBV[i].HCPU);
+        }
     }
+
+
+    
 
 }
 

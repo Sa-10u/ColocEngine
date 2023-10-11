@@ -19,7 +19,7 @@ struct alignas(256) WVP
 template <typename T>
 struct CBUFFERVIEW
 {
-	T* buffer;
+	T* ptr;
 	D3D12_CONSTANT_BUFFER_VIEW_DESC desc;
 	D3D12_CPU_DESCRIPTOR_HANDLE HCPU;
 	D3D12_GPU_DESCRIPTOR_HANDLE HGPU;
