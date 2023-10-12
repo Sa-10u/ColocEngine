@@ -168,7 +168,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
 bool D3d::InitPoly()
 {
-    HRESULT res = false;
+    HRESULT res = FALSE;
 
     VERTEX vts[] = 
     {
@@ -304,11 +304,104 @@ bool D3d::InitPoly()
             CBV[i].desc.SizeInBytes = sizeof(WVP);
 
             device_->CreateConstantBufferView(&CBV[i].desc, CBV[i].HCPU);
+            res = CB[i]->Map(0, NULL, reinterpret_cast<void**>(&CBV[i].ptr));
+            if (FAILED(res)) return 0;
+
+            auto C_pos = XMVectorSet(0.0f, 0.0f, 5.0f, 0.0f);
+            auto C_tgt = XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f);
+            auto C_head = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
+
+            auto C_fovY = 37.5 * (_PI / 180);
+            auto C_aspect = Width / Height;
+
+            CBV[i].ptr->wld = XMMatrixIdentity();
+            CBV[i].ptr->view = XMMatrixLookAtRH(C_pos, C_tgt, C_head);
+            CBV[i].ptr->proj = XMMatrixPerspectiveFovRH(C_fovY, C_aspect, 1.0f ,100.0f);
+
         }
     }
+    //-----------------------------------------------------------
+    {
+        D3D12_ROOT_PARAMETER r_param;
+        {
+            r_param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+            r_param.Descriptor.RegisterSpace = 0;
+            r_param.Descriptor.ShaderRegister = 0;
+            r_param.ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+        }
+
+        D3D12_ROOT_SIGNATURE_DESC r_s_desc;
+        {
+            r_s_desc.pParameters = &r_param;
+            r_s_desc.pStaticSamplers = nullptr;
+            r_s_desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT | D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS | D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS | D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
+            r_s_desc.NumParameters = 1;
+            r_s_desc.NumStaticSamplers = 0;
+        }
+
+        ID3DBlob* S_blob;
+        ID3DBlob* E_blob;
+
+        res = D3D12SerializeRootSignature
+        (
+            &r_s_desc,
+            D3D_ROOT_SIGNATURE_VERSION_1_1,
+            &S_blob,
+            &E_blob
+        );
+
+        res = device_->CreateRootSignature
+        (
+            NULL,
+            S_blob->GetBufferPointer(),
+            S_blob->GetBufferSize(),
+            IID_PPV_ARGS(&rootsig_)
+        );
+
+        if (FAILED(res))     return 0;
+    }
+    //---------------------------------
+    {
+        D3D12_INPUT_ELEMENT_DESC in_e_desc[2];
+        { 
+            {
+                in_e_desc[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+                in_e_desc[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+                in_e_desc[0].InputSlot = 0;
+                in_e_desc[0].SemanticName = SEMANTICS_STR::POSITION;
+                in_e_desc[0].SemanticIndex = 0;
+                in_e_desc[0].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+                in_e_desc[0].InstanceDataStepRate = 0;
+            }
+            {
+                in_e_desc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+                in_e_desc[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
+                in_e_desc[1].InputSlot = 0;
+                in_e_desc[1].SemanticName = SEMANTICS_STR::COLOR;
+                in_e_desc[1].SemanticIndex = 0;
+                in_e_desc[1].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
+                in_e_desc[1].InstanceDataStepRate = 0;
+            }
+        }
+        //------------------------------
+
+        D3D12_RASTERIZER_DESC rs_desc;
+        {
+            rs_desc.FillMode = D3D12_FILL_MODE_SOLID;
+            rs_desc.CullMode = D3D12_CULL_MODE_NONE;
+            rs_desc.FrontCounterClockwise = false;
+            rs_desc.DepthBias = D3D12_DEFAULT_DEPTH_BIAS;
+            rs_desc.DepthBiasClamp = D3D12_DEFAULT_DEPTH_BIAS_CLAMP;
+            rs_desc.SlopeScaledDepthBias = D3D12_DEFAULT_SLOPE_SCALED_DEPTH_BIAS;
+            rs_desc.AntialiasedLineEnable = false;
+            rs_desc.DepthClipEnable = false;
+            rs_desc.MultisampleEnable = false;
+            rs_desc.ForcedSampleCount = 0;
+            rs_desc.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
+        }
 
 
-    
+    }
 
 }
 
