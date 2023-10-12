@@ -24,6 +24,9 @@
     <ClCompile Include="D3D.cpp">
       <Filter>Base</Filter>
     </ClCompile>
+    <ClCompile Include="MACRO.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinView.h">

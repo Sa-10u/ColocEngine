@@ -170,7 +170,7 @@ bool D3d::InitPoly()
 {
     HRESULT res = FALSE;
 
-    VERTEX vts[] = 
+    VERTEX vts[] =
     {
         {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
         {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
@@ -212,9 +212,9 @@ bool D3d::InitPoly()
             nullptr,
             IID_PPV_ARGS(&VB)
         );
+        if (FAILED(res))  return false;
     }
 
-    if (FAILED(res))  return false;
     //----------------------------
     {
 
@@ -228,8 +228,8 @@ bool D3d::InitPoly()
         VB->Unmap(0, 0);
 
         VBV.BufferLocation = VB->GetGPUVirtualAddress();
-        VBV.SizeInBytes = sizeof(vts);
-        VBV.StrideInBytes = sizeof(VERTEX);
+        VBV.SizeInBytes = static_cast<int>(sizeof(vts));
+        VBV.StrideInBytes = static_cast <int>(sizeof(VERTEX));
     }
 
     {
@@ -252,7 +252,7 @@ bool D3d::InitPoly()
 
     //------------------------
     {
-        D3D12_HEAP_PROPERTIES hp_proc_c;
+        D3D12_HEAP_PROPERTIES hp_proc_c = {};
         {
             hp_proc_c.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
             hp_proc_c.Type = D3D12_HEAP_TYPE_UPLOAD;
@@ -261,7 +261,7 @@ bool D3d::InitPoly()
             hp_proc_c.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
         }
 
-        D3D12_RESOURCE_DESC rc_desc_c;
+        D3D12_RESOURCE_DESC rc_desc_c = {};
         {
             rc_desc_c.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
             rc_desc_c.Format = DXGI_FORMAT_UNKNOWN;
@@ -322,7 +322,7 @@ bool D3d::InitPoly()
     }
     //-----------------------------------------------------------
     {
-        D3D12_ROOT_PARAMETER r_param;
+        D3D12_ROOT_PARAMETER r_param = {};
         {
             r_param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
             r_param.Descriptor.RegisterSpace = 0;
@@ -330,7 +330,7 @@ bool D3d::InitPoly()
             r_param.ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
         }
 
-        D3D12_ROOT_SIGNATURE_DESC r_s_desc;
+        D3D12_ROOT_SIGNATURE_DESC r_s_desc = {};
         {
             r_s_desc.pParameters = &r_param;
             r_s_desc.pStaticSamplers = nullptr;
@@ -345,10 +345,11 @@ bool D3d::InitPoly()
         res = D3D12SerializeRootSignature
         (
             &r_s_desc,
-            D3D_ROOT_SIGNATURE_VERSION_1_1,
+            D3D_ROOT_SIGNATURE_VERSION_1_0,
             &S_blob,
             &E_blob
         );
+        if (FAILED(res))     return 0;
 
         res = device_->CreateRootSignature
         (
@@ -357,12 +358,12 @@ bool D3d::InitPoly()
             S_blob->GetBufferSize(),
             IID_PPV_ARGS(&rootsig_)
         );
-
         if (FAILED(res))     return 0;
     }
-    //---------------------------------
+    //---------------------------------**********
+    __CREATE("Pipeline State Object : PSO")
     {
-        D3D12_INPUT_ELEMENT_DESC in_e_desc[2];
+        D3D12_INPUT_ELEMENT_DESC in_e_desc[2] = {};
         { 
             {
                 in_e_desc[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -383,9 +384,8 @@ bool D3d::InitPoly()
                 in_e_desc[1].InstanceDataStepRate = 0;
             }
         }
-        //------------------------------
 
-        D3D12_RASTERIZER_DESC rs_desc;
+        D3D12_RASTERIZER_DESC rs_desc = {};
         {
             rs_desc.FillMode = D3D12_FILL_MODE_SOLID;
             rs_desc.CullMode = D3D12_CULL_MODE_NONE;
@@ -400,9 +400,78 @@ bool D3d::InitPoly()
             rs_desc.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
         }
 
+        D3D12_RENDER_TARGET_BLEND_DESC rtb_desc;
+        {
+            rtb_desc.BlendEnable = false;
+            rtb_desc.LogicOpEnable = false;
 
+            rtb_desc.SrcBlend = D3D12_BLEND_ZERO;
+            rtb_desc.DestBlend = D3D12_BLEND_ZERO;
+            rtb_desc.SrcBlendAlpha = D3D12_BLEND_ZERO;
+
+            rtb_desc.BlendOp = D3D12_BLEND_OP_ADD;
+            rtb_desc.LogicOp = D3D12_LOGIC_OP_NOOP;
+            rtb_desc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
+
+            rtb_desc.DestBlendAlpha = D3D12_BLEND_ZERO;
+
+            rtb_desc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+        }
+
+        D3D12_BLEND_DESC bs_desc = {};
+        {
+            bs_desc.AlphaToCoverageEnable = false;
+            bs_desc.IndependentBlendEnable = false;
+            for (auto i = 0; i < D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT;i++) {
+
+                bs_desc.RenderTarget[i] = rtb_desc;
+            }
+        };
+
+        //----------------------
+
+        ID3DBlob* VSblob = nullptr;
+        res = D3DReadFileToBlob(SHADER_FILENAME::PoorVS, &VSblob);
+        if (FAILED(res))     return 0;
+
+        ID3DBlob* PSblob = nullptr;
+        res = D3DReadFileToBlob(SHADER_FILENAME::PoorPS, &PSblob);
+        if (FAILED(res))     return 0;
+        //--------------------------
+
+        D3D12_GRAPHICS_PIPELINE_STATE_DESC pso_desc = {};
+        {
+            pso_desc.InputLayout.pInputElementDescs = in_e_desc;
+            pso_desc.InputLayout.NumElements = sizeof(in_e_desc) / sizeof(in_e_desc[0]);
+            pso_desc.pRootSignature = rootsig_;
+            pso_desc.VS.pShaderBytecode = VSblob->GetBufferPointer();
+            pso_desc.PS.pShaderBytecode = PSblob->GetBufferPointer();
+            pso_desc.VS.BytecodeLength = VSblob->GetBufferSize();
+            pso_desc.PS.BytecodeLength = PSblob->GetBufferSize();
+            pso_desc.RasterizerState = rs_desc;
+            pso_desc.BlendState = bs_desc;
+            pso_desc.SampleDesc.Count = 1;
+            pso_desc.SampleDesc.Quality = 0;
+            pso_desc.SampleMask = UINT_MAX;
+            pso_desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
+            pso_desc.DepthStencilState.DepthEnable = false;
+            pso_desc.DepthStencilState.StencilEnable = false;
+            pso_desc.NumRenderTargets = 1;
+            pso_desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+            pso_desc.DSVFormat = DXGI_FORMAT_UNKNOWN;
+        }
+
+        res = device_->CreateGraphicsPipelineState
+        (
+            &pso_desc,
+            IID_PPV_ARGS(&PSO)
+        );
+        if (FAILED(res)) return 0;
+
+        //-----------------------------------------------------------------------------------------*****
     }
 
+    return true;
 }
 
 void D3d::Termination()

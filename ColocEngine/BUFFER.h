@@ -9,7 +9,7 @@ struct VERTEX
 	XMFLOAT4 rgba;
 };
 
-struct alignas(256) WVP
+struct alignas(256) Transform
 {
 	XMMATRIX wld;
 	XMMATRIX view;
@@ -25,8 +25,3 @@ struct CBUFFERVIEW
 	D3D12_GPU_DESCRIPTOR_HANDLE HGPU;
 };
 
-namespace SEMANTICS_STR
-{
-	LPCSTR POSITION = "POSITION";
-	LPCSTR COLOR = "COLOR";
-};

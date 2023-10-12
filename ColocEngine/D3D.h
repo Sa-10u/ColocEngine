@@ -7,8 +7,10 @@
 #include<dxgi1_4.h>
 #include"MACRO.h"
 #include"BUFFER.h"
+#include<d3dcompiler.h>
 
 #pragma comment(lib,"d3d12.lib")
+#pragma comment(lib,"d3dcompiler.lib")
 #pragma comment(lib,"dxgi.lib")
 
 using namespace DirectX;

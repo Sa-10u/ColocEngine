@@ -1,5 +1,6 @@
 #pragma once
 #include<DirectXMath.h>
+#include <windows.h>
 
 template<typename tgt>
 inline void SAFE_DELETE(tgt*& p)
@@ -33,3 +34,16 @@ typedef DirectX::XMFLOAT4 fl4;
 
 typedef DirectX::XMMATRIX Mat;
 typedef DirectX::XMVECTOR Vec;
+
+namespace SEMANTICS_STR
+{
+	extern LPCSTR POSITION ;
+	extern LPCSTR COLOR;
+}
+namespace SHADER_FILENAME
+{
+	extern LPCWSTR PoorVS;
+	extern LPCWSTR PoorPS;
+}
+
+#define __CREATE(LPCSTR)	NULL;
