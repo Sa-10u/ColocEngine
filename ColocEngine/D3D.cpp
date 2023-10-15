@@ -80,17 +80,16 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     res = p_swch->QueryInterface(__guidof(swpchain_), reinterpret_cast<void**>(&swpchain_));
     if (FAILED(res))
     {
-        SAFE_RELEASE(fact);
-        SAFE_RELEASE(p_swch);
         return FAIL;
     }
 
     IND_frame = swpchain_->GetCurrentBackBufferIndex();
+
     SAFE_RELEASE(fact);
     SAFE_RELEASE(p_swch);
 
 
-    for (int i = 0u; i < FrameAmmount; i++) {
+    for (int i = 0u; i < FrameAmmount; ++i) {
 
         res = device_->CreateCommandAllocator
         (
@@ -114,7 +113,6 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     if (FAILED(res)) return FAIL;
 
     D3D12_DESCRIPTOR_HEAP_DESC hpdesc;
-
     {
         hpdesc.NumDescriptors = FrameAmmount;
         hpdesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
@@ -130,17 +128,18 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     D3D12_CPU_DESCRIPTOR_HANDLE handle = heapRTV_->GetCPUDescriptorHandleForHeapStart();
     UINT incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 
-    for (UINT i = 0u; i < FrameAmmount; i++) {
+    for (UINT i = 0u; i < FrameAmmount; ++i) {
 
         res = swpchain_->GetBuffer(i, IID_PPV_ARGS(&colbuf_[i]));
         if (FAILED(res))     return FAIL;
 
         D3D12_RENDER_TARGET_VIEW_DESC rtvdesc = {};
-
-        rtvdesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-        rtvdesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
-        rtvdesc.Texture2D.MipSlice = NULL;
-        rtvdesc.Texture2D.PlaneSlice = NULL;
+        {
+            rtvdesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+            rtvdesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
+            rtvdesc.Texture2D.MipSlice = NULL;
+            rtvdesc.Texture2D.PlaneSlice = NULL;
+        }
 
         device_->CreateRenderTargetView(colbuf_[i], &rtvdesc, handle);
 
@@ -148,18 +147,29 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
         handle.ptr += incre;
     }
 
-    res = device_->CreateFence
-    (
-        fencecnt_[IND_frame],
-        D3D12_FENCE_FLAG_NONE,
-        __guidof(fence_),
-        reinterpret_cast<void**>(&fence_)
-    );
+  
+    {
+        for (auto i = 0u; i < FrameAmmount;++i) {
+            fencecnt_[i] = 0;
 
-    if (FAILED(res))     return FAIL;
+            res = device_->CreateFence
+            (
+                fencecnt_[i],
+                D3D12_FENCE_FLAG_NONE,
+                IID_PPV_ARGS(&fence_)
+            );
 
-    event_fence = CreateEvent(nullptr, false, false, nullptr);
-    if (event_fence == nullptr)  return FAIL;
+            if (FAILED(res))     return FAIL;
+
+            fencecnt_[i]++;
+
+            event_fence = CreateEvent(nullptr, false, false, nullptr);
+                if(event_fence == nullptr)      return FAIL;
+
+        }
+    }
+
+    cmdlist_->Close();
 
     if (!InitPoly()) return false;
 
@@ -228,8 +238,8 @@ bool D3d::InitPoly()
         VB->Unmap(0, 0);
 
         VBV.BufferLocation = VB->GetGPUVirtualAddress();
-        VBV.SizeInBytes = static_cast<int>(sizeof(vts));
-        VBV.StrideInBytes = static_cast <int>(sizeof(VERTEX));
+        VBV.SizeInBytes = static_cast<UINT>(sizeof(vts));
+        VBV.StrideInBytes = static_cast <UINT>(sizeof(VERTEX));
     }
 
     {
@@ -237,7 +247,7 @@ bool D3d::InitPoly()
         {
             hp_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
             hp_desc.NodeMask = 0;
-            hp_desc.NumDescriptors = 1 * FrameAmmount;
+            hp_desc.NumDescriptors = 2 * FrameAmmount;
             hp_desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
         }
 
@@ -277,7 +287,9 @@ bool D3d::InitPoly()
             rc_desc_c.SampleDesc.Quality = 0;
         }
 
-        for (auto i = 0; i < FrameAmmount;i++) {
+        auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+
+        for (auto i = 0; i < FrameAmmount *2;i++) {
 
             res = device_->CreateCommittedResource
             (
@@ -288,9 +300,9 @@ bool D3d::InitPoly()
                 NULL,
                 IID_PPV_ARGS(&CB[i])
             );
+            if (FAILED(res))     return false;
             //----------------------------------
 
-            static auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
             auto address = CB[i]->GetGPUVirtualAddress();
             auto _HCPU = heapCBV_->GetCPUDescriptorHandleForHeapStart();
             auto _HGPU = heapCBV_->GetGPUDescriptorHandleForHeapStart();
@@ -304,6 +316,8 @@ bool D3d::InitPoly()
             CBV[i].desc.SizeInBytes = sizeof(WVP);
 
             device_->CreateConstantBufferView(&CBV[i].desc, CBV[i].HCPU);
+
+
             res = CB[i]->Map(0, NULL, reinterpret_cast<void**>(&CBV[i].ptr));
             if (FAILED(res)) return 0;
 
@@ -332,9 +346,14 @@ bool D3d::InitPoly()
 
         D3D12_ROOT_SIGNATURE_DESC r_s_desc = {};
         {
+            auto flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
+            flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS;
+            flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS;
+            flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
+
             r_s_desc.pParameters = &r_param;
             r_s_desc.pStaticSamplers = nullptr;
-            r_s_desc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT | D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS | D3D12_ROOT_SIGNATURE_FLAG_DENY_DOMAIN_SHADER_ROOT_ACCESS | D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
+            r_s_desc.Flags =flag;
             r_s_desc.NumParameters = 1;
             r_s_desc.NumStaticSamplers = 0;
         }
@@ -366,7 +385,7 @@ bool D3d::InitPoly()
         D3D12_INPUT_ELEMENT_DESC in_e_desc[2] = {};
         { 
             {
-                in_e_desc[0].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+                in_e_desc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
                 in_e_desc[0].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
                 in_e_desc[0].InputSlot = 0;
                 in_e_desc[0].SemanticName = SEMANTICS_STR::POSITION;
@@ -400,23 +419,13 @@ bool D3d::InitPoly()
             rs_desc.ConservativeRaster = D3D12_CONSERVATIVE_RASTERIZATION_MODE_OFF;
         }
 
-        D3D12_RENDER_TARGET_BLEND_DESC rtb_desc;
+        D3D12_RENDER_TARGET_BLEND_DESC rtb_desc =
         {
-            rtb_desc.BlendEnable = false;
-            rtb_desc.LogicOpEnable = false;
-
-            rtb_desc.SrcBlend = D3D12_BLEND_ZERO;
-            rtb_desc.DestBlend = D3D12_BLEND_ZERO;
-            rtb_desc.SrcBlendAlpha = D3D12_BLEND_ZERO;
-
-            rtb_desc.BlendOp = D3D12_BLEND_OP_ADD;
-            rtb_desc.LogicOp = D3D12_LOGIC_OP_NOOP;
-            rtb_desc.BlendOpAlpha = D3D12_BLEND_OP_ADD;
-
-            rtb_desc.DestBlendAlpha = D3D12_BLEND_ZERO;
-
-            rtb_desc.RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
-        }
+            false,false,
+            D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD,
+            D3D12_BLEND_ONE, D3D12_BLEND_ZERO, D3D12_BLEND_OP_ADD,
+            D3D12_LOGIC_OP_NOOP,D3D12_COLOR_WRITE_ENABLE_ALL
+        };
 
         D3D12_BLEND_DESC bs_desc = {};
         {
@@ -442,7 +451,7 @@ bool D3d::InitPoly()
         D3D12_GRAPHICS_PIPELINE_STATE_DESC pso_desc = {};
         {
             pso_desc.InputLayout.pInputElementDescs = in_e_desc;
-            pso_desc.InputLayout.NumElements = sizeof(in_e_desc) / sizeof(in_e_desc[0]);
+            pso_desc.InputLayout.NumElements = _countof(in_e_desc);
             pso_desc.pRootSignature = rootsig_;
             pso_desc.VS.pShaderBytecode = VSblob->GetBufferPointer();
             pso_desc.PS.pShaderBytecode = PSblob->GetBufferPointer();
@@ -553,6 +562,10 @@ D3d::D3d()
 
 void D3d::write()
 {
+    {
+        angle_ += 0.1;
+        CBV[IND_frame].ptr->wld = XMMatrixRotationY(angle_);
+    }
     cmdalloc_[IND_frame]->Reset();
     cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
 
@@ -568,11 +581,24 @@ void D3d::write()
     }
     cmdlist_->ResourceBarrier(1, &brr);
 
-    float backcolor_[2][4] = { {0,0.6,0.5,1} ,{1,0.6,0.5,1} };
+    float backcolor_[4] = { 0,0.6,0.5,1};
 
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
-    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_[IND_frame], 0, nullptr);
+    cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_, 0, nullptr);
 
+    {
+        cmdlist_->SetGraphicsRootSignature(rootsig_);
+        cmdlist_->SetDescriptorHeaps(1, &heapCBV_);
+        cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame].desc.BufferLocation);
+        cmdlist_->SetPipelineState(PSO);
+
+        cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        cmdlist_->IASetVertexBuffers(0, 1, &VBV);
+        cmdlist_->RSSetViewports(1, &view_);
+        cmdlist_->RSSetScissorRects(1, &rect_);
+
+        cmdlist_->DrawInstanced(3, 1, 0, 0);
+    }
 }
 
 void D3d::waitGPU()

@@ -6,10 +6,10 @@ using namespace DirectX;
 struct VERTEX
 {
 	XMFLOAT3 pos;
-	XMFLOAT4 rgba;
+	XMFLOAT4 RGBA;
 };
 
-struct alignas(256) Transform
+struct alignas(256) WVP
 {
 	XMMATRIX wld;
 	XMMATRIX view;

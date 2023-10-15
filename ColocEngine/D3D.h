@@ -10,8 +10,8 @@
 #include<d3dcompiler.h>
 
 #pragma comment(lib,"d3d12.lib")
-#pragma comment(lib,"d3dcompiler.lib")
 #pragma comment(lib,"dxgi.lib")
+#pragma comment(lib,"d3dcompiler.lib")
 
 using namespace DirectX;
 
@@ -72,7 +72,6 @@ private:
 
 	D3D12_VIEWPORT view_;
 	D3D12_RECT rect_;
-	D3D12_CONSTANT_BUFFER_VIEW_DESC descCBV[FrameAmmount];
 
 	float angle_;
 
