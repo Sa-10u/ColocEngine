@@ -113,8 +113,7 @@ void WinView::termination()
     if (h_ins != nullptr)
     {
         D3D->Termination();
-        D3D->Kill();
-
+        delete D3D;
         UnregisterClass(WND_NAME::smp, h_ins);
     }
 

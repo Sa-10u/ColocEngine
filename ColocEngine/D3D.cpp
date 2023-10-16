@@ -2,12 +2,6 @@
 #include<cassert>
 
 
-void D3d::Kill()
-{
-    delete me;
-    me = nullptr;
-}
-
 bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 {
 #if 1
@@ -28,8 +22,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
     (
         nullptr,
         D3D_FEATURE_LEVEL_11_0,
-        __guidof(device_),
-        reinterpret_cast<void**>(&device_)
+        IID_PPV_ARGS((&device_))
     );
     if (FAILED(res))               return FAIL;
 
@@ -42,12 +35,12 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
         cmddesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
         cmddesc.NodeMask = NULL;
     }
-    res = device_->CreateCommandQueue(&cmddesc, __guidof(cmdque_), reinterpret_cast<void**>(&cmdque_));
+    res = device_->CreateCommandQueue(&cmddesc, IID_PPV_ARGS((&cmdque_)));
     if (FAILED(res))     return FAIL;
 
 
     IDXGIFactory4* fact = nullptr;
-    res = CreateDXGIFactory1(__guidof(fact), reinterpret_cast<void**>(&fact));
+    res = CreateDXGIFactory1(IID_PPV_ARGS((&fact)));
     if (FAILED(res))     return 0;
 
 
@@ -77,7 +70,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
         return FAIL;
     }
 
-    res = p_swch->QueryInterface(__guidof(swpchain_), reinterpret_cast<void**>(&swpchain_));
+    res = p_swch->QueryInterface(IID_PPV_ARGS((&swpchain_)));
     if (FAILED(res))
     {
         return FAIL;
@@ -94,8 +87,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
         res = device_->CreateCommandAllocator
         (
             D3D12_COMMAND_LIST_TYPE_DIRECT,
-            __guidof(cmdalloc_[i]),
-            reinterpret_cast<void**>(&cmdalloc_[i])
+            IID_PPV_ARGS((&cmdalloc_[i]))
         );
 
         if (FAILED(res)) return FAIL;
@@ -107,8 +99,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
         D3D12_COMMAND_LIST_TYPE_DIRECT,
         cmdalloc_[IND_frame],
         nullptr,
-        __guidof(cmdlist_),
-        reinterpret_cast<void**>(&cmdlist_)
+        IID_PPV_ARGS((&cmdlist_))
     );
     if (FAILED(res)) return FAIL;
 
@@ -120,7 +111,7 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
         hpdesc.NodeMask = 0;
     }
 
-    res = device_->CreateDescriptorHeap(&hpdesc, __guidof(heapRTV_), reinterpret_cast<void**>(&heapRTV_));
+    res = device_->CreateDescriptorHeap(&hpdesc, IID_PPV_ARGS((&heapRTV_)));
 
     if (FAILED(res))    return FAIL;
 
@@ -154,14 +145,14 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
             res = device_->CreateFence
             (
-                fencecnt_[i],
+                fencecnt_[IND_frame],
                 D3D12_FENCE_FLAG_NONE,
                 IID_PPV_ARGS(&fence_)
             );
 
             if (FAILED(res))     return FAIL;
 
-            fencecnt_[i]++;
+            fencecnt_[IND_frame]++;
 
             event_fence = CreateEvent(nullptr, false, false, nullptr);
                 if(event_fence == nullptr)      return FAIL;
@@ -247,7 +238,7 @@ bool D3d::InitPoly()
         {
             hp_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
             hp_desc.NodeMask = 0;
-            hp_desc.NumDescriptors = 2 * FrameAmmount;
+            hp_desc.NumDescriptors = 1 * FrameAmmount;
             hp_desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
         }
 
@@ -289,7 +280,7 @@ bool D3d::InitPoly()
 
         auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-        for (auto i = 0; i < FrameAmmount *2;i++) {
+        for (auto i = 0; i < FrameAmmount ;++i) {
 
             res = device_->CreateCommittedResource
             (
@@ -315,7 +306,7 @@ bool D3d::InitPoly()
             CBV[i].desc.BufferLocation = address;
             CBV[i].desc.SizeInBytes = sizeof(WVP);
 
-            device_->CreateConstantBufferView(&CBV[i].desc, CBV[i].HCPU);
+            device_->CreateConstantBufferView(&CBV[i].desc, _HCPU);
 
 
             res = CB[i]->Map(0, NULL, reinterpret_cast<void**>(&CBV[i].ptr));
@@ -330,7 +321,7 @@ bool D3d::InitPoly()
 
             CBV[i].ptr->wld = XMMatrixIdentity();
             CBV[i].ptr->view = XMMatrixLookAtRH(C_pos, C_tgt, C_head);
-            CBV[i].ptr->proj = XMMatrixPerspectiveFovRH(C_fovY, C_aspect, 1.0f ,100.0f);
+            CBV[i].ptr->proj = XMMatrixPerspectiveFovRH(C_fovY, C_aspect, 1.0f ,1000.0f);
 
         }
     }
@@ -382,7 +373,7 @@ bool D3d::InitPoly()
     //---------------------------------**********
     __CREATE("Pipeline State Object : PSO")
     {
-        D3D12_INPUT_ELEMENT_DESC in_e_desc[2] = {};
+        D3D12_INPUT_ELEMENT_DESC in_e_desc[2] ;
         { 
             {
                 in_e_desc[0].Format = DXGI_FORMAT_R32G32B32_FLOAT;
@@ -431,7 +422,7 @@ bool D3d::InitPoly()
         {
             bs_desc.AlphaToCoverageEnable = false;
             bs_desc.IndependentBlendEnable = false;
-            for (auto i = 0; i < D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT;i++) {
+            for (auto i = 0u; i < D3D12_SIMULTANEOUS_RENDER_TARGET_COUNT;++i) {
 
                 bs_desc.RenderTarget[i] = rtb_desc;
             }

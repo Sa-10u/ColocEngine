@@ -24,8 +24,6 @@ public:
 	D3d();
 	~D3d();
 
-	void Kill();
-
 	bool Initialize(HWND hwnd , uint32_t h , uint32_t w);
 	bool InitPoly();
 	void Termination();
@@ -82,6 +80,5 @@ private:
 
 	//-------
 
-	D3d* me;
 };
 
