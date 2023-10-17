@@ -317,6 +317,7 @@ bool D3d::InitPoly()
             auto C_head = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
             auto C_fovY = 37.5 * (_PI / 180);
+
             auto C_aspect = Width / Height;
 
             CBV[i].ptr->wld = XMMatrixIdentity();
@@ -471,6 +472,19 @@ bool D3d::InitPoly()
         //-----------------------------------------------------------------------------------------*****
     }
 
+    view_.Height = Height;
+    view_.Width = Width;
+    view_.MaxDepth = 1.0f;
+    view_.MinDepth = 0.0f;
+    view_.TopLeftX = 0.0f;
+    view_.TopLeftY = 0.0f;
+
+
+    rect_.left = 0.0f;
+    rect_.top = 0.0f;
+    rect_.right = Width;
+    rect_.bottom = Height;
+    
     return true;
 }
 
@@ -503,11 +517,15 @@ void D3d::Run(int interval)
 {
 
 	write();
-	waitGPU();
+	//waitGPU();
 
     {
         brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
         brr.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
+        brr.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
+        brr.Flags = D3D12_RESOURCE_BARRIER_FLAG_NONE;
+        brr.Transition.pResource = colbuf_[IND_frame];
+        brr.Transition.Subresource = D3D12_RESOURCE_BARRIER_ALL_SUBRESOURCES;
     }
 
     cmdlist_->ResourceBarrier(1, &brr);
@@ -572,7 +590,7 @@ void D3d::write()
     }
     cmdlist_->ResourceBarrier(1, &brr);
 
-    float backcolor_[4] = { 0,0.6,0.5,1};
+    float backcolor_[] = { 0.0f,0.0f,0.5f,1.0f};
 
     cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
     cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_, 0, nullptr);

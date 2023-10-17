@@ -31,9 +31,6 @@ bool WinView::setup()
     {
         if (D3D->Initialize(h_wnd,h_,w_))
         {
-            ChangeAspect();
-
-
             return true;
         }
     }
@@ -135,7 +132,7 @@ void WinView::loop()
 
         else
         {
-            D3D->Run(0);
+            D3D->Run(1);
         }
     }
 }
