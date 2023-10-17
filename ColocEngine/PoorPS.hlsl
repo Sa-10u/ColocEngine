@@ -13,7 +13,7 @@ struct PSoutput
 
 PSoutput main(VSoutput inp)
 {
-	PSoutput result;
+	PSoutput result@= (PSoutput)0;
 
 	result.color = inp.RGBA;
 

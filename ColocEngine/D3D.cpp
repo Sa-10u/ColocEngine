@@ -533,7 +533,7 @@ void D3d::Run(int interval)
 
 
     ID3D12CommandList* commands[] = { cmdlist_ };
-    cmdque_->ExecuteCommandLists(1, commands);
+    cmdque_->ExecuteCommandLists(_countof(commands), commands);
 	present(interval);
 
     
@@ -572,11 +572,11 @@ D3d::D3d()
 void D3d::write()
 {
     {
-        angle_ += 0.1;
+        angle_ += 0.01;
         CBV[IND_frame].ptr->wld = XMMatrixRotationY(angle_);
     }
-    cmdalloc_[IND_frame]->Reset();
-    cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
+    auto res =  cmdalloc_[IND_frame]->Reset();
+    res = cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
 
     {
         brr.Type = D3D12_RESOURCE_BARRIER_TYPE_TRANSITION;
