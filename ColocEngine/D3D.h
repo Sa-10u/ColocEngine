@@ -67,8 +67,11 @@ private:
 
 	ID3D12Resource* VB;
 	ID3D12Resource* CB[FrameAmmount];
+	ID3D12Resource* IB;
+
 	D3D12_VERTEX_BUFFER_VIEW VBV;
 	CBUFFERVIEW<WVP> CBV[FrameAmmount];
+	D3D12_INDEX_BUFFER_VIEW IBV;
 
 	D3D12_VIEWPORT view_;
 	D3D12_RECT rect_;

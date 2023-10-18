@@ -172,9 +172,10 @@ bool D3d::InitGBO()
 
     VERTEX vts[] =
     {
-        {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
-        {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
-        {XMFLOAT3(0.0f,-1.0f,0.0f),XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
+        {XMFLOAT3(-1.0f,1.0f,0.0f),XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
+        {XMFLOAT3(1.0f,1.0f,0.0f),XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
+        {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
+        {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT4(1.0f,0.0f,1.0f,1.0f)},
     };
 
     {
@@ -230,6 +231,58 @@ bool D3d::InitGBO()
         VBV.BufferLocation = VB->GetGPUVirtualAddress();
         VBV.SizeInBytes = static_cast<UINT>(sizeof(vts));
         VBV.StrideInBytes = static_cast <UINT>(sizeof(VERTEX));
+    }
+
+    {
+        uint32_t indexes[] = { 0,1,2 ,0,2,3 };
+
+        D3D12_HEAP_PROPERTIES hp_prop_i = {};
+        {
+            hp_prop_i.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+            hp_prop_i.CreationNodeMask = 1;
+            hp_prop_i.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+            hp_prop_i.Type = D3D12_HEAP_TYPE_UPLOAD;
+            hp_prop_i.VisibleNodeMask = 1;
+        }
+
+        D3D12_RESOURCE_DESC rc_desc_i = {};
+        {
+            rc_desc_i.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+            rc_desc_i.Format = DXGI_FORMAT_UNKNOWN;
+            rc_desc_i.MipLevels = 1;
+            rc_desc_i.Alignment = 0;
+            rc_desc_i.DepthOrArraySize = 1;
+            rc_desc_i.Flags = D3D12_RESOURCE_FLAG_NONE;
+            rc_desc_i.Height = 1;
+            rc_desc_i.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+            rc_desc_i.SampleDesc.Count = 1;
+            rc_desc_i.SampleDesc.Quality = 0;
+            rc_desc_i.Width = sizeof(indexes);
+        }
+
+        res = device_->CreateCommittedResource
+        (
+            &hp_prop_i,
+            D3D12_HEAP_FLAG_NONE,
+            &rc_desc_i,
+            D3D12_RESOURCE_STATE_GENERIC_READ,
+            nullptr,
+            IID_PPV_ARGS(&IB)
+        );
+        if (FAILED(res)) return 0;
+
+        void* ptr = nullptr;
+        res = IB->Map(0, nullptr, &ptr);
+        if (FAILED(res)) return 0;
+
+        memcpy(ptr, indexes, sizeof(indexes));
+        IB->Unmap(0, 0);
+
+        //-----------
+        IBV.BufferLocation = IB->GetGPUVirtualAddress();
+        IBV.Format = DXGI_FORMAT_R32_UINT;
+        IBV.SizeInBytes = sizeof(indexes);
+
     }
 
     {
@@ -613,11 +666,12 @@ void D3d::write()
 
         cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         cmdlist_->IASetVertexBuffers(0, 1, &VBV);
+        cmdlist_->IASetIndexBuffer(&IBV);
         cmdlist_->RSSetViewports(1, &view_);
         cmdlist_->RSSetScissorRects(1, &rect_);
 
         cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame ].desc.BufferLocation);
-        cmdlist_->DrawInstanced(3, 1, 0, 0);
+        cmdlist_->DrawIndexedInstanced(6, 1, 0, 0,0);
     }
 }
 

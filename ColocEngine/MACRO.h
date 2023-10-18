@@ -46,4 +46,4 @@ namespace SHADER_FILENAME
 	extern LPCWSTR PoorPS;
 }
 
-#define __CREATE(LPCSTR)	NULL;
+#define __CREATE(LPCSTR)	{};
