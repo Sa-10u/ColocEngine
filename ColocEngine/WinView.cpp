@@ -40,11 +40,11 @@ bool WinView::setup()
 
 bool WinView::initialize()
 {
-    bool FAIL = 0;
+    constexpr bool FAIL = 0;
 
     WNDCLASSEX wcex = {};
 
-    h_ins = GetModuleHandle(_THIS);  //<----
+    h_ins = GetModuleHandle(_THIS);  
 
     if (h_ins == nullptr) return FAIL;
 
@@ -75,7 +75,7 @@ bool WinView::initialize()
     }
 
     {
-        auto style = WS_OVERLAPPEDWINDOW;
+        auto style = WS_OVERLAPPEDWINDOW | WS_CAPTION | WS_SYSMENU;
         AdjustWindowRect(&box, style, false);
 
         h_wnd = CreateWindowEx
@@ -150,7 +150,7 @@ LRESULT WinView::WndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp)
     {
     case WM_DESTROY:PostQuitMessage(0);     return 0;
 
-    default: return DefWindowProc(hwnd,msg,wp,lp);           return 0;
+    default: return DefWindowProc(hwnd,msg,wp,lp);
 
     }
 }

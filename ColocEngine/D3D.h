@@ -25,8 +25,10 @@ public:
 	~D3d();
 
 	bool Initialize(HWND hwnd , uint32_t h , uint32_t w);
-	bool InitPoly();
+	bool InitGBO();
+	bool InitPSO();
 	void Termination();
+	void TermGBO();		//Graphic Buffer Object
 	void Run(int interval);
 
 	void SetHeight(float h);
