@@ -1,21 +1,14 @@
-struct VSoutput
-{
-	float4 pos : SV_POSITION;
-	float4 RGBA: COLOR;
-};
-
-struct PSoutput
-{
-	float4 color : SV_TARGET0;
-
-};
+#include "PoorHeader.hlsli"
 //-----------
+
+SamplerState colsmp : register(s0);
+Texture2D	 colmap : register(t0);
 
 PSoutput main(VSoutput inp)
 {
 	PSoutput resultÅ@= (PSoutput)0;
 
-	result.color = inp.RGBA;
+	result.color = colmap.Sample(colsmp, inp.uv);
 
 	return result;
 }

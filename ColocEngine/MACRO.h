@@ -39,6 +39,7 @@ namespace SEMANTICS_STR
 {
 	extern LPCSTR POSITION ;
 	extern LPCSTR COLOR;
+	extern LPCSTR TEXCOORD;
 }
 namespace SHADER_FILENAME
 {

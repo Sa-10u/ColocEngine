@@ -250,10 +250,10 @@ bool D3d::InitGBO()
 
     VERTEX vts[] =
     {
-        {XMFLOAT3(-1.0f,1.0f,0.0f),XMFLOAT4(0.0f,0.0f,1.0f,1.0f)},
-        {XMFLOAT3(1.0f,1.0f,0.0f),XMFLOAT4(0.0f,1.0f,0.0f,1.0f)},
-        {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT4(1.0f,0.0f,0.0f,1.0f)},
-        {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT4(1.0f,0.0f,1.0f,1.0f)},
+        {XMFLOAT3(-1.0f,1.0f,0.0f),XMFLOAT2(0.0f,0.0f)},
+        {XMFLOAT3(1.0f,1.0f,0.0f),XMFLOAT2(1.0f,0.0f)},
+        {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT2(1.0f,1.0f)},
+        {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT2(0.0f,1.0f)},
     };
 
     {
@@ -458,14 +458,46 @@ bool D3d::InitGBO()
     }
     //-----------------------------------------------------------
     {
-        D3D12_ROOT_PARAMETER r_param = {};
+        D3D12_ROOT_PARAMETER r_param[2] = {};
         {
-            r_param.ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
-            r_param.Descriptor.RegisterSpace = 0;
-            r_param.Descriptor.ShaderRegister = 0;
-            r_param.ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+            r_param[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
+            r_param[0].Descriptor.RegisterSpace = 0;
+            r_param[0].Descriptor.ShaderRegister = 0;
+            r_param[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
         }
 
+        D3D12_DESCRIPTOR_RANGE range = {};
+        {
+            range.BaseShaderRegister = 0;
+            range.NumDescriptors = 1;
+            range.OffsetInDescriptorsFromTableStart = 0;
+            range.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
+            range.RegisterSpace = 0;
+        }
+
+        r_param[1];
+        {
+            r_param[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_SRV;
+            r_param[1].DescriptorTable.NumDescriptorRanges = 1;
+            r_param[1].DescriptorTable.pDescriptorRanges = &range;
+            r_param[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
+        }
+
+        D3D12_STATIC_SAMPLER_DESC sampler = {};
+        {
+            sampler.AddressU = D3D12_TEXTURE_ADDRESS_MODE_MIRROR;
+            sampler.AddressV = D3D12_TEXTURE_ADDRESS_MODE_MIRROR;
+            sampler.AddressW = D3D12_TEXTURE_ADDRESS_MODE_MIRROR;
+            sampler.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;
+            sampler.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
+            sampler.Filter = D3D12_FILTER_MIN_MAG_MIP_LINEAR;
+            sampler.MaxAnisotropy = 1;
+            sampler.MaxLOD = D3D12_FLOAT32_MAX;
+            sampler.MinLOD = D3D12_FLOAT32_MAX * -1;
+            sampler.MipLODBias
+        }
+
+        //--------++++++++++++++++++++++
         D3D12_ROOT_SIGNATURE_DESC r_s_desc = {};
         {
             auto flag = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
@@ -473,7 +505,7 @@ bool D3d::InitGBO()
             flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_HULL_SHADER_ROOT_ACCESS;
             flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
 
-            r_s_desc.pParameters = &r_param;
+            r_s_desc.pParameters = r_param;
             r_s_desc.pStaticSamplers = nullptr;
             r_s_desc.Flags =flag;
             r_s_desc.NumParameters = 1;
@@ -539,10 +571,10 @@ bool D3d::InitPSO()
             in_e_desc[0].InstanceDataStepRate = 0;
         }
         {
-            in_e_desc[1].Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+            in_e_desc[1].Format = DXGI_FORMAT_R32G32_FLOAT;
             in_e_desc[1].AlignedByteOffset = D3D12_APPEND_ALIGNED_ELEMENT;
             in_e_desc[1].InputSlot = 0;
-            in_e_desc[1].SemanticName = SEMANTICS_STR::COLOR;
+            in_e_desc[1].SemanticName = SEMANTICS_STR::TEXCOORD;
             in_e_desc[1].SemanticIndex = 0;
             in_e_desc[1].InputSlotClass = D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA;
             in_e_desc[1].InstanceDataStepRate = 0;

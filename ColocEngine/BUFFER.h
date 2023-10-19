@@ -6,7 +6,7 @@ using namespace DirectX;
 struct VERTEX
 {
 	XMFLOAT3 pos;
-	XMFLOAT4 RGBA;
+	XMFLOAT2 uv;
 };
 
 struct alignas(256) WVP
