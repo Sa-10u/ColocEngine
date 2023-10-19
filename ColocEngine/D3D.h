@@ -58,6 +58,7 @@ private:
 	uint64_t fencecnt_[FrameAmmount];
 	uint64_t IND_frame;
 	D3D12_CPU_DESCRIPTOR_HANDLE h_RTV[FrameAmmount];
+	D3D12_CPU_DESCRIPTOR_HANDLE h_ZBV;
 
 	D3D12_RESOURCE_BARRIER brr;
 
@@ -68,10 +69,12 @@ private:
 	ID3D12Resource* VB;
 	ID3D12Resource* CB[FrameAmmount];
 	ID3D12Resource* IB;
+	ID3D12Resource* ZB;
 
 	D3D12_VERTEX_BUFFER_VIEW VBV;
 	CBUFFERVIEW<WVP> CBV[FrameAmmount];
 	D3D12_INDEX_BUFFER_VIEW IBV;
+	ID3D12DescriptorHeap* hp_ZBV;
 
 	D3D12_VIEWPORT view_;
 	D3D12_RECT rect_;

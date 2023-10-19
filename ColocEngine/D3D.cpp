@@ -27,7 +27,6 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
 
     D3D12_COMMAND_QUEUE_DESC cmddesc = {};
-
     {
         cmddesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
         cmddesc.Priority = D3D12_COMMAND_QUEUE_PRIORITY_NORMAL;
@@ -135,6 +134,85 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
         h_RTV[i] = handle;
         handle.ptr += incre;
+    }
+
+    {
+        D3D12_HEAP_PROPERTIES hp_prop_z = {};
+        {
+            hp_prop_z.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+            hp_prop_z.CreationNodeMask = 1;
+            hp_prop_z.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+            hp_prop_z.Type = D3D12_HEAP_TYPE_DEFAULT;
+            hp_prop_z.VisibleNodeMask = 1;
+        }
+
+        D3D12_RESOURCE_DESC rc_desc_z = {};
+        {
+            rc_desc_z.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+            rc_desc_z.Format = DXGI_FORMAT_D32_FLOAT;
+            rc_desc_z.MipLevels = 1;
+            rc_desc_z.Alignment = 0;
+            rc_desc_z.DepthOrArraySize = 1;
+            rc_desc_z.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+            rc_desc_z.Height = Height;
+            rc_desc_z.Width = Width;
+            rc_desc_z.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
+            rc_desc_z.SampleDesc.Count = 1;
+            rc_desc_z.SampleDesc.Quality = 0;
+        }
+
+        D3D12_CLEAR_VALUE clearcol = {};
+        {
+            clearcol.Format = DXGI_FORMAT_D32_FLOAT;
+            clearcol.DepthStencil.Depth = 1.0f;
+            clearcol.DepthStencil.Stencil = 0;
+        }
+
+        device_->CreateCommittedResource
+        (
+            &hp_prop_z,
+            D3D12_HEAP_FLAG_NONE,
+            &rc_desc_z,
+            D3D12_RESOURCE_STATE_DEPTH_WRITE,
+            &clearcol,
+            IID_PPV_ARGS(&ZB)
+        );
+        //-----
+
+        D3D12_DESCRIPTOR_HEAP_DESC hp_desc = {};
+        {
+            hp_desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
+            hp_desc.NodeMask = 0;
+            hp_desc.NumDescriptors = 1;
+            hp_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
+        }
+
+        res = device_->CreateDescriptorHeap
+        (
+            &hp_desc,
+            IID_PPV_ARGS(&hp_ZBV)
+        );
+        if (FAILED(res)) return 0;
+
+        auto handle = hp_ZBV->GetCPUDescriptorHandleForHeapStart();
+        auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
+
+        D3D12_DEPTH_STENCIL_VIEW_DESC zbv_desc = {};
+        {
+            zbv_desc.Flags = D3D12_DSV_FLAG_NONE;
+            zbv_desc.Format = DXGI_FORMAT_D32_FLOAT;
+            zbv_desc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
+            zbv_desc.Texture2D.MipSlice = 0;
+        }
+
+        device_->CreateDepthStencilView
+        (
+            ZB,
+            &zbv_desc,
+            handle
+        );
+
+        h_ZBV = handle;
     }
 
   
@@ -504,6 +582,14 @@ bool D3d::InitPSO()
         }
     };
 
+    D3D12_DEPTH_STENCIL_DESC dss_desc = {};
+    {
+        dss_desc.DepthEnable = 1;
+        dss_desc.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
+        dss_desc.DepthFunc = D3D12_COMPARISON_FUNC_LESS_EQUAL;
+        dss_desc.StencilEnable = 0;
+    }
+
     //----------------------
 
     ID3DBlob* VSblob = nullptr;
@@ -530,11 +616,10 @@ bool D3d::InitPSO()
         pso_desc.SampleDesc.Quality = 0;
         pso_desc.SampleMask = UINT_MAX;
         pso_desc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
-        pso_desc.DepthStencilState.DepthEnable = false;
-        pso_desc.DepthStencilState.StencilEnable = false;
+        pso_desc.DepthStencilState = dss_desc;
         pso_desc.NumRenderTargets = 1;
         pso_desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
-        pso_desc.DSVFormat = DXGI_FORMAT_UNKNOWN;
+        pso_desc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
     }
 
     res = device_->CreateGraphicsPipelineState
@@ -656,8 +741,9 @@ void D3d::write()
 
     float backcolor_[] = { 0.0f,0.0f,0.5f,1.0f};
 
-    cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, nullptr);
+    cmdlist_->OMSetRenderTargets(1, &h_RTV[IND_frame], FALSE, &h_ZBV);
     cmdlist_->ClearRenderTargetView(h_RTV[IND_frame], backcolor_, 0, nullptr);
+    cmdlist_->ClearDepthStencilView(h_ZBV, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 
     {
         cmdlist_->SetGraphicsRootSignature(rootsig_);
