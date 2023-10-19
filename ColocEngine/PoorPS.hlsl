@@ -9,6 +9,7 @@ PSoutput main(VSoutput inp)
 	PSoutput result@= (PSoutput)0;
 
 	result.color = colmap.Sample(colsmp, inp.uv);
+    //result.color = (inp.uv.r, inp.uv.g, 0.0f, 1.0f);
 
 	return result;
 }

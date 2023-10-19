@@ -494,7 +494,7 @@ bool D3d::InitGBO()
             sampler.MaxAnisotropy = 1;
             sampler.MaxLOD = D3D12_FLOAT32_MAX;
             sampler.MinLOD = D3D12_FLOAT32_MAX * -1;
-            sampler.MipLODBias
+            //sampler.MipLODBias
         }
 
         //--------++++++++++++++++++++++

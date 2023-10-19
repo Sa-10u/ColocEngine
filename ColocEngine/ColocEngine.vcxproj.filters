@@ -54,5 +54,6 @@
     <None Include="PoorHeader.hlsli">
       <Filter>shader</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
