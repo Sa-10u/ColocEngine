@@ -5,13 +5,15 @@ using namespace DirectX;
 
 struct VERTEX
 {
-	XMFLOAT3 pos;
-	XMFLOAT2 uv;
+	XMFLOAT3 pos  ;
+	XMFLOAT2 uv ;
 };
 
 struct Texture
 {
-	ID3D12Resource* rsc_ptr;
+	ID3D12Resource* rsc_ptr = nullptr;
+	D3D12_GPU_DESCRIPTOR_HANDLE HGPU;
+	D3D12_CPU_DESCRIPTOR_HANDLE HCPU;
 };
 
 struct alignas(256) WVP
@@ -27,6 +29,6 @@ struct CBUFFERVIEW
 	D3D12_CONSTANT_BUFFER_VIEW_DESC desc;
 	D3D12_CPU_DESCRIPTOR_HANDLE HCPU;
 	D3D12_GPU_DESCRIPTOR_HANDLE HGPU;
-	T* ptr;
+	T* ptr = nullptr;
 };
 

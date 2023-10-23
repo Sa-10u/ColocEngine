@@ -3,6 +3,7 @@
 #include"ResourceUploadBatch.h"
 #include "DDSTextureLoader.h"
 #include "VertexTypes.h"
+#include <string>
 
 bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 {
@@ -362,22 +363,74 @@ bool D3d::InitGBO()
         IBV.BufferLocation = IB->GetGPUVirtualAddress();
         IBV.Format = DXGI_FORMAT_R32_UINT;
         IBV.SizeInBytes = sizeof(indexes);
-
     }
 
+    {
+        std::wstring tex_Path = {};
+        tex_Path = L"../../VAVA.dds";
+
+        ResourceUploadBatch bat(device_);
+        bat.Begin();
+
+        res = CreateDDSTextureFromFile
+        (
+            device_,
+            bat,
+            tex_Path.c_str(),
+            &(tex.rsc_ptr),
+            true
+        );
+        if (FAILED(res)) return 0;
+
+        auto fut = bat.End(cmdque_);
+        fut.wait();
+
+        //----
+
+        auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+        auto HCPU_ = heapCBV_SRV_UAV_->GetCPUDescriptorHandleForHeapStart();
+        auto HGPU_ = heapCBV_SRV_UAV_->GetGPUDescriptorHandleForHeapStart();
+
+        HCPU_.ptr += incre * 2;
+        HGPU_.ptr += incre * 2;
+
+        tex.HCPU = HCPU_;
+        tex.HGPU = HGPU_;
+
+        auto tex_desc = tex.rsc_ptr->GetDesc();
+
+        D3D12_SHADER_RESOURCE_VIEW_DESC v_desc = {};
+        {
+            v_desc.Format = tex_desc.Format;
+            v_desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+            v_desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+            v_desc.Texture2D.MipLevels = tex_desc.MipLevels;
+            v_desc.Texture2D.MostDetailedMip = 0;
+            v_desc.Texture2D.PlaneSlice = 0;
+            v_desc.Texture2D.ResourceMinLODClamp = 0.0f;
+        }
+
+        device_->CreateShaderResourceView
+        (
+            tex.rsc_ptr,
+            &v_desc,
+            HCPU_
+        );
+    }
+    //----------------------------
     {
         D3D12_DESCRIPTOR_HEAP_DESC hp_desc = {};
         {
             hp_desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
             hp_desc.NodeMask = 0;
-            hp_desc.NumDescriptors = 1 * FrameAmmount;
+            hp_desc.NumDescriptors = 2 * FrameAmmount;
             hp_desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
         }
 
         res = device_->CreateDescriptorHeap
         (
             &hp_desc,
-            IID_PPV_ARGS(&heapCBV_)
+            IID_PPV_ARGS(&heapCBV_SRV_UAV_)
         );
 
         if (FAILED(res)) return false;
@@ -427,8 +480,8 @@ bool D3d::InitGBO()
             //----------------------------------
 
             auto address = CB[i]->GetGPUVirtualAddress();
-            auto _HCPU = heapCBV_->GetCPUDescriptorHandleForHeapStart();
-            auto _HGPU = heapCBV_->GetGPUDescriptorHandleForHeapStart();
+            auto _HCPU = heapCBV_SRV_UAV_->GetCPUDescriptorHandleForHeapStart();
+            auto _HGPU = heapCBV_SRV_UAV_->GetGPUDescriptorHandleForHeapStart();
 
             _HCPU.ptr += incre * i;
             _HGPU.ptr += incre * i;
@@ -784,10 +837,10 @@ void D3d::write()
 
     {
         cmdlist_->SetGraphicsRootSignature(rootsig_);
-        cmdlist_->SetDescriptorHeaps(1, &heapCBV_);
+        cmdlist_->SetDescriptorHeaps(1, &heapCBV_SRV_UAV_);
         cmdlist_->SetPipelineState(PSO);
 
-        cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+        cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
         cmdlist_->IASetVertexBuffers(0, 1, &VBV);
         cmdlist_->IASetIndexBuffer(&IBV);
         cmdlist_->RSSetViewports(1, &view_);

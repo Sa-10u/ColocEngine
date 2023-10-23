@@ -63,7 +63,7 @@ private:
 
 	D3D12_RESOURCE_BARRIER brr;
 
-	ID3D12DescriptorHeap* heapCBV_;
+	ID3D12DescriptorHeap* heapCBV_SRV_UAV_;
 	ID3D12RootSignature* rootsig_;
 	ID3D12PipelineState* PSO;
 
@@ -71,6 +71,7 @@ private:
 	ID3D12Resource* CB[FrameAmmount];
 	ID3D12Resource* IB;
 	ID3D12Resource* ZB;
+	Texture			tex;
 
 	D3D12_VERTEX_BUFFER_VIEW VBV;
 	CBUFFERVIEW<WVP> CBV[FrameAmmount];

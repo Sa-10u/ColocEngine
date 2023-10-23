@@ -13,7 +13,6 @@ struct VSoutput
 struct PSoutput
 {
 	float4 color : SV_TARGET0;
-
 };
 
 cbuffer Transform : register(b0)
