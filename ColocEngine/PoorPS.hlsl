@@ -10,7 +10,6 @@ PSoutput main(VSoutput inp)
 
 	//result.color = colmap.Sample(colsmp, inp.uv);
     result.color = float4(inp.uv.x, inp.uv.y, 0.0f, 1.0f);
-	Time;
 
 	//result.color.r = inp.uv.x;
 
