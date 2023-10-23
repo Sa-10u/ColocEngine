@@ -365,58 +365,6 @@ bool D3d::InitGBO()
         IBV.SizeInBytes = sizeof(indexes);
     }
 
-    {
-        std::wstring tex_Path = {};
-        tex_Path = L"../../VAVA.dds";
-
-        ResourceUploadBatch bat(device_);
-        bat.Begin();
-
-        res = CreateDDSTextureFromFile
-        (
-            device_,
-            bat,
-            tex_Path.c_str(),
-            &(tex.rsc_ptr),
-            true
-        );
-        if (FAILED(res)) return 0;
-
-        auto fut = bat.End(cmdque_);
-        fut.wait();
-
-        //----
-
-        auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-        auto HCPU_ = heapCBV_SRV_UAV_->GetCPUDescriptorHandleForHeapStart();
-        auto HGPU_ = heapCBV_SRV_UAV_->GetGPUDescriptorHandleForHeapStart();
-
-        HCPU_.ptr += incre * 2;
-        HGPU_.ptr += incre * 2;
-
-        tex.HCPU = HCPU_;
-        tex.HGPU = HGPU_;
-
-        auto tex_desc = tex.rsc_ptr->GetDesc();
-
-        D3D12_SHADER_RESOURCE_VIEW_DESC v_desc = {};
-        {
-            v_desc.Format = tex_desc.Format;
-            v_desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
-            v_desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
-            v_desc.Texture2D.MipLevels = tex_desc.MipLevels;
-            v_desc.Texture2D.MostDetailedMip = 0;
-            v_desc.Texture2D.PlaneSlice = 0;
-            v_desc.Texture2D.ResourceMinLODClamp = 0.0f;
-        }
-
-        device_->CreateShaderResourceView
-        (
-            tex.rsc_ptr,
-            &v_desc,
-            HCPU_
-        );
-    }
     //----------------------------
     {
         D3D12_DESCRIPTOR_HEAP_DESC hp_desc = {};
@@ -596,9 +544,64 @@ bool D3d::InitGBO()
     {
         if (!InitPSO())      return 0;
 
-        //-----------------------------------------------------------------------------------------*****
     }
+    //-----------------------------------------------------------------------------------------*****
+    {
+        std::wstring tex_Path = {};
+        tex_Path = L"VAVA.dds";
 
+        ResourceUploadBatch bat(device_);
+        bat.Begin();
+
+        res = CreateDDSTextureFromFile
+        (
+            device_,
+            bat,
+            tex_Path.c_str(),
+            &(tex.rsc_ptr),
+            true
+        );
+        if (FAILED(res)) return 0;
+
+        auto fut = bat.End(cmdque_);
+        fut.wait();
+
+        //----
+
+        auto incre = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
+        auto HCPU_ = heapCBV_SRV_UAV_->GetCPUDescriptorHandleForHeapStart();
+        auto HGPU_ = heapCBV_SRV_UAV_->GetGPUDescriptorHandleForHeapStart();
+
+        HCPU_.ptr += incre * 2;
+        HGPU_.ptr += incre * 2;
+
+        tex.HCPU = HCPU_;
+        tex.HGPU = HGPU_;
+
+        auto tex_desc = tex.rsc_ptr->GetDesc();
+
+        D3D12_SHADER_RESOURCE_VIEW_DESC v_desc = {};
+        {
+            v_desc.Format = tex_desc.Format;
+            v_desc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+            v_desc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
+            v_desc.Texture2D.MipLevels = tex_desc.MipLevels;
+            v_desc.Texture2D.MostDetailedMip = 0;
+            v_desc.Texture2D.PlaneSlice = 0;
+            v_desc.Texture2D.ResourceMinLODClamp = 0.0f;
+        }
+
+        device_->CreateShaderResourceView
+        (
+            tex.rsc_ptr,
+            &v_desc,
+            HCPU_
+        );
+
+    
+
+    }
+    //-----------------******
     view_.Height = Height;
     view_.Width = Width;
     view_.MaxDepth = 1.0f;
@@ -838,6 +841,8 @@ void D3d::write()
     {
         cmdlist_->SetGraphicsRootSignature(rootsig_);
         cmdlist_->SetDescriptorHeaps(1, &heapCBV_SRV_UAV_);
+        cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame].desc.BufferLocation);
+        cmdlist_->SetGraphicsRootDescriptorTable(1, tex.HGPU);
         cmdlist_->SetPipelineState(PSO);
 
         cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -847,6 +852,7 @@ void D3d::write()
         cmdlist_->RSSetScissorRects(1, &rect_);
 
         cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame ].desc.BufferLocation);
+
         cmdlist_->DrawIndexedInstanced(6, 1, 0, 0,0);
     }
 }

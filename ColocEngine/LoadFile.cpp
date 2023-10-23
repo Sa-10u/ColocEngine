@@ -58,4 +58,20 @@ bool FilePath(LPCWSTR name, wstring* str)
 		*str = dst;
 		return 1;
 	}
+
+	swprintf_s(dst, L"%s\\..\\..\\%s", path, name);
+	if (PathFileExistsW(dst))
+	{
+		*str = dst;
+		return 1;
+	}
+
+	swprintf_s(dst, L"%s\\res\\%s", path, name);
+	if (PathFileExistsW(dst))
+	{
+		*str = dst;
+		return 1;
+	}
+
+	return 0;
 }
