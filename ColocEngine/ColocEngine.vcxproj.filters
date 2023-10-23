@@ -27,6 +27,9 @@
     <ClCompile Include="MACRO.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="LoadShaderFile.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinView.h">
@@ -39,6 +42,9 @@
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="BUFFER.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadShaderFile.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>

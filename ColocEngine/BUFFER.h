@@ -9,6 +9,11 @@ struct VERTEX
 	XMFLOAT2 uv;
 };
 
+struct Texture
+{
+	ID3D12Resource* rsc_ptr;
+};
+
 struct alignas(256) WVP
 {
 	XMMATRIX wld;

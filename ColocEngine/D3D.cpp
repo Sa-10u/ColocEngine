@@ -1,6 +1,8 @@
 #include "D3D.h"
 #include<cassert>
-
+#include"ResourceUploadBatch.h"
+#include "DDSTextureLoader.h"
+#include "VertexTypes.h"
 
 bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 {
@@ -477,7 +479,7 @@ bool D3d::InitGBO()
 
         r_param[1];
         {
-            r_param[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_SRV;
+            r_param[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
             r_param[1].DescriptorTable.NumDescriptorRanges = 1;
             r_param[1].DescriptorTable.pDescriptorRanges = &range;
             r_param[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
@@ -494,7 +496,10 @@ bool D3d::InitGBO()
             sampler.MaxAnisotropy = 1;
             sampler.MaxLOD = D3D12_FLOAT32_MAX;
             sampler.MinLOD = D3D12_FLOAT32_MAX * -1;
-            //sampler.MipLODBias
+            sampler.MipLODBias = D3D12_DEFAULT_MIP_LOD_BIAS;
+            sampler.RegisterSpace = 0;
+            sampler.ShaderRegister = 0;
+            sampler.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
         }
 
         //--------++++++++++++++++++++++
@@ -506,10 +511,10 @@ bool D3d::InitGBO()
             flag |= D3D12_ROOT_SIGNATURE_FLAG_DENY_GEOMETRY_SHADER_ROOT_ACCESS;
 
             r_s_desc.pParameters = r_param;
-            r_s_desc.pStaticSamplers = nullptr;
+            r_s_desc.pStaticSamplers = &sampler;
             r_s_desc.Flags =flag;
-            r_s_desc.NumParameters = 1;
-            r_s_desc.NumStaticSamplers = 0;
+            r_s_desc.NumParameters = 2;
+            r_s_desc.NumStaticSamplers = 1;
         }
 
         ID3DBlob* S_blob;
@@ -752,8 +757,8 @@ D3d::D3d()
 void D3d::write()
 {
     {
-        angle_ += 0.01;
-        CBV[IND_frame].ptr->wld = XMMatrixRotationY(angle_);
+      //  angle_ += 0.01;
+      //  CBV[IND_frame].ptr->wld = XMMatrixRotationY(angle_);
     }
     cmdalloc_[IND_frame]->Reset();
     cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);

@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="D3D.cpp" />
+    <ClCompile Include="LoadShaderFile.cpp" />
     <ClCompile Include="MACRO.cpp" />
     <ClCompile Include="MAIN.cpp" />
     <ClCompile Include="WinView.cpp" />
@@ -27,6 +28,7 @@
   <ItemGroup>
     <ClInclude Include="BUFFER.h" />
     <ClInclude Include="D3D.h" />
+    <ClInclude Include="LoadShaderFile.h" />
     <ClInclude Include="MACRO.h" />
     <ClInclude Include="WinView.h" />
   </ItemGroup>
