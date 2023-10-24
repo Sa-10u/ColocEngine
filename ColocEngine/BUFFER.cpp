@@ -1,7 +1,6 @@
 #include "BUFFER.h"
 #include<assert.h>
-
-#include<assimpz>
+#include<codecvt>
 
 VERTEX::VERTEX():pos_(0),norm_(0),uv_(0),tan_(0)
 {
@@ -21,5 +20,5 @@ MESH::MESH():vtcs_(nullptr),indexes_(nullptr),ID_Material(-1)
 
 bool MESH::LoadMesh(const wchar_t* file, MESH& mesh, MATERIAL& material)
 {
-	
+	return false;
 }
