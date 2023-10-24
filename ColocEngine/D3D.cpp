@@ -546,9 +546,9 @@ bool D3d::InitGBO()
 
     }
     //-----------------------------------------------------------------------------------------*****
-    {
+    /* {
         std::wstring tex_Path = {};
-        tex_Path = L"VAVA.dds";
+        tex_Path = L"Sample.dds";
 
         ResourceUploadBatch bat(device_);
         bat.Begin();
@@ -600,7 +600,7 @@ bool D3d::InitGBO()
 
     
 
-    }
+    }*/
     //-----------------******
     view_.Height = Height;
     view_.Width = Width;
@@ -841,8 +841,8 @@ void D3d::write()
     {
         cmdlist_->SetGraphicsRootSignature(rootsig_);
         cmdlist_->SetDescriptorHeaps(1, &heapCBV_SRV_UAV_);
-        cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame].desc.BufferLocation);
-        cmdlist_->SetGraphicsRootDescriptorTable(1, tex.HGPU);
+      //  cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame].desc.BufferLocation);
+      //  cmdlist_->SetGraphicsRootDescriptorTable(1, tex.HGPU);
         cmdlist_->SetPipelineState(PSO);
 
         cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
