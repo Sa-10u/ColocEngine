@@ -30,6 +30,9 @@
     <ClCompile Include="LoadFile.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="BUFFER.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinView.h">

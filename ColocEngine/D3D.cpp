@@ -251,7 +251,7 @@ bool D3d::InitGBO()
 {
     HRESULT res = FALSE;
 
-    VERTEX vts[] =
+    SIMPLEVERTEX vts[] =
     {
         {XMFLOAT3(-1.0f,1.0f,0.0f),XMFLOAT2(0.0f,0.0f)},
         {XMFLOAT3(1.0f,1.0f,0.0f),XMFLOAT2(1.0f,0.0f)},
@@ -311,7 +311,7 @@ bool D3d::InitGBO()
 
         VBV.BufferLocation = VB->GetGPUVirtualAddress();
         VBV.SizeInBytes = static_cast<UINT>(sizeof(vts));
-        VBV.StrideInBytes = static_cast <UINT>(sizeof(VERTEX));
+        VBV.StrideInBytes = static_cast <UINT>(sizeof(SIMPLEVERTEX));
     }
 
     {

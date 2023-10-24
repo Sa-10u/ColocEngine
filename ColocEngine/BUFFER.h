@@ -1,13 +1,47 @@
 #pragma once
 #include"DirectXMath.h"
+#include<d3d12.h>
+#include <string>
 
+using std::string;
 using namespace DirectX;
 
-struct VERTEX
+struct SIMPLEVERTEX
 {
 	XMFLOAT3 pos  ;
 	XMFLOAT2 uv ;
 };
+
+struct VERTEX
+{
+	XMFLOAT3 pos_;
+	XMFLOAT3 norm_;
+	XMFLOAT3 uv_;
+	XMFLOAT3 tan_;
+
+	static const D3D12_INPUT_LAYOUT_DESC inp_Layout;
+
+	VERTEX();
+	VERTEX(XMFLOAT3 const& pos, XMFLOAT3 const& norm, XMFLOAT3 const& uv, XMFLOAT3 const& tan);
+
+
+	enum ELEMENT
+	{
+		POSITION = 0,
+		NORMAL,
+		UV,
+		TANGENT,
+
+		AMMOUNT
+	};
+
+private:
+
+	static const int count = 4;
+	static const D3D12_INPUT_ELEMENT_DESC element[AMMOUNT];
+};
+
+//-------------
 
 struct Texture
 {
@@ -15,6 +49,31 @@ struct Texture
 	D3D12_GPU_DESCRIPTOR_HANDLE HGPU;
 	D3D12_CPU_DESCRIPTOR_HANDLE HCPU;
 };
+
+struct MATERIAL
+{
+	XMFLOAT3 dif_;
+	XMFLOAT3 spec_;
+	float alpha_;
+	float shin_;
+	string map_;
+
+	MATERIAL();
+};
+
+struct MESH
+{
+	VERTEX* vtcs_;
+	uint32_t* indexes_;
+
+	uint32_t ID_Material;
+
+	MESH();
+	//-----
+	bool LoadMesh(const wchar_t* file, MESH& mesh, MATERIAL& material);
+};
+
+//-----------------------------
 
 struct alignas(256) WVP
 {
