@@ -80,6 +80,7 @@ struct alignas(256) WVP
 	XMMATRIX wld;
 	XMMATRIX view;
 	XMMATRIX proj;
+	float time;
 };
 
 template <typename T>

@@ -64,5 +64,8 @@
       <Filter>shader</Filter>
     </None>
     <None Include="packages.config" />
+    <None Include="Functions.hlsli">
+      <Filter>shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

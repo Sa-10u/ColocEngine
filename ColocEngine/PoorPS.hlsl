@@ -1,4 +1,5 @@
 #include "PoorHeader.hlsli"
+#include "Functions.hlsli"
 //-----------
 
 SamplerState colsmp : register(s0);
@@ -6,44 +7,36 @@ Texture2D	 colmap : register(t0);
 
 PSoutput main(VSoutput inp)
 {
-	PSoutput resultÅ@= (PSoutput)0;
-	float2 center = (inp.uv -0.5 )*2;
+	PSoutput resÅ@= (PSoutput)0;
+	float2 cuv = (inp.uv -0.5 )*2;
+    float2 uv = 2 * cuv;
+    float2 quv = uv - floor(uv);
+    float2 qcuv = (quv - 0.5) * 2;
+    
+    cuv *= 0.25;
+    float3 col = 0;
+    for (float i = 0; i < 4; i++){
 
-	result.color = colmap.Sample(colsmp, inp.uv);
+        cuv *= 2;
+        cuv = cuv - floor(cuv);
+        cuv -= 0.5;
+        //cuv *= 2;
+    
+        float dist = length(cuv) * exp(-length(uv*0.1));
+    
+        col = Pallet1(length((inp.uv - 0.5) * 2) + Time);
+    //-----------
+   
+        dist = sin((dist - Time * 0.1) * 3.14 * 2);
+        dist = abs(dist);
+        dist = 0.05 / dist;
+        col *= dist;
+        
+        res.color += float4(col, 1);
 
-	//result.color = smoothstep(0.2,0.4,sin(length(center) * 3.14 * 50));
-	//result.color *= step(0.5, length(center));
+    }
 
-	//result.color = 1 - length(center *2);
-	//result.color = smoothstep(0.2, 0.7, result.color);
-
-	/*
-	float sub = exp((abs(center.x) *- 5)) *0.4;
-	center.y -= sub ;
-	center.y += 0.25;
-	center.x *= 0.85;
-	result.color = step(0.5, length(center)) * (1 - step(0.7, length(center)));
-	result.color.r = 1 - step(0.7, length(center));
-	*/
-	/*
-	center.x = clamp(-1, 0.0, center.x);
-	result.color = step(0.2,(0.5,1 - length(center)) * length(center));
-	result.color = result.color - step(0.5,(center.x));
-	*/
-
-	/*
-	float2 tri = 0;
-	tri.y = sin(center.y * 3.14 * 10 + pow(center.x *5,2) + center.x) + center.x ;
-	
-	result.color = length(tri.y);
-	*/
-
-	result.color =step(0.5,abs( sin(length(center)*3.14 *10)));
-	float4 temp = result.color;
-
-	result.color = 0.5;
-
-
-
-	return result;
+    
+    //res.color = float4(col, 1);
+	return res;
 }

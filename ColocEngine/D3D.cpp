@@ -456,7 +456,7 @@ bool D3d::InitGBO()
             CBV[i].ptr->wld = XMMatrixIdentity();
             CBV[i].ptr->view = XMMatrixLookAtRH(C_pos, C_tgt, C_head);
             CBV[i].ptr->proj = XMMatrixPerspectiveFovRH(C_fovY, C_aspect, 1.0f ,1000.0f);
-
+            CBV[i].ptr->time = 0.0f;
         }
     }
     //-----------------------------------------------------------
@@ -466,7 +466,7 @@ bool D3d::InitGBO()
             r_param[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
             r_param[0].Descriptor.RegisterSpace = 0;
             r_param[0].Descriptor.ShaderRegister = 0;
-            r_param[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_VERTEX;
+            r_param[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
         }
 
         D3D12_DESCRIPTOR_RANGE range = {};
@@ -546,9 +546,9 @@ bool D3d::InitGBO()
 
     }
     //-----------------------------------------------------------------------------------------*****
-    /* {
+    {
         std::wstring tex_Path = {};
-        tex_Path = L"Sample.dds";
+        tex_Path = L"VAVA.dds";
 
         ResourceUploadBatch bat(device_);
         bat.Begin();
@@ -600,7 +600,7 @@ bool D3d::InitGBO()
 
     
 
-    }*/
+    }
     //-----------------******
     view_.Height = Height;
     view_.Width = Width;
@@ -777,7 +777,8 @@ void D3d::Run(int interval)
     cmdque_->ExecuteCommandLists(1, commands);
 	present(interval);
 
-    
+    constexpr float incre = 1 / 60;
+
 }
 
 void D3d::SetHeight(float h)
@@ -813,8 +814,11 @@ D3d::D3d()
 void D3d::write()
 {
     {
-      //  angle_ += 0.01;
-      //  CBV[IND_frame].ptr->wld = XMMatrixRotationY(angle_);
+        static float time_ = 0.0f;
+        constexpr float incre = 1.0f/60.0f;
+
+        time_ += incre;
+        CBV[IND_frame].ptr->time = time_;
     }
     cmdalloc_[IND_frame]->Reset();
     cmdlist_->Reset(cmdalloc_[IND_frame], nullptr);
@@ -841,8 +845,8 @@ void D3d::write()
     {
         cmdlist_->SetGraphicsRootSignature(rootsig_);
         cmdlist_->SetDescriptorHeaps(1, &heapCBV_SRV_UAV_);
-      //  cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame].desc.BufferLocation);
-      //  cmdlist_->SetGraphicsRootDescriptorTable(1, tex.HGPU);
+        cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame].desc.BufferLocation);
+        cmdlist_->SetGraphicsRootDescriptorTable(1, tex.HGPU);
         cmdlist_->SetPipelineState(PSO);
 
         cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
@@ -874,7 +878,7 @@ void D3d::waitGPU()
 
 void D3d::present(uint32_t itv)
 {
-    if (FAILED(swpchain_->Present(itv, 0)));
+    if (FAILED(swpchain_->Present(itv, 0))) return;
 
     const auto curval = fencecnt_[IND_frame];
     cmdque_->Signal(fence_, curval);
