@@ -8,7 +8,7 @@ Texture2D	 colmap : register(t0);
 PSoutput main(VSoutput inp)
 {
 	PSoutput resÅ@= (PSoutput)0;
-
+    
 	float2 cuv = (inp.uv -0.5 )*2;
     float2 uv = 2 * cuv;
     float2 quv = uv - floor(uv);
@@ -42,10 +42,11 @@ PSoutput main(VSoutput inp)
     float i2 = abs(0.1 / (length(cuv) - 0.5)) * abs(sin(Time + 0.5));
     float i3 = abs(0.1 / (length(cuv) - 0.5)) * abs(sin(Time + 1.0));
 
-    float 
-
     res.color = float4(i1, i2, i3, 1);
     */
-
-	return res;
+    
+    float s = length(uv.x);
+    res.color = s;
+    
+	return res ;
 }

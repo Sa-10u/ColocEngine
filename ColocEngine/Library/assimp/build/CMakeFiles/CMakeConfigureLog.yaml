@@ -1,0 +1,564 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineSystem.cmake:233 (message)"
+      - "CMakeLists.txt:58 (PROJECT)"
+    message: |
+      The system is: Windows - 10.0.22621 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:58 (PROJECT)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+      2023/10/27 1:58:58 にビルドを開始しました。
+      
+      ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\3.28.0-rc3\\CompilerIdC\\CompilerIdC.vcxproj" (既定のターゲット)。
+      PrepareForBuild:
+        ディレクトリ "Debug\\" を作成しています。
+        ディレクトリ "Debug\\CompilerIdC.tlog\\" を作成しています。
+      InitializeBuildStatus:
+        "AlwaysCreate" が指定されたため "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" を作成しています。
+        "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\3.28.0-rc3\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        ファイル "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" を削除しています。
+        "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate" のタッチ タスクを実行しています。
+      プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\3.28.0-rc3\\CompilerIdC\\CompilerIdC.vcxproj" (既定のターゲット) のビルドが完了しました。
+      
+      ビルドに成功しました。
+          0 個の警告
+          0 エラー
+      
+      経過時間 00:00:00.43
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        C:/Users/sato0/Downloads/assimp/build/CMakeFiles/3.28.0-rc3/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:58 (PROJECT)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+      2023/10/27 1:58:59 にビルドを開始しました。
+      
+      ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\3.28.0-rc3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (既定のターゲット)。
+      PrepareForBuild:
+        ディレクトリ "Debug\\" を作成しています。
+        ディレクトリ "Debug\\CompilerIdCXX.tlog\\" を作成しています。
+      InitializeBuildStatus:
+        "AlwaysCreate" が指定されたため "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" を作成しています。
+        "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+      ClCompile:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\3.28.0-rc3\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        ファイル "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" を削除しています。
+        "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate" のタッチ タスクを実行しています。
+      プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\3.28.0-rc3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (既定のターゲット) のビルドが完了しました。
+      
+      ビルドに成功しました。
+          0 個の警告
+          0 エラー
+      
+      経過時間 00:00:00.34
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        C:/Users/sato0/Downloads/assimp/build/CMakeFiles/3.28.0-rc3/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:58 (PROJECT)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-vd8ayp"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-vd8ayp"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-vd8ayp'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_23b11.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:00 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vd8ayp\\cmTC_23b11.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_23b11.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vd8ayp\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_23b11.dir\\Debug\\cmTC_23b11.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_23b11.dir\\Debug\\cmTC_23b11.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_23b11.dir\\Debug\\cmTC_23b11.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_23b11.dir\\Debug\\\\" /Fd"cmTC_23b11.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCCompilerABI.c"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CMakeCCompilerABI.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_23b11.dir\\Debug\\\\" /Fd"cmTC_23b11.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCCompilerABI.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vd8ayp\\Debug\\cmTC_23b11.exe" /INCREMENTAL /ILK:"cmTC_23b11.dir\\Debug\\cmTC_23b11.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-vd8ayp/Debug/cmTC_23b11.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-vd8ayp/Debug/cmTC_23b11.lib" /MACHINE:X64  /machine:x64 cmTC_23b11.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_23b11.vcxproj -> C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vd8ayp\\Debug\\cmTC_23b11.exe
+        FinalizeBuildStatus:
+          ファイル "cmTC_23b11.dir\\Debug\\cmTC_23b11.tlog\\unsuccessfulbuild" を削除しています。
+          "cmTC_23b11.dir\\Debug\\cmTC_23b11.tlog\\cmTC_23b11.lastbuildstate" のタッチ タスクを実行しています。
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-vd8ayp\\cmTC_23b11.vcxproj" (既定のターゲット) のビルドが完了しました。
+        
+        ビルドに成功しました。
+            0 個の警告
+            0 エラー
+        
+        経過時間 00:00:00.28
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeDetermineCompilerABI.cmake:57 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:58 (PROJECT)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-3cdaqa"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-3cdaqa"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-3cdaqa'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_096bd.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:00 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3cdaqa\\cmTC_096bd.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_096bd.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3cdaqa\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_096bd.dir\\Debug\\cmTC_096bd.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_096bd.dir\\Debug\\cmTC_096bd.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_096bd.dir\\Debug\\cmTC_096bd.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_096bd.dir\\Debug\\\\" /Fd"cmTC_096bd.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CMakeCXXCompilerABI.cpp
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_096bd.dir\\Debug\\\\" /Fd"cmTC_096bd.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.28\\Modules\\CMakeCXXCompilerABI.cpp"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3cdaqa\\Debug\\cmTC_096bd.exe" /INCREMENTAL /ILK:"cmTC_096bd.dir\\Debug\\cmTC_096bd.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-3cdaqa/Debug/cmTC_096bd.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-3cdaqa/Debug/cmTC_096bd.lib" /MACHINE:X64  /machine:x64 cmTC_096bd.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_096bd.vcxproj -> C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3cdaqa\\Debug\\cmTC_096bd.exe
+        FinalizeBuildStatus:
+          ファイル "cmTC_096bd.dir\\Debug\\cmTC_096bd.tlog\\unsuccessfulbuild" を削除しています。
+          "cmTC_096bd.dir\\Debug\\cmTC_096bd.tlog\\cmTC_096bd.lastbuildstate" のタッチ タスクを実行しています。
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-3cdaqa\\cmTC_096bd.vcxproj" (既定のターゲット) のビルドが完了しました。
+        
+        ビルドに成功しました。
+            0 個の警告
+            0 エラー
+        
+        経過時間 00:00:00.29
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:35 (check_include_file)"
+    checks:
+      - "Looking for sys/types.h"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-avz272"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-avz272"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/sato0/Downloads/assimp/cmake-modules"
+    buildResult:
+      variable: "HAVE_SYS_TYPES_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-avz272'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_fe37a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:01 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-avz272\\cmTC_fe37a.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_fe37a.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-avz272\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_fe37a.dir\\Debug\\cmTC_fe37a.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_fe37a.dir\\Debug\\cmTC_fe37a.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_fe37a.dir\\Debug\\cmTC_fe37a.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fe37a.dir\\Debug\\\\" /Fd"cmTC_fe37a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-avz272\\CheckIncludeFile.c"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_fe37a.dir\\Debug\\\\" /Fd"cmTC_fe37a.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-avz272\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-avz272\\Debug\\cmTC_fe37a.exe" /INCREMENTAL /ILK:"cmTC_fe37a.dir\\Debug\\cmTC_fe37a.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-avz272/Debug/cmTC_fe37a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-avz272/Debug/cmTC_fe37a.lib" /MACHINE:X64  /machine:x64 cmTC_fe37a.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_fe37a.vcxproj -> C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-avz272\\Debug\\cmTC_fe37a.exe
+        FinalizeBuildStatus:
+          ファイル "cmTC_fe37a.dir\\Debug\\cmTC_fe37a.tlog\\unsuccessfulbuild" を削除しています。
+          "cmTC_fe37a.dir\\Debug\\cmTC_fe37a.tlog\\cmTC_fe37a.lastbuildstate" のタッチ タスクを実行しています。
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-avz272\\cmTC_fe37a.vcxproj" (既定のターゲット) のビルドが完了しました。
+        
+        ビルドに成功しました。
+            0 個の警告
+            0 エラー
+        
+        経過時間 00:00:00.28
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:36 (check_include_file)"
+    checks:
+      - "Looking for stdint.h"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-j4y16q"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-j4y16q"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/sato0/Downloads/assimp/cmake-modules"
+    buildResult:
+      variable: "HAVE_STDINT_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-j4y16q'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_634d3.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:01 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-j4y16q\\cmTC_634d3.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_634d3.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-j4y16q\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_634d3.dir\\Debug\\cmTC_634d3.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_634d3.dir\\Debug\\cmTC_634d3.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_634d3.dir\\Debug\\cmTC_634d3.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_634d3.dir\\Debug\\\\" /Fd"cmTC_634d3.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-j4y16q\\CheckIncludeFile.c"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_634d3.dir\\Debug\\\\" /Fd"cmTC_634d3.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-j4y16q\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-j4y16q\\Debug\\cmTC_634d3.exe" /INCREMENTAL /ILK:"cmTC_634d3.dir\\Debug\\cmTC_634d3.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-j4y16q/Debug/cmTC_634d3.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-j4y16q/Debug/cmTC_634d3.lib" /MACHINE:X64  /machine:x64 cmTC_634d3.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_634d3.vcxproj -> C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-j4y16q\\Debug\\cmTC_634d3.exe
+        FinalizeBuildStatus:
+          ファイル "cmTC_634d3.dir\\Debug\\cmTC_634d3.tlog\\unsuccessfulbuild" を削除しています。
+          "cmTC_634d3.dir\\Debug\\cmTC_634d3.tlog\\cmTC_634d3.lastbuildstate" のタッチ タスクを実行しています。
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-j4y16q\\cmTC_634d3.vcxproj" (既定のターゲット) のビルドが完了しました。
+        
+        ビルドに成功しました。
+            0 個の警告
+            0 エラー
+        
+        経過時間 00:00:00.28
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:37 (check_include_file)"
+    checks:
+      - "Looking for stddef.h"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-jzfeoj"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-jzfeoj"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/sato0/Downloads/assimp/cmake-modules"
+    buildResult:
+      variable: "HAVE_STDDEF_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-jzfeoj'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_3b184.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:01 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jzfeoj\\cmTC_3b184.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_3b184.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jzfeoj\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_3b184.dir\\Debug\\cmTC_3b184.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_3b184.dir\\Debug\\cmTC_3b184.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_3b184.dir\\Debug\\cmTC_3b184.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3b184.dir\\Debug\\\\" /Fd"cmTC_3b184.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jzfeoj\\CheckIncludeFile.c"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckIncludeFile.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3b184.dir\\Debug\\\\" /Fd"cmTC_3b184.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jzfeoj\\CheckIncludeFile.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jzfeoj\\Debug\\cmTC_3b184.exe" /INCREMENTAL /ILK:"cmTC_3b184.dir\\Debug\\cmTC_3b184.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-jzfeoj/Debug/cmTC_3b184.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-jzfeoj/Debug/cmTC_3b184.lib" /MACHINE:X64  /machine:x64 cmTC_3b184.dir\\Debug\\CheckIncludeFile.obj
+          cmTC_3b184.vcxproj -> C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jzfeoj\\Debug\\cmTC_3b184.exe
+        FinalizeBuildStatus:
+          ファイル "cmTC_3b184.dir\\Debug\\cmTC_3b184.tlog\\unsuccessfulbuild" を削除しています。
+          "cmTC_3b184.dir\\Debug\\cmTC_3b184.tlog\\cmTC_3b184.lastbuildstate" のタッチ タスクを実行しています。
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-jzfeoj\\cmTC_3b184.vcxproj" (既定のターゲット) のビルドが完了しました。
+        
+        ビルドに成功しました。
+            0 個の警告
+            0 エラー
+        
+        経過時間 00:00:00.27
+        
+      exitCode: 0
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:146 (try_compile)"
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckTypeSize.cmake:271 (__check_type_size_impl)"
+      - "contrib/zlib/CMakeLists.txt:55 (check_type_size)"
+    checks:
+      - "Check size of off64_t"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-xvpum0"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-xvpum0"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/sato0/Downloads/assimp/cmake-modules"
+    buildResult:
+      variable: "HAVE_OFF64_T"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-xvpum0'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_236d9.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:02 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_236d9.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_236d9.dir\\Debug\\cmTC_236d9.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_236d9.dir\\Debug\\cmTC_236d9.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_236d9.dir\\Debug\\cmTC_236d9.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_236d9.dir\\Debug\\\\" /Fd"cmTC_236d9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          OFF64_T.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D _LARGEFILE64_SOURCE=1 /D HAVE_SYS_TYPES_H /D HAVE_STDINT_H /D HAVE_STDDEF_H /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_236d9.dir\\Debug\\\\" /Fd"cmTC_236d9.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c"
+        C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(29,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+        C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(30,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+        C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(31,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+        C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(32,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+        C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(33,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj" (既定のターゲット) のビルドが終了しました -- 失敗。
+        
+        ビルドに失敗しました。
+        
+        "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj" (既定のターゲット) (1) ->
+        (ClCompile ターゲット) -> 
+          C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(29,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+          C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(30,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+          C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(31,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+          C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(32,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+          C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\OFF64_T.c(33,12): error C2065: 'off64_t': 定義されていない識別子です。 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-xvpum0\\cmTC_236d9.vcxproj]
+        
+            0 個の警告
+            5 エラー
+        
+        経過時間 00:00:00.17
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckFunctionExists.cmake:86 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:64 (check_function_exists)"
+    checks:
+      - "Looking for fseeko"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-pllffm"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-pllffm"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/sato0/Downloads/assimp/cmake-modules"
+    buildResult:
+      variable: "HAVE_FSEEKO"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-pllffm'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_1298c.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:02 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\cmTC_1298c.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_1298c.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_1298c.dir\\Debug\\cmTC_1298c.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_1298c.dir\\Debug\\cmTC_1298c.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_1298c.dir\\Debug\\cmTC_1298c.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1298c.dir\\Debug\\\\" /Fd"cmTC_1298c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\CheckFunctionExists.c"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          CheckFunctionExists.c
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=fseeko /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_1298c.dir\\Debug\\\\" /Fd"cmTC_1298c.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\CheckFunctionExists.c"
+        Link:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\Debug\\cmTC_1298c.exe" /INCREMENTAL /ILK:"cmTC_1298c.dir\\Debug\\cmTC_1298c.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-pllffm/Debug/cmTC_1298c.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-pllffm/Debug/cmTC_1298c.lib" /MACHINE:X64  /machine:x64 cmTC_1298c.dir\\Debug\\CheckFunctionExists.obj
+        CheckFunctionExists.obj : error LNK2019: 未解決の外部シンボル fseeko が関数 main で参照されました [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\cmTC_1298c.vcxproj]
+        C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\Debug\\cmTC_1298c.exe : fatal error LNK1120: 1 件の未解決の外部参照 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\cmTC_1298c.vcxproj]
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\cmTC_1298c.vcxproj" (既定のターゲット) のビルドが終了しました -- 失敗。
+        
+        ビルドに失敗しました。
+        
+        "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\cmTC_1298c.vcxproj" (既定のターゲット) (1) ->
+        (Link ターゲット) -> 
+          CheckFunctionExists.obj : error LNK2019: 未解決の外部シンボル fseeko が関数 main で参照されました [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\cmTC_1298c.vcxproj]
+          C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\Debug\\cmTC_1298c.exe : fatal error LNK1120: 1 件の未解決の外部参照 [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-pllffm\\cmTC_1298c.vcxproj]
+        
+            0 個の警告
+            2 エラー
+        
+        経過時間 00:00:00.25
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/CMake/share/cmake-3.28/Modules/CheckIncludeFile.cmake:90 (try_compile)"
+      - "contrib/zlib/CMakeLists.txt:72 (check_include_file)"
+    checks:
+      - "Looking for unistd.h"
+    directories:
+      source: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-5axre6"
+      binary: "C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-5axre6"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/MDd /Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+      CMAKE_MODULE_PATH: "C:/Users/sato0/Downloads/assimp/cmake-modules"
+    buildResult:
+      variable: "Z_HAVE_UNISTD_H"
+      cached: true
+      stdout: |
+        Change Dir: 'C:/Users/sato0/Downloads/assimp/build/CMakeFiles/CMakeScratch/TryCompile-5axre6'
+        
+        Run Build Command(s): "C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_247e0.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild のバージョン 17.7.2+d6990bcfa (.NET Framework)
+        2023/10/27 1:59:02 にビルドを開始しました。
+        
+        ノード 1 上のプロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\cmTC_247e0.vcxproj" (既定のターゲット)。
+        PrepareForBuild:
+          ディレクトリ "cmTC_247e0.dir\\Debug\\" を作成しています。
+          ディレクトリ "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\Debug\\" を作成しています。
+          ディレクトリ "cmTC_247e0.dir\\Debug\\cmTC_247e0.tlog\\" を作成しています。
+        InitializeBuildStatus:
+          "AlwaysCreate" が指定されたため "cmTC_247e0.dir\\Debug\\cmTC_247e0.tlog\\unsuccessfulbuild" を作成しています。
+          "cmTC_247e0.dir\\Debug\\cmTC_247e0.tlog\\unsuccessfulbuild" のタッチ タスクを実行しています。
+        ClCompile:
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.37.32822\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_247e0.dir\\Debug\\\\" /Fd"cmTC_247e0.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\CheckIncludeFile.c"
+          Microsoft(R) C/C++ Optimizing Compiler Version 19.37.32825 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          CheckIncludeFile.c
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_247e0.dir\\Debug\\\\" /Fd"cmTC_247e0.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\CheckIncludeFile.c"
+        C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\CheckIncludeFile.c(1,10): fatal  error C1083: include ファイルを開けません。'unistd.h':No such file or directory [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\cmTC_247e0.vcxproj]
+        プロジェクト "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\cmTC_247e0.vcxproj" (既定のターゲット) のビルドが終了しました -- 失敗。
+        
+        ビルドに失敗しました。
+        
+        "C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\cmTC_247e0.vcxproj" (既定のターゲット) (1) ->
+        (ClCompile ターゲット) -> 
+          C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\CheckIncludeFile.c(1,10): fatal  error C1083: include ファイルを開けません。'unistd.h':No such file or directory [C:\\Users\\sato0\\Downloads\\assimp\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5axre6\\cmTC_247e0.vcxproj]
+        
+            0 個の警告
+            1 エラー
+        
+        経過時間 00:00:00.18
+        
+      exitCode: 1
+...

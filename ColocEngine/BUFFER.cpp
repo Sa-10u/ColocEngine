@@ -1,11 +1,10 @@
 #include "BUFFER.h"
 #include<assert.h>
 #include<codecvt>
-//#include <assimp/Importer.hpp>
-//#include <assimp/scene.h>
-//#include <assimp/postprocess.h>
-//#include <assimp/cimport.h>
-
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+#include <assimp/cimport.h>
 
 VERTEX::VERTEX():pos_(0),norm_(0),uv_(0),tan_(0)
 {
