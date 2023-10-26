@@ -18,3 +18,8 @@ float3 Pallet1(float val)
     
     return phase + amp * cos(6.28318 * (freq * val + offset));
 };
+
+float3 LineNoise(float val, float am, float f)
+{
+
+}

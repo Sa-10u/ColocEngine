@@ -12,6 +12,8 @@ VSoutput main(VSinput inp)
 	float4 posProj = mul(Projection, posView);
 
 	result.pos = posProj;
+	//result.pos = float4(inp.pos,1.0f);
+
 	result.uv = inp.uv;
 
 	return result;

@@ -402,7 +402,7 @@ bool D3d::InitGBO()
             rc_desc_c.MipLevels = 1;
             rc_desc_c.Alignment = 0;
             rc_desc_c.Height = 1;
-            rc_desc_c.Width = sizeof(WVP);
+            rc_desc_c.Width = sizeof(WVPT);
             rc_desc_c.DepthOrArraySize = 1;
             rc_desc_c.Flags = D3D12_RESOURCE_FLAG_NONE;
             rc_desc_c.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
@@ -437,7 +437,7 @@ bool D3d::InitGBO()
             CBV[i].HCPU = _HCPU;
             CBV[i].HGPU = _HGPU;
             CBV[i].desc.BufferLocation = address;
-            CBV[i].desc.SizeInBytes = sizeof(WVP);
+            CBV[i].desc.SizeInBytes = sizeof(WVPT);
 
             device_->CreateConstantBufferView(&CBV[i].desc, _HCPU);
 

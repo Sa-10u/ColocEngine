@@ -75,7 +75,7 @@ struct MESH
 
 //-----------------------------
 
-struct alignas(256) WVP
+struct alignas(256) WVPT
 {
 	XMMATRIX wld;
 	XMMATRIX view;
