@@ -44,7 +44,6 @@ PSoutput main(VSoutput inp)
     float s = pow(1 - length(uv.x),3);
 
     res.color = float4(i1*s,i2*s,i3*s,1);
-    res.color = res.color.rgb / 3;
     
 	return res ;
 }
