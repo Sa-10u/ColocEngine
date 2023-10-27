@@ -1,10 +1,6 @@
 #include "BUFFER.h"
 #include<assert.h>
-#include<codecvt>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/postprocess.h>
-#include <assimp/cimport.h>
+
 
 VERTEX::VERTEX():pos_(0),norm_(0),uv_(0),tan_(0)
 {
@@ -18,11 +14,11 @@ MATERIAL::MATERIAL():dif_(0),spec_(0),alpha_(0),shin_(0),map_(0)
 {
 }
 
-MESH::MESH():vtcs_(nullptr),indexes_(nullptr),ID_Material(-1)
+MESH::MESH():ID_Material(-1)
 {
 }
 //--------
-bool MESH::LoadMesh(const wchar_t* file, MESH& mesh, MATERIAL& material)
+bool MESH::LoadMesh(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& material)
 {
 	return false;
 }

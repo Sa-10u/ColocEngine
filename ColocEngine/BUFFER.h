@@ -2,8 +2,10 @@
 #include"DirectXMath.h"
 #include<d3d12.h>
 #include <string>
+#include <vector>
 
 using std::string;
+using std::vector;
 using namespace DirectX;
 
 struct SIMPLEVERTEX
@@ -63,14 +65,14 @@ struct MATERIAL
 
 struct MESH
 {
-	VERTEX* vtcs_;
-	uint32_t* indexes_;
+	vector<VERTEX> vtcs_;
+	vector<uint32_t> indexes_;
 
 	uint32_t ID_Material;
 
 	MESH();
 	//-----
-	bool LoadMesh(const wchar_t* file, MESH& mesh, MATERIAL& material);
+	bool LoadMesh(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& material);
 };
 
 //-----------------------------

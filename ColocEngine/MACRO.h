@@ -2,6 +2,7 @@
 #include<DirectXMath.h>
 #include <windows.h>
 
+
 template<typename tgt>
 inline void SAFE_DELETE(tgt*& p)
 {
@@ -46,5 +47,8 @@ namespace SHADER_FILENAME
 	extern LPCWSTR PoorVS;
 	extern LPCWSTR PoorPS;
 }
+
+char* wtoc(const wchar_t* str);
+
 
 #define __CREATE(LPCSTR)	{};

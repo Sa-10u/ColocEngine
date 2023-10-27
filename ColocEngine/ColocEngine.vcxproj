@@ -24,6 +24,7 @@
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="MACRO.cpp" />
     <ClCompile Include="MAIN.cpp" />
+    <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="WinView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -31,6 +32,7 @@
     <ClInclude Include="D3D.h" />
     <ClInclude Include="LoadFile.h" />
     <ClInclude Include="MACRO.h" />
+    <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="WinView.h" />
   </ItemGroup>
   <ItemGroup>

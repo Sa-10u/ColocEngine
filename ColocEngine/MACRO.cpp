@@ -12,3 +12,13 @@ namespace SHADER_FILENAME
 	LPCWSTR PoorVS = L"PoorVS.cso";
 	LPCWSTR PoorPS = L"PoorPS.cso";
 }
+
+char* wtoc(const wchar_t* str)
+{
+	auto len = WideCharToMultiByte(CP_UTF8, 0, str, -1, nullptr, 0, nullptr, nullptr);
+	auto buf = new char[len];
+
+	WideCharToMultiByte(CP_UTF8, 0, str, -1, buf, len, nullptr, nullptr);
+
+	return buf;
+}
