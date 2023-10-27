@@ -37,16 +37,14 @@ PSoutput main(VSoutput inp)
     }
     */
 
-    /*
-    float i1 = abs(0.1 / (length(cuv) - 0.5)) * abs(sin(Time - 0.5));
-    float i2 = abs(0.1 / (length(cuv) - 0.5)) * abs(sin(Time + 0.5));
-    float i3 = abs(0.1 / (length(cuv) - 0.5)) * abs(sin(Time + 1.0));
-
-    res.color = float4(i1, i2, i3, 1);
-    */
     
-    float s = length(uv.x);
-    res.color = s;
+    float i1 = abs(sin(2*Time - 0.5));
+    float i2 = abs(sin(2*Time + 0.5));
+    float i3 = abs(sin(2*Time + 1.0));
+    float s = pow(1 - length(uv.x),3);
+
+    res.color = float4(i1*s,i2*s,i3*s,1);
+    res.color = res.color.rgb / 3;
     
 	return res ;
 }
