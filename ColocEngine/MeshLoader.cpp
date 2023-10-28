@@ -11,7 +11,7 @@ MeshLoader::~MeshLoader()
 
 bool MeshLoader::Load(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& mtr)
 {
-    /*if (file == nullptr) return false;
+    if (file == nullptr) return false;
     auto path = wtoc(file);
 
     Assimp::Importer imp;
@@ -44,7 +44,7 @@ bool MeshLoader::Load(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>&
         ParseMaterial(mtr[i], pm);
     }
 
-    scene = nullptr;*/
+    scene = nullptr;
 
     return true;
 }
