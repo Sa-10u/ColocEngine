@@ -1,7 +1,9 @@
 struct VSinput
 {
 	float3 pos	: POSITION;
+    float3 norm : NORMAL;
 	float2 uv	: TEXCOORD;
+    float3 tan  : TANGENT;
 };
 
 struct VSoutput

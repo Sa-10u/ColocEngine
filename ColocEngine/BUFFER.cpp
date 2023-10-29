@@ -6,7 +6,7 @@ VERTEX::VERTEX():pos_(0),norm_(0),uv_(0),tan_(0)
 {
 }
 
-VERTEX::VERTEX(XMFLOAT3 const& pos, XMFLOAT3 const& norm, XMFLOAT3 const& uv, XMFLOAT3 const& tan):pos_(pos),norm_(norm),uv_(uv),tan_(tan)
+VERTEX::VERTEX(XMFLOAT3 const& pos, XMFLOAT3 const& norm, XMFLOAT2 const& uv, XMFLOAT3 const& tan):pos_(pos),norm_(norm),uv_(uv),tan_(tan)
 {
 }
 
@@ -18,7 +18,3 @@ MESH::MESH():ID_Material(-1)
 {
 }
 //--------
-bool MESH::LoadMesh(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& material)
-{
-	return false;
-}

@@ -18,13 +18,13 @@ struct VERTEX
 {
 	XMFLOAT3 pos_;
 	XMFLOAT3 norm_;
-	XMFLOAT3 uv_;
+	XMFLOAT2 uv_;
 	XMFLOAT3 tan_;
 
 	static const D3D12_INPUT_LAYOUT_DESC inp_Layout;
 
 	VERTEX();
-	VERTEX(XMFLOAT3 const& pos, XMFLOAT3 const& norm, XMFLOAT3 const& uv, XMFLOAT3 const& tan);
+	VERTEX(XMFLOAT3 const& pos, XMFLOAT3 const& norm, XMFLOAT2 const& uv, XMFLOAT3 const& tan);
 
 
 	enum ELEMENT
@@ -39,7 +39,6 @@ struct VERTEX
 
 private:
 
-	static const int count = 4;
 	static const D3D12_INPUT_ELEMENT_DESC element[AMMOUNT];
 };
 
