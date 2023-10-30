@@ -41,9 +41,11 @@ PSoutput main(VSoutput inp)
     float i1 = abs(sin(2*Time - 0.5));
     float i2 = abs(sin(2*Time + 0.5));
     float i3 = abs(sin(2*Time + 1.0));
-    float s = pow(1 - length(uv.x),3);
+    float s1 = pow(1 - length(uv.x),3);
+    float s2 = pow(1 - length(uv.y), 3);
 
-    res.color = float4(i1*s,i2*s,i3*s,1);
+    res.color =  abs(float4(i1 * s1, i2 * s1, i3 * s1, 1));
+    res.color += abs(float4(i1 * s2, i2 * s2, i3 * s2, 1));
     
 	return res ;
 }
