@@ -16,5 +16,5 @@ public:
 class DescriptorPool
 {
 public:
-	static bool Create(ID3D12Device* device_ ,)
+	///static bool Create(ID3D12Device* device_ ,)
 };

@@ -251,7 +251,7 @@ bool D3d::InitGBO()
 {
     HRESULT res = FALSE;
 
-    std::wstring path = {};
+    std::wstring path = L"teapot/teapot.obj";
     //path set 3Ddata name
 
     if (!LoadMesh(path.c_str(), mesh_, mtr_)) return 0;
@@ -263,6 +263,8 @@ bool D3d::InitGBO()
     //    {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT2(1.0f,1.0f)},
     //    {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT2(0.0f,1.0f)},
     //};
+    int i = mesh_.size();
+
     auto size = sizeof(VERTEX) * mesh_[0].vtcs_.size();//for 
     auto vtcs = mesh_[0].vtcs_.data();
     {
@@ -317,7 +319,7 @@ bool D3d::InitGBO()
 
         VBV.BufferLocation = VB->GetGPUVirtualAddress();
         VBV.SizeInBytes = static_cast<UINT>(size);
-        VBV.StrideInBytes = static_cast <UINT>(sizeof(SIMPLEVERTEX));
+        VBV.StrideInBytes = static_cast <UINT>(sizeof(VERTEX));
     }
 
     size = sizeof(uint32_t) * mesh_[0].indexes_.size();

@@ -31,7 +31,7 @@ bool MeshLoader::Load(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>&
     if (scene == nullptr)    return false;
 
     mesh.clear();
-    mesh.reserve(scene->mNumMeshes);
+    mesh.resize(scene->mNumMeshes);
     for (size_t i = 0; i < mesh.size(); i++) {
 
         const auto pm = scene->mMeshes[i];
@@ -39,7 +39,7 @@ bool MeshLoader::Load(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>&
     }
 
     mtr.clear();
-    mtr.reserve(scene->mNumMaterials);
+    mtr.resize(scene->mNumMaterials);
     for (size_t i = 0; i < mtr.size(); i++) {
 
         const auto pm = scene->mMaterials[i];
@@ -56,7 +56,9 @@ void MeshLoader::ParseMesh(MESH& mesh, const aiMesh* src)
     mesh.ID_Material = src->mMaterialIndex;
 
     aiVector3D vecdef(0.0f, 0.0f, 0.0f);
-    mesh.vtcs_.resize(src->mNumVertices);
+    int x = src->mNumVertices;
+
+    mesh.vtcs_.resize(x);
 
     for (auto i = 0u; i < src->mNumVertices; i++) {
 
