@@ -251,14 +251,20 @@ bool D3d::InitGBO()
 {
     HRESULT res = FALSE;
 
-    SIMPLEVERTEX vts[] =
-    {
-        {XMFLOAT3(-1.0f,1.0f,0.0f),XMFLOAT2(0.0f,0.0f)},
-        {XMFLOAT3(1.0f,1.0f,0.0f),XMFLOAT2(1.0f,0.0f)},
-        {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT2(1.0f,1.0f)},
-        {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT2(0.0f,1.0f)},
-    };
+    std::wstring path = {};
+    //path set 3Ddata name
 
+    if (!LoadMesh(path.c_str(), mesh_, mtr_)) return 0;
+
+    //SIMPLEVERTEX vts[] =
+    //{
+    //    {XMFLOAT3(-1.0f,1.0f,0.0f),XMFLOAT2(0.0f,0.0f)},
+    //    {XMFLOAT3(1.0f,1.0f,0.0f),XMFLOAT2(1.0f,0.0f)},
+    //    {XMFLOAT3(1.0f,-1.0f,0.0f),XMFLOAT2(1.0f,1.0f)},
+    //    {XMFLOAT3(-1.0f,-1.0f,0.0f),XMFLOAT2(0.0f,1.0f)},
+    //};
+    auto size = sizeof(VERTEX) * mesh_[0].vtcs_.size();//for 
+    auto vtcs = mesh_[0].vtcs_.data();
     {
         D3D12_HEAP_PROPERTIES hp_prop_v = {};
         {
@@ -273,7 +279,7 @@ bool D3d::InitGBO()
         {
             rc_desc_v.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
             rc_desc_v.Alignment = 0;
-            rc_desc_v.Width = sizeof(vts);
+            rc_desc_v.Width = size;
             rc_desc_v.Height = 1;
             rc_desc_v.DepthOrArraySize = 1;
             rc_desc_v.MipLevels = 1;
@@ -305,17 +311,20 @@ bool D3d::InitGBO()
 
         if (FAILED(res)) return false;
 
-        memcpy(ptr, vts, sizeof(vts));
+        memcpy(ptr,vtcs ,size );
 
         VB->Unmap(0, 0);
 
         VBV.BufferLocation = VB->GetGPUVirtualAddress();
-        VBV.SizeInBytes = static_cast<UINT>(sizeof(vts));
+        VBV.SizeInBytes = static_cast<UINT>(size);
         VBV.StrideInBytes = static_cast <UINT>(sizeof(SIMPLEVERTEX));
     }
 
+    size = sizeof(uint32_t) * mesh_[0].indexes_.size();
+    auto indexes = mesh_[0].indexes_.data();
+
     {
-        uint32_t indexes[] = { 0,1,2 ,0,2,3 };
+       // uint32_t indexes[] = { 0,1,2 ,0,2,3 };
 
         D3D12_HEAP_PROPERTIES hp_prop_i = {};
         {
@@ -338,7 +347,7 @@ bool D3d::InitGBO()
             rc_desc_i.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
             rc_desc_i.SampleDesc.Count = 1;
             rc_desc_i.SampleDesc.Quality = 0;
-            rc_desc_i.Width = sizeof(indexes);
+            rc_desc_i.Width = size;
         }
 
         res = device_->CreateCommittedResource
@@ -356,13 +365,13 @@ bool D3d::InitGBO()
         res = IB->Map(0, nullptr, &ptr);
         if (FAILED(res)) return 0;
 
-        memcpy(ptr, indexes, sizeof(indexes));
+        memcpy(ptr, indexes, size);
         IB->Unmap(0, 0);
 
         //-----------
         IBV.BufferLocation = IB->GetGPUVirtualAddress();
         IBV.Format = DXGI_FORMAT_R32_UINT;
-        IBV.SizeInBytes = sizeof(indexes);
+        IBV.SizeInBytes = size;
     }
 
     //----------------------------
@@ -696,8 +705,7 @@ bool D3d::InitPSO()
 
     D3D12_GRAPHICS_PIPELINE_STATE_DESC pso_desc = {};
     {
-        pso_desc.InputLayout.pInputElementDescs = in_e_desc;
-        pso_desc.InputLayout.NumElements = _countof(in_e_desc);
+        pso_desc.InputLayout = VERTEX::inp_Layout;
         pso_desc.pRootSignature = rootsig_;
         pso_desc.VS.pShaderBytecode = VSblob->GetBufferPointer();
         pso_desc.PS.pShaderBytecode = PSblob->GetBufferPointer();
@@ -857,7 +865,8 @@ void D3d::write()
 
         cmdlist_->SetGraphicsRootConstantBufferView(0, CBV[IND_frame ].desc.BufferLocation);
 
-        cmdlist_->DrawIndexedInstanced(6, 1, 0, 0,0);
+        auto cnt = static_cast<uint32_t>(mesh_[0].indexes_.size());
+        cmdlist_->DrawIndexedInstanced(cnt, 1, 0, 0,0);
     }
 }
 

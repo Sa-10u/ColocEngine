@@ -182,7 +182,7 @@ const D3D12_INPUT_LAYOUT_DESC VERTEX::inp_Layout =
     VERTEX::AMMOUNT
 };
 
-bool MESH::LoadMesh(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& material)
+bool LoadMesh(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& material)
 {
     MeshLoader ml = {};
 

@@ -8,6 +8,7 @@
 #include"MACRO.h"
 #include"BUFFER.h"
 #include<d3dcompiler.h>
+#include "MeshLoader.h"
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
@@ -89,6 +90,8 @@ private:
 	float Width;
 
 	//-------
+	vector<MESH> mesh_;
+	vector<MATERIAL> mtr_;
 
 };
 

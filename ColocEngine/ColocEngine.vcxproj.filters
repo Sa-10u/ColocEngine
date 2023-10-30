@@ -36,6 +36,9 @@
     <ClCompile Include="MeshLoader.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="PoolManager.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinView.h">
@@ -54,6 +57,9 @@
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="MeshLoader.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="PoolManager.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>

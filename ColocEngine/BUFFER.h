@@ -71,8 +71,9 @@ struct MESH
 
 	MESH();
 	//-----
-	bool LoadMesh(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& material);
 };
+
+bool LoadMesh(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>& material);
 
 //-----------------------------
 

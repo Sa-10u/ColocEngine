@@ -25,6 +25,7 @@
     <ClCompile Include="MACRO.cpp" />
     <ClCompile Include="MAIN.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
+    <ClCompile Include="PoolManager.cpp" />
     <ClCompile Include="WinView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +34,7 @@
     <ClInclude Include="LoadFile.h" />
     <ClInclude Include="MACRO.h" />
     <ClInclude Include="MeshLoader.h" />
+    <ClInclude Include="PoolManager.h" />
     <ClInclude Include="WinView.h" />
   </ItemGroup>
   <ItemGroup>
