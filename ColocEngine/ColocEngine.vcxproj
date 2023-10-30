@@ -21,16 +21,17 @@
   <ItemGroup>
     <ClCompile Include="BUFFER.cpp" />
     <ClCompile Include="D3D.cpp" />
+    <ClCompile Include="DescriptorManager.cpp" />
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="MACRO.cpp" />
     <ClCompile Include="MAIN.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
-    <ClCompile Include="PoolManager.cpp" />
     <ClCompile Include="WinView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BUFFER.h" />
     <ClInclude Include="D3D.h" />
+    <ClInclude Include="DescriptorManager.h" />
     <ClInclude Include="LoadFile.h" />
     <ClInclude Include="MACRO.h" />
     <ClInclude Include="MeshLoader.h" />

@@ -12,12 +12,12 @@ public:
 	PoolManager() :buffer_(nullptr), Active_(nullptr), Free_(nullptr), capacity_(NULL), count_(NULL) {};
 	~PoolManager() { Term(); };
 	PoolManager(const PoolManager&) = delete;
-	operator = (const PoolManager&) = delete;
+	void operator = (const PoolManager&) = delete;
 
 	bool Init(uint32_t count)
 	{
 		std::lock_guard<std::mutex> guard(mutex_);
-		buffer_ = static_cast<uint8_t*>(new Item[count_ + 2]);
+		buffer_ = static_cast<uint8_t*>(new Item[count + 2]);
 		if (buffer_ == nullptr)	return false;
 		capacity_ = count;
 		for (auto i = 2u , j= 0u; i < capacity_ + 2; i++ , j++) {
@@ -74,7 +74,7 @@ public:
 		temp->next = Active_;
 		temp->prev->next = temp->next->prev = temp;
 
-		count_++;]
+		count_++;
 
 		auto val = new ((void*)Item) T();
 
@@ -92,7 +92,7 @@ public:
 
 		std::lock_guard<std::mutex> guard(mutex_);
 
-		auto temp = reinterpret_cast<Item*>(val);
+		auto temp = reinterpret_cast<Item*>(addr);
 		temp->prev->next = temp->next;
 		temp->next->prev = temp->prev;
 
@@ -126,7 +126,7 @@ private:
 		Item* next;
 		Item* prev;
 
-		Item() :val(), ind_(NULL), next(nullptr), prev(nullptr) {};
+		Item() :val_(), ind_(NULL), next(nullptr), prev(nullptr) {};
 		~Item() {};
 	};
 
@@ -147,6 +147,6 @@ private:
 	Item* AssignItem(uint32_t ind)
 	{
 		auto temp = (buffer_ + (ind) * sizeof(Item));
-		return new(buf) Item;
+		return new(temp) Item;
 	};
 };

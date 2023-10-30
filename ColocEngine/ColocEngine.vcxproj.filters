@@ -36,7 +36,7 @@
     <ClCompile Include="MeshLoader.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="PoolManager.cpp">
+    <ClCompile Include="DescriptorManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
@@ -60,6 +60,9 @@
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="PoolManager.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="DescriptorManager.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>
