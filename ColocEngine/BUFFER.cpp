@@ -14,7 +14,7 @@ MATERIAL::MATERIAL():dif_(0),spec_(0),alpha_(0),shin_(0),map_(0)
 {
 }
 
-MESH::MESH():ID_Material(-1)
+MESH::MESH():ID_Material(-1),indexes_(),vtcs_()
 {
 }
 //--------
