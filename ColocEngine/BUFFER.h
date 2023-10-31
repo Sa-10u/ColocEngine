@@ -23,7 +23,7 @@ struct VERTEX
 
 	static const D3D12_INPUT_LAYOUT_DESC inp_Layout;
 
-	VERTEX();
+	VERTEX() = default;
 	VERTEX(XMFLOAT3 const& pos, XMFLOAT3 const& norm, XMFLOAT2 const& uv, XMFLOAT3 const& tan);
 
 
@@ -59,7 +59,7 @@ struct MATERIAL
 	float shin_;
 	string map_;
 
-	MATERIAL();
+	MATERIAL() = default;
 };
 
 struct MESH

@@ -56,9 +56,8 @@ void MeshLoader::ParseMesh(MESH& mesh, const aiMesh* src)
     mesh.ID_Material = src->mMaterialIndex;
 
     aiVector3D vecdef(0.0f, 0.0f, 0.0f);
-    int x = src->mNumVertices;
-
-    mesh.vtcs_.resize(x);
+    
+    mesh.vtcs_.resize(src->mNumVertices);
 
     for (auto i = 0u; i < src->mNumVertices; i++) {
 
