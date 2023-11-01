@@ -48,6 +48,8 @@ namespace SHADER_FILENAME
 {
 	extern LPCWSTR PoorVS;
 	extern LPCWSTR PoorPS;
+
+	extern LPCWSTR LambertPS;
 }
 
 char* wtoc(const wchar_t* str);

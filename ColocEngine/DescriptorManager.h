@@ -23,7 +23,7 @@ public:
 	uint32_t GetCountVH();
 	uint32_t GetCountUH();
 	uint32_t GetCountH();
-	DescriptorHandle AllocHandle();
+	DescriptorHandle* AllocHandle();
 	void FreeHandle(DescriptorHandle** handle);
 	ID3D12DescriptorHeap* GetHeap();
 

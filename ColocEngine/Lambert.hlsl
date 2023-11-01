@@ -3,7 +3,10 @@
 SamplerState colsmp : register(s0);
 Texture2D colmap : register(t0);
 
-float4 main() : SV_TARGET
+PSoutput main(VSoutput inp)
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+    PSoutput res = (PSoutput)0;
+    
+    res.color = colmap.Sample(colsmp, inp.uv);
+    return res;
 }

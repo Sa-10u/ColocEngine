@@ -141,9 +141,9 @@ void MeshLoader::ParseMaterial(MATERIAL& mtl, const aiMaterial* src)
                 mtl.spec_.y = coltemp.g;
                 mtl.spec_.z = coltemp.b;
             }
-
+        
         __CREATE("SHININESS")   auto shine = 0.0f;
-            if (src->Get(AI_MATKEY_COLOR_SPECULAR, shine) == AI_SUCCESS)
+            if (src->Get(AI_MATKEY_SHININESS, shine) == AI_SUCCESS)
             {
                 mtl.shin_ = shine;
             }
@@ -152,7 +152,7 @@ void MeshLoader::ParseMaterial(MATERIAL& mtl, const aiMaterial* src)
                 ResetColor();
                 mtl.shin_ = shine;
             }
-
+            
         __CREATE("DIFFUSEMAP")  aiString path = {};
             if (src->Get(AI_MATKEY_COLOR_DIFFUSE(0), path) == AI_SUCCESS)
             {

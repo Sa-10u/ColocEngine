@@ -13,6 +13,8 @@ namespace SHADER_FILENAME
 {
 	LPCWSTR PoorVS = L"PoorVS.cso";
 	LPCWSTR PoorPS = L"PoorPS.cso";
+
+	LPCWSTR LambertPS = L"Lambert.cso";
 }
 
 char* wtoc(const wchar_t* str)

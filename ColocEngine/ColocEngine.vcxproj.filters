@@ -39,6 +39,9 @@
     <ClCompile Include="DescriptorManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WinView.h">
@@ -63,6 +66,9 @@
       <Filter>Head</Filter>
     </ClInclude>
     <ClInclude Include="DescriptorManager.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
       <Filter>Head</Filter>
     </ClInclude>
   </ItemGroup>

@@ -559,7 +559,7 @@ bool D3d::InitGBO()
     //-----------------------------------------------------------------------------------------*****
     {
         std::wstring tex_Path = {};
-        tex_Path = L"VAVA.dds";
+        tex_Path = L"teapot/default.DDS";
 
         ResourceUploadBatch bat(device_);
         bat.Begin();
@@ -770,6 +770,9 @@ void D3d::Run(int interval)
 	write();
 	//waitGPU();
 
+    angle_ += 0.01;
+    CBV[IND_frame].ptr->wld = XMMatrixRotationY(angle_);
+
     {
         brr.Transition.StateBefore = D3D12_RESOURCE_STATE_RENDER_TARGET;
         brr.Transition.StateAfter = D3D12_RESOURCE_STATE_PRESENT;
@@ -859,7 +862,7 @@ void D3d::write()
         cmdlist_->SetGraphicsRootDescriptorTable(1, tex.HGPU);
         cmdlist_->SetPipelineState(PSO);
 
-        cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+        cmdlist_->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
         cmdlist_->IASetVertexBuffers(0, 1, &VBV);
         cmdlist_->IASetIndexBuffer(&IBV);
         cmdlist_->RSSetViewports(1, &view_);
@@ -904,5 +907,3 @@ void D3d::present(uint32_t itv)
 
     fencecnt_[IND_frame] = curval + 1;
 }
-
-

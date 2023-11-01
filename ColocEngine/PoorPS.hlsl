@@ -13,7 +13,7 @@ PSoutput main(VSoutput inp)
     float2 uv = 2 * cuv;
     float2 quv = uv - floor(uv);
     float2 qcuv = (quv - 0.5) * 2;
-   /*
+   
     cuv *= 0.25*0.5;
     float3 col = 0;
     for (float i = 0; i < 5; i++){
@@ -35,17 +35,6 @@ PSoutput main(VSoutput inp)
         
         res.color += float4(col, 1);
     }
-    */
 
-    
-    float i1 = abs(sin(2*Time - 0.5));
-    float i2 = abs(sin(2*Time + 0.5));
-    float i3 = abs(sin(2*Time + 1.0));
-    float s1 = pow(1 - length(uv.x),3);
-    float s2 = pow(1 - length(uv.y), 3);
-
-    res.color =  abs(float4(i1 * s1, i2 * s1, i3 * s1, 1));
-    res.color += abs(float4(i1 * s2, i2 * s2, i3 * s2, 1));
-    
-	return res ;
+    return res;
 }
