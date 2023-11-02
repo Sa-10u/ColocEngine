@@ -18,78 +18,58 @@
     <ClCompile Include="MAIN.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="WinView.cpp">
+    <ClCompile Include="Library\CE\src\BUFFER.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="D3D.cpp">
+    <ClCompile Include="Library\CE\src\D3D.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="MACRO.cpp">
+    <ClCompile Include="Library\CE\src\DescriptorManager.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="LoadFile.cpp">
+    <ClCompile Include="Library\CE\src\LoadFile.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="BUFFER.cpp">
+    <ClCompile Include="Library\CE\src\MACRO.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="MeshLoader.cpp">
+    <ClCompile Include="Library\CE\src\MeshLoader.cpp">
       <Filter>Source</Filter>
     </ClCompile>
-    <ClCompile Include="DescriptorManager.cpp">
-      <Filter>Source</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
+    <ClCompile Include="Library\CE\src\WinView.cpp">
       <Filter>Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WinView.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="MACRO.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="D3D.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="BUFFER.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="LoadFile.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="MeshLoader.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="PoolManager.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="DescriptorManager.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Head</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="poorVS.hlsl">
-      <Filter>shader</Filter>
-    </FxCompile>
-    <FxCompile Include="PoorPS.hlsl">
-      <Filter>shader</Filter>
-    </FxCompile>
-    <FxCompile Include="Lambert.hlsl">
-      <Filter>shader</Filter>
-    </FxCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="PoorHeader.hlsli">
-      <Filter>shader</Filter>
-    </None>
     <None Include="packages.config" />
-    <None Include="Functions.hlsli">
-      <Filter>shader</Filter>
-    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Library\CE\include\CE\BUFFER.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\D3D.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\DescriptorManager.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\LoadFile.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\MACRO.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\MeshLoader.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\PoolManager.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\Resource.h">
+      <Filter>Head</Filter>
+    </ClInclude>
+    <ClInclude Include="Library\CE\include\CE\WinView.h">
+      <Filter>Head</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

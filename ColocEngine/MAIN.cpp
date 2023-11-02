@@ -1,4 +1,4 @@
-#include "WinView.h"
+#include "CE/WinView.h"
 
 int main(int argc,wchar_t** argv,wchar_t** evnp)
 {
