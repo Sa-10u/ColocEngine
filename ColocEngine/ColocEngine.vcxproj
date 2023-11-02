@@ -29,6 +29,8 @@
     <ClCompile Include="MAIN.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Library\CE\shader\Functions.hlsli" />
+    <None Include="Library\CE\shader\PoorHeader.hlsli" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -41,6 +43,11 @@
     <ClInclude Include="Library\CE\include\CE\PoolManager.h" />
     <ClInclude Include="Library\CE\include\CE\Resource.h" />
     <ClInclude Include="Library\CE\include\CE\WinView.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Library\CE\shader\Lambert.hlsl" />
+    <FxCompile Include="Library\CE\shader\PoorPS.hlsl" />
+    <FxCompile Include="Library\CE\shader\poorVS.hlsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
@@ -114,7 +121,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>Library/CE/include;Library/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Library/CE/shader;Library/CE/include;Library/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -125,6 +132,7 @@
     <FxCompile>
       <ObjectFileOutput>$OutDir)%(Filename).cso</ObjectFileOutput>
       <ShaderModel>6.6</ShaderModel>
+      <AdditionalIncludeDirectories>Library/CE/shader</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -138,7 +146,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <Optimization>MaxSpeed</Optimization>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>Library/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Library/CE/include;Library/CE/shader;Library/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +158,7 @@
     </Link>
     <FxCompile>
       <ShaderModel>6.6</ShaderModel>
+      <AdditionalIncludeDirectories>Library/CE/shader</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,7 +169,7 @@
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>Library/CE/include;Library/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Library/CE/shader;Library/CE/include;Library/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,6 +180,7 @@
     <FxCompile>
       <ObjectFileOutput>$OutDir)%(Filename).cso</ObjectFileOutput>
       <ShaderModel>6.6</ShaderModel>
+      <AdditionalIncludeDirectories>Library/CE/shader</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -184,7 +194,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <Optimization>MaxSpeed</Optimization>
       <WholeProgramOptimization>true</WholeProgramOptimization>
-      <AdditionalIncludeDirectories>Library/assimp/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>Library/CE/include;Library/CE/shader;Library/assimp/include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -196,6 +206,7 @@
     </Link>
     <FxCompile>
       <ShaderModel>6.6</ShaderModel>
+      <AdditionalIncludeDirectories>Library/CE/shader</AdditionalIncludeDirectories>
     </FxCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
