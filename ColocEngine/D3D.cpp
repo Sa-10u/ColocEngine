@@ -7,7 +7,6 @@
 
 bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 {
-
     for (auto i = 0u; i < FrameAmmount;++i) {
 
         colbuf_[i] = nullptr;
@@ -20,7 +19,10 @@ bool D3d::Initialize(HWND hwnd, uint32_t h, uint32_t w)
 
     bool FAIL = 0;
 
-    auto res = D3D12CreateDevice
+    auto res = CoInitializeEx(NULL, COINITBASE_MULTITHREADED);
+    if (FAILED(res))               return FAIL;
+
+    res = D3D12CreateDevice
     (
         nullptr,
         D3D_FEATURE_LEVEL_11_0,
@@ -748,7 +750,7 @@ bool D3d::InitPSO()
         pso_desc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
         pso_desc.DSVFormat = DXGI_FORMAT_D32_FLOAT;
     }
-
+    
     res = device_->CreateGraphicsPipelineState
     (
         &pso_desc,

@@ -15,6 +15,10 @@
 #pragma comment(lib,"dxgi.lib")
 #pragma comment(lib,"dxguid.lib")
 #pragma comment(lib,"d3dcompiler.lib")
+#pragma comment(lib,"assimp-vc143-mtd.lib")
+#pragma comment(lib,"assimp-vc143-mt.lib")
+#pragma comment(lib,"assimp-vc143-mtd.dll")
+#pragma comment(lib,"assimp-vc143-mt.dll")
 
 using namespace DirectX;
 

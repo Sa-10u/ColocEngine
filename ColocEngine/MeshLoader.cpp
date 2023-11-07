@@ -16,7 +16,7 @@ bool MeshLoader::Load(const wchar_t* file, vector<MESH>& mesh, vector<MATERIAL>&
     if (file == nullptr) return false;
     auto path = wtoc(file);
 
-    Assimp::Importer imp;
+    Assimp::Importer imp = {};
     //---------
     auto flag = 0;
     flag |= aiProcess_Triangulate;
