@@ -576,6 +576,30 @@ bool D3d::InitGBO()
 
         auto fut = bat.End(cmdque_);
         fut.wait();
+ //-------------------------------------------------------
+
+        TexMetadata data = {};
+        ScratchImage image = {};
+        std::vector<D3D12_SUBRESOURCE_DATA> rsc = {};
+
+        res = LoadFromWICFile
+        (
+            tex_Path.c_str(),
+            WIC_FLAGS_NONE,
+            &data,
+            image
+        );
+        if (FAILED(res)) return 0;
+        
+        res = PrepareUpload
+        (
+            device_,
+            image.GetImages(),
+            image.GetImageCount(),
+            data,
+            rsc
+        );
+        if (FAILED(res)) return 0;
 
         //----
 

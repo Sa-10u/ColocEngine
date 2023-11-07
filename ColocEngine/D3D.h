@@ -9,6 +9,7 @@
 #include"BUFFER.h"
 #include<d3dcompiler.h>
 #include "MeshLoader.h"
+#include<DirectXTex.h>
 
 #pragma comment(lib,"d3d12.lib")
 #pragma comment(lib,"dxgi.lib")
