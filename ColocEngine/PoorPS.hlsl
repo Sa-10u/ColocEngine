@@ -9,10 +9,18 @@ PSoutput main(VSoutput inp)
 {
 	float2 uv = (inp.uv -0.5) *2;
 
-	float2 pos = (cuv(0.0, 0.0));
-	float len = length(pos - inp.uv);
+	float2 pos0 = (cuv(0.0, 0.3));
+	float2 pos1 = (cuv(0.7, 0.6));
 
-	float3 res =exp(1 - (len ) * 50);
+	float len0 = length(pos0 - inp.uv);
+	float len1 = length(pos1 - inp.uv);
+
+	float3 res =exp(1 - (len0 ) * 50);
+	res += exp(1 - (len1) * 100);
+
+	res.r *= sin(Time);
+	res.g *= sin(Time * 0.5);
+	res.b *= sin(Time * 0.25);
 
 	PSoutput o;
 	o.color = float4(res,0);

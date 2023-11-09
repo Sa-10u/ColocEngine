@@ -1,4 +1,3 @@
-
 float3 Pallet0(float val)
 {
     float3 phase = float3(1, 0.92, 0.5);
@@ -29,4 +28,9 @@ float3 LineNoise(float val, float am, float f)
 float2 cuv(float x, float y)
 {
     return float2 (1 -(0.5-(x*0.5)), 1 - (0.5 - (y * 0.5)));
+}
+
+float rand(float2 pos,float seed)
+{
+
 }
