@@ -25,3 +25,8 @@ float3 LineNoise(float val, float am, float f)
     
     return float3(1, 1, 1);
 }
+
+float2 cuv(float x, float y)
+{
+    return float2 (1 -(0.5-(x*0.5)), 1 - (0.5 - (y * 0.5)));
+}

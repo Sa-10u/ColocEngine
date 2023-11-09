@@ -7,43 +7,15 @@ Texture2D	 colmap : register(t0);
 
 PSoutput main(VSoutput inp)
 {
-	PSoutput resÅ@= (PSoutput)0;
-    
-	float2 cuv = (inp.uv -0.5 )*2;
-    float2 uv = 2 * cuv;
-    float2 quv = uv - floor(uv);
-    float2 qcuv = (quv - 0.5) * 2;
-   /*
-    cuv *= 0.25*0.5;
-    float3 col = 0;
-    for (float i = 0; i < 5; i++){
+	float2 uv = (inp.uv -0.5) *2;
 
-        cuv *= 2;
-        cuv = cuv - floor(cuv);
-        cuv -= 0.5;
-        //cuv *= 2;
-    
-        float dist = length(cuv) * exp(-length(uv*0.25));
-    
-        col = Pallet1(length((inp.uv - 0.5) * 2) + Time);
-//--------------------------------
-   
-        dist = sin((dist - Time * 0.1) * 3.14 * 2);
-        dist = abs(dist);
-        dist = 0.05 / dist;
-        col *= dist;
-        
-        res.color += float4(col, 1);
-    }
-    */
+	float2 pos = (cuv(0.0, 0.0));
+	float len = length(pos - inp.uv);
 
-    
-    float i1 = abs(sin(2*Time - 0.5));
-    float i2 = abs(sin(2*Time + 0.5));
-    float i3 = abs(sin(2*Time + 1.0));
-    float s = pow(1 - length(uv.x),3);
+	float3 res =exp(1 - (len ) * 50);
 
-    res.color = float4(i1*s,i2*s,i3*s,1);
-    
-	return res ;
+	PSoutput o;
+	o.color = float4(res,0);
+
+	return o;
 }
