@@ -22,10 +22,12 @@
     <ClCompile Include="BUFFER.cpp" />
     <ClCompile Include="D3D.cpp" />
     <ClCompile Include="DescriptorManager.cpp" />
+    <ClCompile Include="IComp.cpp" />
     <ClCompile Include="LoadFile.cpp" />
     <ClCompile Include="MACRO.cpp" />
     <ClCompile Include="MAIN.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
+    <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="WinView.cpp" />
   </ItemGroup>
@@ -33,9 +35,11 @@
     <ClInclude Include="BUFFER.h" />
     <ClInclude Include="D3D.h" />
     <ClInclude Include="DescriptorManager.h" />
+    <ClInclude Include="IComp.h" />
     <ClInclude Include="LoadFile.h" />
     <ClInclude Include="MACRO.h" />
     <ClInclude Include="MeshLoader.h" />
+    <ClInclude Include="ModelManager.h" />
     <ClInclude Include="PoolManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="WinView.h" />
