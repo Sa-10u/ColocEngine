@@ -1,22 +1,38 @@
 #pragma once
 #include <string>
+#include <vector>
+#include <stack>
+
 using std::string;
-typedef unsigned int Entity;
+typedef size_t Entity;
 
 class IComp_Data
 {
+public:
+	IComp_Data(Entity e);
+
+	Entity entity;
 };
 
 class IComp_System
 {
+public:
+	virtual void Run(Entity e) = 0;
+	bool Runnable;
+	
+	IComp_System();
 };
 
-namespace ECSManager
+namespace GOBJS
 {
-	constexpr unsigned int OBJECTS_AMMOUNT;
-	IComp_Data* data;
-	IComp_System* system;
-	Entity* entity;
+//-------------
+	const size_t Size = 100;//test
+//-------------
+
+	extern IComp_Data** data;
+	extern IComp_System** system;
+
+	std::stack<size_t> Vacancy;
 
 
 }
